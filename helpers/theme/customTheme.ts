@@ -1,6 +1,9 @@
 import { extendTheme } from '@chakra-ui/react';
 
 const theme = extendTheme({
+  shadows: {
+    onSurface: '0 0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, .15)',
+  },
   colors: {
     primary: {
       main: '#3F2C27',
