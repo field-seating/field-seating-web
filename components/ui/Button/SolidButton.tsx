@@ -13,12 +13,10 @@ const SolidButton = (props: ButtonProps) => (
       borderColor: 'onSurface.gray',
     }}
     _focus={{
-      bg: 'primary.dark',
+      bg: 'primary.light',
       boxShadow: 'onSurface',
     }}
-  >
-    Button
-  </Button>
+  />
 );
 
 export default SolidButton;

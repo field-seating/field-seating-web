@@ -10,6 +10,7 @@ const theme = extendTheme({
       dark: '#1B0100',
       light: '#6A554F',
       transparent: 'rgba(63, 44, 39, 0.2)',
+      'transparent.60': 'rgba(63, 44, 39, 0.6)',
     },
     onPrimary: {
       main: '#FFFFFF',
