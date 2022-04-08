@@ -2,7 +2,7 @@ import Head from 'next/head';
 
 import { Box } from '@chakra-ui/react';
 
-const Home = () => {
+const InventoryPage = () => {
   return (
     <>
       <Head>
@@ -11,10 +11,10 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box h={1500}>
-        <h1>球場坐座</h1>
+        <h1>InventoryPage</h1>
       </Box>
     </>
   );
 };
 
-export default Home;
+export default InventoryPage;
