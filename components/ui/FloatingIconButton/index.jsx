@@ -2,14 +2,14 @@ import { Button } from '@chakra-ui/react';
 
 const getStyle = size => {
   switch (size) {
-    case SizeEnum.sm:
+    case 'sm':
       return {
         width: 10,
         height: 10,
         borderRadius: '40px',
       };
 
-    case SizeEnum.md:
+    case 'md':
     default:
       return {
         width: 14,

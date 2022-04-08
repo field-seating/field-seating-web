@@ -2,7 +2,7 @@ import React from 'react';
 
 import TextField from './';
 
-export default {
+const story = {
   title: 'TextField',
   component: TextField,
   argTypes: {
@@ -17,5 +17,7 @@ export default {
     },
   },
 };
+
+export default story;
 
 export const Main = args => <TextField {...args} />;

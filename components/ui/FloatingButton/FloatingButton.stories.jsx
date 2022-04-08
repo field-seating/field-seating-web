@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from './';
 
-export default {
+const story = {
   title: 'Floating Action Button',
   component: Button,
   argTypes: {
@@ -12,6 +12,8 @@ export default {
     },
   },
 };
+
+export default story;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 export const Main = args => <Button {...args} />;

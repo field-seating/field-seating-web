@@ -6,13 +6,13 @@ import LinkButton from './LinkButton';
 
 const getButtonComp = variant => {
   switch (variant) {
-    case VariantEnum.outline:
+    case 'outline':
       return OutlineButton;
-    case VariantEnum.ghost:
+    case 'ghost':
       return GhostButton;
-    case VariantEnum.link:
+    case 'link':
       return LinkButton;
-    case VariantEnum.solid:
+    case 'solid':
     default:
       return SolidButton;
   }

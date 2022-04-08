@@ -2,7 +2,7 @@ import React from 'react';
 
 import Select from './';
 
-export default {
+const story = {
   title: 'Select',
   component: Select,
   argTypes: {
@@ -13,6 +13,8 @@ export default {
     },
   },
 };
+
+export default story;
 
 export const Main = args => (
   <Select {...args}>
