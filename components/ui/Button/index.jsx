@@ -4,7 +4,7 @@ import OutlineButton from './OutlineButton';
 import GhostButton from './GhostButton';
 import LinkButton from './LinkButton';
 
-const getButtonComp = variant => {
+const getButtonComp = (variant) => {
   switch (variant) {
     case 'outline':
       return OutlineButton;

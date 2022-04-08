@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-const SolidButton = props => (
+const SolidButton = (props) => (
   <Button
     {...props}
     bg="primary.light"

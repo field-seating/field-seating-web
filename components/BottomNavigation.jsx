@@ -35,7 +35,7 @@ const BottomNavigation = () => {
   const pathname = router.pathname;
   return (
     <Box as="nav" display="flex">
-      {tabList.map(tab => (
+      {tabList.map((tab) => (
         <NextLink key={tab.id} href={tab.route} passHref>
           <IconButton
             as="a"

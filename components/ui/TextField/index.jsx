@@ -1,6 +1,6 @@
 import { Input } from '@chakra-ui/react';
 
-const TextField = props => (
+const TextField = (props) => (
   <Input
     {...props}
     variant="outline"

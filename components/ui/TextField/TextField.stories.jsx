@@ -20,4 +20,4 @@ const story = {
 
 export default story;
 
-export const Main = args => <TextField {...args} />;
+export const Main = (args) => <TextField {...args} />;

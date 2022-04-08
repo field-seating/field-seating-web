@@ -16,4 +16,4 @@ const story = {
 export default story;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-export const Main = args => <Button {...args} />;
+export const Main = (args) => <Button {...args} />;

@@ -1,6 +1,6 @@
 import { Select as CkSelect } from '@chakra-ui/react';
 
-const Select = props => (
+const Select = (props) => (
   <CkSelect
     {...props}
     variant="outline"
