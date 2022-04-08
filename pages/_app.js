@@ -3,7 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { inspect } from '@xstate/inspect';
 
 import AppLayout from 'components/layout/AppLayout';
-import theme from 'helpers/theme/customTheme';
+import theme from 'lib/helpers/theme/customTheme';
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   inspect({
