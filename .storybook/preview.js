@@ -1,4 +1,4 @@
-import theme from '../lib/helpers/theme/customTheme';
+import theme from '../lib/theme/customTheme';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
