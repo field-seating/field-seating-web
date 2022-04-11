@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useMachine } from '@xstate/react';
+import { Box, Grid } from '@chakra-ui/react';
 
 import Button from 'components/ui/Button';
 
@@ -20,12 +21,19 @@ const LoginForm = () => {
 
   return (
     <>
-      <Field actor={emailActor} />
-      <Field actor={passwordActor} />
-      <Field actor={confirmPasswordActor} />
-      <Button variant="solid" onClick={onSubmit}>
-        {'登入'}
-      </Button>
+      <Grid templateColumns="1fr" gap="4">
+        <Field actor={emailActor} />
+        <Field actor={passwordActor} />
+        <Field actor={confirmPasswordActor} />
+        <Box display="flex" justifyContent="flex-end">
+          <Button variant="link">{'前往註冊'}</Button>
+        </Box>
+      </Grid>
+      <Box display="flex" mt={10} justifyContent="flex-end">
+        <Button variant="solid" onClick={onSubmit} size="lg">
+          {'登入'}
+        </Button>
+      </Box>
     </>
   );
 };
