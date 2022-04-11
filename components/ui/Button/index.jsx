@@ -18,10 +18,10 @@ const getButtonComp = (variant) => {
   }
 };
 
-const Button = ({ variant, ...props }) => {
+const Button = ({ onClick, variant, ...props }) => {
   const Comp = getButtonComp(variant);
 
-  return <Comp {...props} />;
+  return <Comp onClick={onClick} {...props} />;
 };
 
 export default Button;

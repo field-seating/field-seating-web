@@ -5,7 +5,7 @@ const TextField = (props) => (
     {...props}
     variant="outline"
     focusBorderColor="primary.light"
-    errorBorderColor="secondary.main"
+    errorBorderColor="red.500"
   />
 );
 

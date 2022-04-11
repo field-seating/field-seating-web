@@ -1,13 +1,8 @@
 import Head from 'next/head';
 
-import {
-  Box,
-  Heading,
-  FormControl,
-  FormLabel,
-  FormHelperText,
-} from '@chakra-ui/react';
-import TextField from 'components/ui/TextField';
+import { Box, Heading } from '@chakra-ui/react';
+
+import LoginForm from 'components/profile/login-form';
 
 const ProfilePage = () => {
   return (
@@ -24,11 +19,7 @@ const ProfilePage = () => {
           </Heading>
         </Box>
         <Box display="flex" flexDir="column">
-          <FormControl>
-            <FormLabel htmlFor="email">電子信箱</FormLabel>
-            <TextField id="email" value="value" />
-            <FormHelperText>{"We'll never share your email."}</FormHelperText>
-          </FormControl>
+          <LoginForm />
         </Box>
       </Box>
     </>
