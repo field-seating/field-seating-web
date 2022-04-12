@@ -2,7 +2,15 @@ import PropTypes from 'prop-types';
 
 import { Input } from '@chakra-ui/react';
 
-const TextField = ({ size, placeholder, value, onBlur, type, ...props }) => (
+const TextField = ({
+  onKeyDown,
+  size,
+  placeholder,
+  value,
+  onBlur,
+  type,
+  ...props
+}) => (
   <Input
     {...props}
     size={size}
@@ -13,6 +21,7 @@ const TextField = ({ size, placeholder, value, onBlur, type, ...props }) => (
     variant="outline"
     focusBorderColor="primary.light"
     errorBorderColor="error.main"
+    onKeyDown={onKeyDown}
   />
 );
 
@@ -21,6 +30,7 @@ TextField.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   onBlur: PropTypes.func,
+  onKeyDown: PropTypes.func,
   type: PropTypes.string,
 };
 

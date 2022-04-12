@@ -9,10 +9,20 @@ import FormLabel from 'components/ui/FormLabel';
 
 const Field = ({ actor }) => {
   const [state, send] = useActor(actor);
-  const onChange = useCallback(
+  const onBlur = useCallback(
     (evt) => {
       const { value } = evt.target;
       send({ type: 'CHANGE', value });
+    },
+    [send]
+  );
+
+  const onKeyDown = useCallback(
+    (evt) => {
+      if (evt.key === 'Enter') {
+        const { value } = evt.target;
+        send({ type: 'CHANGE', value });
+      }
     },
     [send]
   );
@@ -30,7 +40,8 @@ const Field = ({ actor }) => {
         defaultValue={value}
         placeholder={placeholder}
         type={type}
-        onBlur={onChange}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
       />
       {!isError ? (
         <FormHelperText>{helpText}</FormHelperText>

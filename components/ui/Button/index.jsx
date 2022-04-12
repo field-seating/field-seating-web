@@ -18,10 +18,25 @@ const getButtonComp = (variant) => {
   }
 };
 
-const Button = ({ isDisabled, onClick, variant, ...props }) => {
+const Button = ({
+  isDisabled,
+  onClick,
+  variant,
+  type,
+  isLoading,
+  ...props
+}) => {
   const Comp = getButtonComp(variant);
 
-  return <Comp onClick={onClick} isDisabled={isDisabled} {...props} />;
+  return (
+    <Comp
+      onClick={onClick}
+      isDisabled={isDisabled}
+      type={type}
+      isLoading={isLoading}
+      {...props}
+    />
+  );
 };
 
 export default Button;

@@ -12,9 +12,13 @@ import machine from './machine';
 
 const LoginForm = () => {
   const [current, send] = useMachine(machine);
-  const onSubmit = useCallback(() => {
-    send('SUBMIT');
-  }, [send]);
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      send('SUBMIT');
+    },
+    [send]
+  );
 
   const { email: emailActor, password: passwordActor } =
     current.context.inputRefs;
@@ -26,6 +30,7 @@ const LoginForm = () => {
   const globalErrorMsg = current.context.globalErrorMsg;
   const token = current.context?.responseData?.data?.token;
   const isIdle = current.matches('idle');
+  const isLoading = current.matches('loading');
 
   useEffect(() => {
     if (globalErrorMsg) {
@@ -43,23 +48,26 @@ const LoginForm = () => {
 
   return (
     <>
-      <Grid templateColumns="1fr" gap="4">
-        <Field actor={emailActor} />
-        <Field actor={passwordActor} />
-        <Box display="flex" justifyContent="flex-end">
-          <Button variant="link">{'前往註冊'}</Button>
+      <form onSubmit={onSubmit}>
+        <Grid templateColumns="1fr" gap="4">
+          <Field actor={emailActor} />
+          <Field actor={passwordActor} />
+          <Box display="flex" justifyContent="flex-end">
+            <Button variant="link">{'前往註冊'}</Button>
+          </Box>
+        </Grid>
+        <Box display="flex" mt={10} justifyContent="flex-end">
+          <Button
+            isLoading={isLoading}
+            isDisabled={!isIdle}
+            variant="solid"
+            type="submit"
+            size="lg"
+          >
+            {'登入'}
+          </Button>
         </Box>
-      </Grid>
-      <Box display="flex" mt={10} justifyContent="flex-end">
-        <Button
-          isDisabled={!isIdle}
-          variant="solid"
-          onClick={onSubmit}
-          size="lg"
-        >
-          {'登入'}
-        </Button>
-      </Box>
+      </form>
     </>
   );
 };
