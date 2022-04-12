@@ -15,6 +15,11 @@ const story = {
       defaultValue: 'sm',
       options: ['xs', 'sm', 'md', 'lg'],
     },
+    type: {
+      control: 'radio',
+      defaultValue: 'text',
+      options: ['text', 'password'],
+    },
   },
 };
 

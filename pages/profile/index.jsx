@@ -14,7 +14,7 @@ const ProfilePage = () => {
       </Head>
       <Box display="flex" flexDir="column" px={[4, 16]} py={4}>
         <Box h={90}>
-          <Heading as="h2" size="lg">
+          <Heading as="h2" size="lg" color="onSurface.main">
             你好，歡迎加入
           </Heading>
         </Box>

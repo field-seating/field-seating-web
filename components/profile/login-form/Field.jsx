@@ -19,15 +19,17 @@ const Field = ({ actor }) => {
 
   const isError = state.matches('error');
 
-  const { helpText, errorMsg, label, placeholder, value } = state.context;
+  const { helpText, errorMsg, label, placeholder, value, type, id } =
+    state.context;
 
   return (
     <FormControl isInvalid={isError}>
-      <FormLabel htmlFor={state.id}>{label}</FormLabel>
+      <FormLabel htmlFor={id}>{label}</FormLabel>
       <TextField
-        id={state.id}
+        id={id}
         defaultValue={value}
         placeholder={placeholder}
+        type={type}
         onBlur={onChange}
       />
       {!isError ? (

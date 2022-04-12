@@ -18,16 +18,30 @@ const inputOptionMap = {
     defaultValue: '',
   },
   password: {
-    validateFunc: () => ({ valid: false, message: '請輸入8 至20 碼' }),
+    validateFunc: (context) => {
+      if (!string().min(8).max(20).required().isValidSync(context.value)) {
+        return { valid: false, message: '請輸入8 至20 碼' };
+      }
+
+      return { valid: true, message: '' };
+    },
     label: '密碼',
     helpText: '不限種類8 至20 碼',
     defaultValue: '',
+    type: 'password',
   },
   confirmPassword: {
-    validateFunc: () => ({ valid: false, message: '請重複輸入密碼' }),
+    validateFunc: (context) => {
+      if (context.value !== context.otherFieldValues.password) {
+        return { valid: false, message: '與密碼不同' };
+      }
+
+      return { valid: true, message: '' };
+    },
     label: '確認密碼',
     helpText: '重複輸入密碼',
     defaultValue: '',
+    type: 'password',
   },
 };
 
