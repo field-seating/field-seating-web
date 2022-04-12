@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useMachine } from '@xstate/react';
-import { Box, Grid, Heading } from '@chakra-ui/react';
+import { Box, Grid } from '@chakra-ui/react';
 
 import Button from 'components/ui/Button';
 import useSnackbar from 'components/ui/Snackbar';
@@ -54,8 +54,6 @@ const LoginForm = () => {
           {'登入'}
         </Button>
       </Box>
-      <Heading>{token}</Heading>
-      <Heading>{globalErrorMsg}</Heading>
     </>
   );
 };
