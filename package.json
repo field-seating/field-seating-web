@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -p 8000",
     "build": "next build",
+    "build:analize": "ANALYZE=true next build",
     "start": "next start -p 8000",
     "lint": "next lint",
     "test": "jest",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@chakra-ui/storybook-addon": "^1.0.3",
+    "@next/bundle-analyzer": "^12.1.4",
     "@storybook/addon-actions": "^6.4.19",
     "@storybook/addon-essentials": "^6.4.19",
     "@storybook/addon-interactions": "^6.4.19",
