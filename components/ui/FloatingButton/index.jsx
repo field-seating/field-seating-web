@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-const FloatingActionButton = props => (
+const FloatingActionButton = (props) => (
   <Button
     {...props}
     px={5}

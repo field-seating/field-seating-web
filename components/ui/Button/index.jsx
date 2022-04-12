@@ -4,7 +4,7 @@ import OutlineButton from './OutlineButton';
 import GhostButton from './GhostButton';
 import LinkButton from './LinkButton';
 
-const getButtonComp = variant => {
+const getButtonComp = (variant) => {
   switch (variant) {
     case 'outline':
       return OutlineButton;
@@ -18,10 +18,10 @@ const getButtonComp = variant => {
   }
 };
 
-const Button = ({ variant, ...props }) => {
+const Button = ({ isDisabled, onClick, variant, ...props }) => {
   const Comp = getButtonComp(variant);
 
-  return <Comp {...props} />;
+  return <Comp onClick={onClick} isDisabled={isDisabled} {...props} />;
 };
 
 export default Button;

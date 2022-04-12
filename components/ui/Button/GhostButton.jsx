@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-const GhostButton = props => (
+const GhostButton = (props) => (
   <Button
     {...props}
     bg="surface"

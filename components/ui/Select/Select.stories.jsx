@@ -16,7 +16,7 @@ const story = {
 
 export default story;
 
-export const Main = args => (
+export const Main = (args) => (
   <Select {...args}>
     <option value="option1">Option 1</option>
     <option value="option2">Option 2</option>

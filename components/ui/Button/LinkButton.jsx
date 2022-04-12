@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-const LinkButton = props => (
+const LinkButton = (props) => (
   <Button
     {...props}
     bg="surface"

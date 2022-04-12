@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-const getStyle = size => {
+const getStyle = (size) => {
   switch (size) {
     case 'sm':
       return {
@@ -19,7 +19,7 @@ const getStyle = size => {
   }
 };
 
-const FloatingIconButton = props => (
+const FloatingIconButton = (props) => (
   <Button
     {...props}
     bg="primary.light"

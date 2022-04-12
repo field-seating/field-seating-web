@@ -1,6 +1,6 @@
 import { Button } from '@chakra-ui/react';
 
-const OutlineButton = props => (
+const OutlineButton = (props) => (
   <Button
     {...props}
     bg="surface"

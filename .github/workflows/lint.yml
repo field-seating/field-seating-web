@@ -20,4 +20,3 @@ jobs:
 
       - name: lint
         run: npm run lint
-
