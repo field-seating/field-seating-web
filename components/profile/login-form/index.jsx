@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
-import { useMachine } from '@xstate/react';
+import React, { useContext, useCallback, useEffect } from 'react';
+import { useActor, useMachine } from '@xstate/react';
 import { Box, Grid } from '@chakra-ui/react';
 
 import Button from 'components/ui/Button';
 import useSnackbar from 'components/ui/Snackbar';
+import { GlobalStateContext } from 'lib/contexts/globalState';
+import { set as setToken } from 'lib/storage/token';
 
 import Field from './Field';
 import machine from './machine';
@@ -17,6 +19,8 @@ const LoginForm = () => {
   const { email: emailActor, password: passwordActor } =
     current.context.inputRefs;
 
+  const { authService } = useContext(GlobalStateContext);
+  const [, sendToAuthService] = useActor(authService);
   const snackbar = useSnackbar();
 
   const globalErrorMsg = current.context.globalErrorMsg;
@@ -31,9 +35,11 @@ const LoginForm = () => {
 
   useEffect(() => {
     if (token) {
-      snackbar({ text: token });
+      setToken(token);
+      snackbar({ text: '已發送認證信' });
+      sendToAuthService('SIGNIN');
     }
-  }, [snackbar, token]);
+  }, [snackbar, token, sendToAuthService]);
 
   return (
     <>
