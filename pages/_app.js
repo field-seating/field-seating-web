@@ -1,7 +1,8 @@
 import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
-//import { inspect } from '@xstate/inspect';
 
+//import { inspect } from '@xstate/inspect';
+import GlobalStateContext from 'lib/contexts/globalState';
 import AppLayout from 'components/layout/AppLayout';
 import theme from 'lib/theme/customTheme';
 
@@ -16,7 +17,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ChakraProvider theme={theme}>
-      <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
+      <GlobalStateContext.Provider>
+        <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
+      </GlobalStateContext.Provider>
     </ChakraProvider>
   );
 }
