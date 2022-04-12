@@ -13,7 +13,8 @@ const inputOptionMap = {
       };
     },
     label: '電子信箱',
-    helpText: '以接收認證信',
+    helpText: '請確認可接收認證信',
+    placeholder: '輸入信箱',
     defaultValue: '',
   },
   password: {
