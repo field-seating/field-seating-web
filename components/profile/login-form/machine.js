@@ -1,6 +1,7 @@
 import { string } from 'yup';
 
 import formMachineCreator from 'lib/machines/form';
+import signIn from 'lib/fetch/auth/signin';
 
 const inputOptionMap = {
   email: {
@@ -30,26 +31,17 @@ const inputOptionMap = {
     defaultValue: '',
     type: 'password',
   },
-  confirmPassword: {
-    validateFunc: (context) => {
-      if (context.value !== context.otherFieldValues.password) {
-        return { valid: false, message: '與密碼不同' };
-      }
-
-      return { valid: true, message: '' };
-    },
-    label: '確認密碼',
-    helpText: '重複輸入密碼',
-    defaultValue: '',
-    type: 'password',
-  },
 };
 
 const machine = formMachineCreator({ machineId: 'login-form' })(
   inputOptionMap
 ).withConfig({
   services: {
-    postRequest: () => Promise.resolve('success'),
+    postRequest: (context) => {
+      const email = context.inputRefs.email.getSnapshot().context.value;
+      const password = context.inputRefs.password.getSnapshot().context.value;
+      return signIn(email, password);
+    },
   },
 });
 
