@@ -17,6 +17,7 @@ const inputOptionMap = {
     helpText: '請確認可接收認證信',
     placeholder: '輸入信箱',
     defaultValue: '',
+    type: 'email',
   },
   password: {
     validateFunc: (context) => {
