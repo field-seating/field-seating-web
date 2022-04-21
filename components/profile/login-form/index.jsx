@@ -7,8 +7,8 @@ import Button from 'components/ui/Button';
 import Link from 'components/ui/Link';
 import useSnackbar from 'components/ui/Snackbar';
 import { set as setToken } from 'lib/storage/token';
+import Field from 'components/InputActorField';
 
-import Field from './Field';
 import machine from './machine';
 
 const LoginForm = () => {

@@ -8,7 +8,7 @@ import Button from 'components/ui/Button';
 import Link from 'components/ui/Link';
 import useSnackbar from 'components/ui/Snackbar';
 
-import Field from './Field';
+import Field from 'components/InputActorField';
 import machine from './machine';
 
 const RegisterForm = () => {
@@ -45,7 +45,7 @@ const RegisterForm = () => {
   useEffect(() => {
     if (!isNil(responseData)) {
       snackbar({ text: '註冊成功，已寄出認證信' });
-      router.reload();
+      router.push('/profile');
     }
   }, [snackbar, responseData, router]);
 
