@@ -14,21 +14,19 @@ const inputOptionMap = {
       };
     },
     label: '電子信箱',
-    helpText: '請確認可接收認證信',
-    placeholder: '輸入信箱',
+    placeholder: 'mail@featseating.com',
     defaultValue: '',
     type: 'email',
   },
   password: {
     validateFunc: (context) => {
       if (!string().min(8).max(20).required().isValidSync(context.value)) {
-        return { valid: false, message: '請輸入8 至20 碼' };
+        return { valid: false, message: '密碼格式不符' };
       }
 
       return { valid: true, message: '' };
     },
     label: '密碼',
-    helpText: '不限種類8 至20 碼',
     defaultValue: '',
     type: 'password',
   },
