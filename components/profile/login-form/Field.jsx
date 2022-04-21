@@ -33,10 +33,9 @@ const Field = ({ actor }) => {
     state.context;
 
   return (
-    <FormControl isInvalid={isError}>
-      <FormLabel htmlFor={id}>{label}</FormLabel>
+    <FormControl id={id} isInvalid={isError}>
+      <FormLabel>{label}</FormLabel>
       <TextField
-        id={id}
         defaultValue={value}
         placeholder={placeholder}
         type={type}
