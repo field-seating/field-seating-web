@@ -1,10 +1,10 @@
-import React, { useContext, useCallback, useEffect } from 'react';
-import { useActor, useMachine } from '@xstate/react';
+import React, { useCallback, useEffect } from 'react';
+import { useMachine } from '@xstate/react';
 import { Box, Grid } from '@chakra-ui/react';
+import Router from 'next/router';
 
 import Button from 'components/ui/Button';
 import useSnackbar from 'components/ui/Snackbar';
-import { GlobalStateContext } from 'lib/contexts/globalState';
 import { set as setToken } from 'lib/storage/token';
 
 import Field from './Field';
@@ -23,8 +23,6 @@ const LoginForm = () => {
   const { email: emailActor, password: passwordActor } =
     current.context.inputRefs;
 
-  const { authService } = useContext(GlobalStateContext);
-  const [, sendToAuthService] = useActor(authService);
   const snackbar = useSnackbar();
 
   const globalErrorMsg = current.context.globalErrorMsg;
@@ -42,9 +40,9 @@ const LoginForm = () => {
     if (token) {
       setToken(token);
       snackbar({ text: '成功登入' });
-      sendToAuthService('SIGNIN');
+      Router.reload();
     }
-  }, [snackbar, token, sendToAuthService]);
+  }, [snackbar, token]);
 
   return (
     <>

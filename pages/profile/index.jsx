@@ -1,40 +1,22 @@
-import { useContext } from 'react';
 import Head from 'next/head';
-import { useSelector } from '@xstate/react';
-import { Box, Heading } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
-import LoginForm from 'components/profile/login-form';
-import { GlobalStateContext } from 'lib/contexts/globalState';
-
-const matchLogin = (state) => state.matches('login');
-const matchSetup = (state) => state.matches('setup');
+import useAuth from 'lib/hooks/userAuth';
 
 const ProfilePage = () => {
-  const { authService } = useContext(GlobalStateContext);
+  const { isReady } = useAuth('profile/sign-in');
 
-  const isLogin = useSelector(authService, matchLogin);
-  const isSetup = useSelector(authService, matchSetup);
+  let content = null;
 
-  let content = (
-    <Box display="flex" flexDir="column" px={[4, 16]} py={4}>
-      <Box h={90}>
-        <Heading as="h2" size="lg" color="onSurface.main">
-          {`你好，歡迎加入`}
-        </Heading>
+  if (isReady) {
+    content = (
+      <Box display="flex" flexDir="column" px={[4, 16]} py={4}>
+        LOGINNNNN
       </Box>
-      <Box display="flex" flexDir="column">
-        <LoginForm />
-      </Box>
-    </Box>
-  );
-
-  if (isSetup) {
-    content = null;
+    );
   }
 
-  if (isLogin) {
-    content = <Box>LOGINNNNN</Box>;
-  }
+  console.log('ProfilePage.isReady', isReady);
 
   return (
     <>
