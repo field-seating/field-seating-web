@@ -1,6 +1,7 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
 import LoginForm from 'components/profile/login-form';
+import ProfileHeader from 'components/profile/ProfileHeader';
 import useAuth from 'lib/hooks/userAuth';
 
 const SignInPage = () => {
@@ -9,19 +10,14 @@ const SignInPage = () => {
   return (
     <>
       {isAnonymous && (
-        <Box display="flex" flexDir="column" px={[4, 16]} py={4}>
-          <Box h={90}>
-            <Heading as="h2" size="lg" color="onSurface.main">
-              {`你好，歡迎加入`}
-            </Heading>
-          </Box>
-          <Box display="flex" flexDir="column">
-            <LoginForm />
-          </Box>
+        <Box display="flex" flexDir="column">
+          <LoginForm />
         </Box>
       )}
     </>
   );
 };
+
+SignInPage.getLayout = (children) => <ProfileHeader>{children}</ProfileHeader>;
 
 export default SignInPage;
