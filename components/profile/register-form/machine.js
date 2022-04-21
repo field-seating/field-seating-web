@@ -19,7 +19,7 @@ const inputOptionMap = {
     },
     label: '使用者名稱',
     helpText: '作為顯示使用',
-    placeholder: '',
+    placeholder: 'GoCobras',
     defaultValue: '',
   },
   email: {
@@ -33,7 +33,7 @@ const inputOptionMap = {
     },
     label: '電子信箱',
     helpText: '請確認可接收認證信',
-    placeholder: '輸入信箱',
+    placeholder: 'mail@fieldtseating.com',
     defaultValue: '',
   },
   password: {

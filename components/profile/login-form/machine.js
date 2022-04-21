@@ -14,7 +14,7 @@ const inputOptionMap = {
       };
     },
     label: '電子信箱',
-    placeholder: 'mail@featseating.com',
+    placeholder: 'mail@fieldtseating.com',
     defaultValue: '',
     type: 'email',
   },

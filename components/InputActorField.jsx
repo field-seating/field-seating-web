@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { FormControl } from '@chakra-ui/react';
 import { useActor } from '@xstate/react';
+import { debounce } from 'throttle-debounce';
 
 import TextField from 'components/ui/TextField';
 import FormErrorMessage from 'components/ui/FormErrorMessage';
@@ -9,7 +10,7 @@ import FormLabel from 'components/ui/FormLabel';
 
 const Field = ({ actor }) => {
   const [state, send] = useActor(actor);
-  const onBlur = useCallback(
+  const onChange = useCallback(
     (evt) => {
       const { value } = evt.target;
       send({ type: 'CHANGE', value });
@@ -39,7 +40,8 @@ const Field = ({ actor }) => {
         defaultValue={value}
         placeholder={placeholder}
         type={type}
-        onBlur={onBlur}
+        onBlur={onChange}
+        onChange={debounce(1000, onChange)}
         onKeyDown={onKeyDown}
       />
       {!isError ? (
