@@ -28,7 +28,7 @@ const LoginForm = () => {
   const snackbar = useSnackbar();
 
   const globalErrorMsg = current.context.globalErrorMsg;
-  const token = current.context?.responseData?.data?.token;
+  const token = current.context?.responseData?.token;
   const isIdle = current.matches('idle');
   const isLoading = current.matches('loading');
 
@@ -41,7 +41,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (token) {
       setToken(token);
-      snackbar({ text: '已發送認證信' });
+      snackbar({ text: '成功登入' });
       sendToAuthService('SIGNIN');
     }
   }, [snackbar, token, sendToAuthService]);
