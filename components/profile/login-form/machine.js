@@ -14,13 +14,13 @@ const inputOptionMap = {
       };
     },
     label: '電子信箱',
-    placeholder: 'mail@featseating.com',
+    placeholder: 'mail@fieldtseating.com',
     defaultValue: '',
     type: 'email',
   },
   password: {
     validateFunc: (context) => {
-      if (!string().min(8).max(20).required().isValidSync(context.value)) {
+      if (!string().min(8).max(30).required().isValidSync(context.value)) {
         return { valid: false, message: '密碼格式不符' };
       }
 

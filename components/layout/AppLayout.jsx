@@ -1,9 +1,11 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
 import BottomNavigation from '../BottomNavigation';
+import DefaultHead from './DefaultHead';
 
 const AppLayout = ({ children }) => (
   <Box>
+    <DefaultHead />
     <Box as="main" pb="56px">
       {children}
     </Box>

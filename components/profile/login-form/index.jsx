@@ -1,13 +1,14 @@
-import React, { useContext, useCallback, useEffect } from 'react';
-import { useActor, useMachine } from '@xstate/react';
+import React, { useCallback, useEffect } from 'react';
+import { useMachine } from '@xstate/react';
 import { Box, Grid } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 import Button from 'components/ui/Button';
+import Link from 'components/ui/Link';
 import useSnackbar from 'components/ui/Snackbar';
-import { GlobalStateContext } from 'lib/contexts/globalState';
 import { set as setToken } from 'lib/storage/token';
+import Field from 'components/InputActorField';
 
-import Field from './Field';
 import machine from './machine';
 
 const LoginForm = () => {
@@ -23,12 +24,11 @@ const LoginForm = () => {
   const { email: emailActor, password: passwordActor } =
     current.context.inputRefs;
 
-  const { authService } = useContext(GlobalStateContext);
-  const [, sendToAuthService] = useActor(authService);
   const snackbar = useSnackbar();
+  const router = useRouter();
 
   const globalErrorMsg = current.context.globalErrorMsg;
-  const token = current.context?.responseData?.data?.token;
+  const token = current.context?.responseData?.token;
   const isIdle = current.matches('idle');
   const isLoading = current.matches('loading');
 
@@ -41,10 +41,10 @@ const LoginForm = () => {
   useEffect(() => {
     if (token) {
       setToken(token);
-      snackbar({ text: '已發送認證信' });
-      sendToAuthService('SIGNIN');
+      snackbar({ text: '成功登入' });
+      router.reload();
     }
-  }, [snackbar, token, sendToAuthService]);
+  }, [snackbar, token, router]);
 
   return (
     <>
@@ -53,7 +53,7 @@ const LoginForm = () => {
           <Field actor={emailActor} />
           <Field actor={passwordActor} />
           <Box display="flex" justifyContent="flex-end">
-            <Button variant="link">{'前往註冊'}</Button>
+            <Link href="/profile/sign-up">{'前往註冊'}</Link>
           </Box>
         </Grid>
         <Box display="flex" mt={10} justifyContent="flex-end">
