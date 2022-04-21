@@ -1,8 +1,27 @@
 import { string } from 'yup';
 
 import formMachineCreator from 'lib/machines/form';
+import signUp from 'lib/fetch/users/signup';
 
 const inputOptionMap = {
+  name: {
+    validateFunc: (context) => {
+      const valid = string()
+        .required()
+        .min(1)
+        .max(20)
+        .isValidSync(context.value);
+
+      return {
+        valid,
+        message: '名稱不可超過20 字元',
+      };
+    },
+    label: '使用者名稱',
+    helpText: '作為顯示使用',
+    placeholder: '',
+    defaultValue: '',
+  },
   email: {
     validateFunc: (context) => {
       const valid = string().required().email().isValidSync(context.value);
@@ -19,14 +38,14 @@ const inputOptionMap = {
   },
   password: {
     validateFunc: (context) => {
-      if (!string().min(8).max(20).required().isValidSync(context.value)) {
-        return { valid: false, message: '請輸入8 至20 碼' };
+      if (!string().min(8).max(30).required().isValidSync(context.value)) {
+        return { valid: false, message: '請輸入8 至30 碼' };
       }
 
       return { valid: true, message: '' };
     },
     label: '密碼',
-    helpText: '不限種類8 至20 碼',
+    helpText: '不限種類8 至30 碼',
     defaultValue: '',
     type: 'password',
   },
@@ -45,11 +64,16 @@ const inputOptionMap = {
   },
 };
 
-const machine = formMachineCreator({ machineId: 'login-form' })(
+const machine = formMachineCreator({ machineId: 'signup-form' })(
   inputOptionMap
 ).withConfig({
   services: {
-    postRequest: () => Promise.resolve('success'),
+    postRequest: (context) => {
+      const name = context.inputRefs.name.getSnapshot().context.value;
+      const email = context.inputRefs.email.getSnapshot().context.value;
+      const password = context.inputRefs.password.getSnapshot().context.value;
+      return signUp(name, email, password);
+    },
   },
 });
 

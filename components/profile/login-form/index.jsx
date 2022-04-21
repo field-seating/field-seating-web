@@ -4,6 +4,7 @@ import { Box, Grid } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import Button from 'components/ui/Button';
+import Link from 'components/ui/Link';
 import useSnackbar from 'components/ui/Snackbar';
 import { set as setToken } from 'lib/storage/token';
 
@@ -52,7 +53,7 @@ const LoginForm = () => {
           <Field actor={emailActor} />
           <Field actor={passwordActor} />
           <Box display="flex" justifyContent="flex-end">
-            <Button variant="link">{'前往註冊'}</Button>
+            <Link href="/profile/sign-up">{'前往註冊'}</Link>
           </Box>
         </Grid>
         <Box display="flex" mt={10} justifyContent="flex-end">

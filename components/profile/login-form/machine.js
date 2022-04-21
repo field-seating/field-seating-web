@@ -20,7 +20,7 @@ const inputOptionMap = {
   },
   password: {
     validateFunc: (context) => {
-      if (!string().min(8).max(20).required().isValidSync(context.value)) {
+      if (!string().min(8).max(30).required().isValidSync(context.value)) {
         return { valid: false, message: '密碼格式不符' };
       }
 
