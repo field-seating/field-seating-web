@@ -1,42 +1,26 @@
 import { Box, IconButton } from '@chakra-ui/react';
-import { CloudUpload, Search, Inventory, Person } from '@mui/icons-material';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
+import { defaultTo, prop, find, compose } from 'ramda';
 
-const tabList = [
-  {
-    id: 'lookup',
-    label: '查詢',
-    Icon: Search,
-    route: '/',
-  },
-  {
-    id: 'upload',
-    label: '上傳',
-    Icon: CloudUpload,
-    route: '/upload',
-  },
-  {
-    id: 'inventory',
-    label: '收藏',
-    Icon: Inventory,
-    route: '/inventory',
-  },
-  {
-    id: 'profile',
-    label: '檔案',
-    Icon: Person,
-    route: '/profile',
-  },
-];
+import { tabList } from 'lib/constants/route';
+import matchRoute from 'lib/utils/match-route';
 
 const BottomNavigation = () => {
   const router = useRouter();
-  const pathname = router.pathname;
+
+  console.log(router.pathname);
+  const findFunc = compose(
+    matchRoute({ exact: false })(router),
+    prop('pathname')
+  );
+  const matchFunc = compose(prop('id'), defaultTo({}), find(findFunc));
+
+  const matchId = matchFunc(tabList);
   return (
     <Box as="nav" display="flex">
       {tabList.map((tab) => (
-        <NextLink key={tab.id} href={tab.route} passHref>
+        <NextLink key={tab.id} href={tab.pathname} passHref>
           <IconButton
             as="a"
             flex="1"
@@ -56,7 +40,7 @@ const BottomNavigation = () => {
             h="56px"
             bg="primary.main"
             color="onPrimary.transparent"
-            isActive={tab.route === pathname}
+            isActive={tab.id === matchId}
           />
         </NextLink>
       ))}
