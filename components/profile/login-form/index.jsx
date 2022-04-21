@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 import { Box, Grid } from '@chakra-ui/react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 import Button from 'components/ui/Button';
 import useSnackbar from 'components/ui/Snackbar';
@@ -24,6 +24,7 @@ const LoginForm = () => {
     current.context.inputRefs;
 
   const snackbar = useSnackbar();
+  const router = useRouter();
 
   const globalErrorMsg = current.context.globalErrorMsg;
   const token = current.context?.responseData?.token;
@@ -40,9 +41,9 @@ const LoginForm = () => {
     if (token) {
       setToken(token);
       snackbar({ text: '成功登入' });
-      Router.reload();
+      router.reload();
     }
-  }, [snackbar, token]);
+  }, [snackbar, token, router]);
 
   return (
     <>
