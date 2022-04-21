@@ -69,7 +69,7 @@ const RegisterForm = () => {
             type="submit"
             size="lg"
           >
-            {'登入'}
+            {'確定註冊'}
           </Button>
         </Box>
       </form>
