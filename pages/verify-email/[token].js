@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
-import { useMachine } from '@xstate/react';
-
+import { useMachine, useActor } from '@xstate/react';
 import { Box, Heading, Spinner, Text } from '@chakra-ui/react';
+
 import useSnackbar from 'components/ui/snackbar';
+import { GlobalStateContext } from 'lib/contexts/globalState';
 
 import machine from './machine';
 
@@ -40,11 +41,15 @@ const VerifyEmailTokenPage = () => {
   const router = useRouter();
   const [current, send, service] = useMachine(machine);
   const snackbar = useSnackbar();
+  const { authService } = useContext(GlobalStateContext);
+  const [, sendToAuthService] = useActor(authService);
 
   const { token } = router.query;
 
   useEffect(() => {
-    send({ type: 'VERIFY', token });
+    if (token) {
+      send({ type: 'VERIFY', token });
+    }
   }, [token, send]);
 
   useEffect(() => {
@@ -53,13 +58,14 @@ const VerifyEmailTokenPage = () => {
         snackbar({ text: state.context.globalErrorMsg, variant: 'error' });
       }
       if (state.matches('success')) {
+        sendToAuthService('SIGNIN');
+
         router.push('/profile');
-        router.reload();
       }
     });
 
     return subscription.unsubscribe;
-  }, [service, router, snackbar]);
+  }, [service, router, snackbar, sendToAuthService]);
 
   const element = getElement(current);
 

@@ -47,6 +47,7 @@ const verifyEmailMachine = createMachine(
     },
     services: {
       verifyEmail: async (context, event) => {
+        console.log({ event });
         await verfiyEmail(event.token);
       },
     },
