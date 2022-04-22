@@ -3,10 +3,10 @@ import { FormControl } from '@chakra-ui/react';
 import { useActor } from '@xstate/react';
 import { debounce } from 'throttle-debounce';
 
-import TextField from 'components/ui/TextField';
-import FormErrorMessage from 'components/ui/FormErrorMessage';
-import FormHelperText from 'components/ui/FormHelperText';
-import FormLabel from 'components/ui/FormLabel';
+import TextField from 'components/ui/text-field';
+import FormErrorMessage from 'components/ui/form-error-message';
+import FormHelperText from 'components/ui/form-helper-text';
+import FormLabel from 'components/ui/form-label';
 
 const Field = ({ actor }) => {
   const [state, send] = useActor(actor);

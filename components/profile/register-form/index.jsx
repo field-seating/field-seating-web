@@ -8,7 +8,7 @@ import Button from 'components/ui/button';
 import Link from 'components/ui/link';
 import useSnackbar from 'components/ui/snackbar';
 
-import Field from 'components/InputActorField';
+import Field from 'components/input-actor-field';
 import machine from './machine';
 
 const RegisterForm = () => {
