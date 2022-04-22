@@ -14,7 +14,15 @@ const getBg = (variant) => {
 };
 
 const Snackbar = ({ children, variant }) => (
-  <Box mb="56px" bg={getBg(variant)} w="100vw" p={4} boxShadow="xl">
+  <Box
+    mb="56px"
+    bg={getBg(variant)}
+    w="100vw"
+    p={4}
+    boxShadow="xl"
+    display="flex"
+    justifyContent="center"
+  >
     <Text color="onSecondary.main">{children}</Text>
   </Box>
 );
@@ -28,15 +36,25 @@ Snackbar.propTypes = {
   variant: PropTypes.oneOf(['solid', 'error']),
 };
 
-const useSnackbar = () => {
+const defaultProps = {
+  duration: 3000,
+};
+
+const useSnackbar = (props = {}) => {
+  const { duration } = { ...defaultProps, ...props };
+
   const toast = useToast();
   const func = useCallback(
     ({ text, variant }) =>
       toast({
-        duration: 3000,
+        duration,
+        containerStyle: {
+          margin: 0,
+          maxWidth: 'none',
+        },
         render: () => <Snackbar variant={variant}>{text}</Snackbar>,
       }),
-    [toast]
+    [toast, duration]
   );
 
   return func;

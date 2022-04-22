@@ -22,7 +22,7 @@ const story = {
 export default story;
 
 export const Main = (args) => {
-  const snackbar = useSnackbar();
+  const snackbar = useSnackbar({ duration: null });
 
   return <Button onClick={() => snackbar(args)}>trigger</Button>;
 };
