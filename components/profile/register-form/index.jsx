@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import { isNil } from 'ramda';
 
 import Button from 'components/ui/button';
-import Link from 'components/ui/Link';
-import useSnackbar from 'components/ui/Snackbar';
+import Link from 'components/ui/link';
+import useSnackbar from 'components/ui/snackbar';
 
 import Field from 'components/InputActorField';
 import machine from './machine';
