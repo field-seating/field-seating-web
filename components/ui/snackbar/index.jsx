@@ -14,7 +14,7 @@ const getBg = (variant) => {
 };
 
 const Snackbar = ({ children, variant }) => (
-  <Box mb="56px" bg={getBg(variant)} w={['100%']} p={4} boxShadow="xl">
+  <Box mb="56px" bg={getBg(variant)} w="100vw" p={4} boxShadow="xl">
     <Text color="onSecondary.main">{children}</Text>
   </Box>
 );
