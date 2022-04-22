@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 
 import LoginForm from 'components/profile/login-form';
 import ProfileHeader from 'components/profile/profile-header';
-import useAuth from 'lib/hooks/userAuth';
+import useAuth from 'lib/hooks/user-auth';
 
 const SignInPage = () => {
   const { isAnonymous } = useAuth('/profile', false);

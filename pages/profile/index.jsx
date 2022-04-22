@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 
-import useAuth from 'lib/hooks/userAuth';
+import useAuth from 'lib/hooks/user-auth';
 import ProfileHeader from 'components/profile/profile-header';
 import FunctionList from 'components/profile/function-list';
 

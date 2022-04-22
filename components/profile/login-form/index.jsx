@@ -3,7 +3,7 @@ import { useMachine } from '@xstate/react';
 import { Box, Grid } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-import Button from 'components/ui/Button';
+import Button from 'components/ui/button';
 import Link from 'components/ui/Link';
 import useSnackbar from 'components/ui/Snackbar';
 import { set as setToken } from 'lib/storage/token';
