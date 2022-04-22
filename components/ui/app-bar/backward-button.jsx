@@ -1,21 +1,41 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { Box } from '@chakra-ui/react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
+import { IconButton } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { isNil } from 'ramda';
 
 const BaseUI = forwardRef(({ role, as, href, onClick }, ref) => (
-  <Box as={as} onClick={onClick} href={href} ref={ref} role={role}>
-    <ArrowBackIcon w="24px" h="24px" />
-  </Box>
+  <IconButton
+    display="flex"
+    alignItems="center"
+    as={as}
+    onClick={onClick}
+    href={href}
+    ref={ref}
+    role={role}
+    variant="unstyled"
+    aria-label="back"
+    icon={<ArrowBackIcon w="24px" h="24px" />}
+    _hover={{
+      bg: 'primary.main',
+    }}
+    _active={{
+      bg: 'primary.dark',
+    }}
+    _focus={{
+      boxShadow: undefined,
+    }}
+  />
 ));
 
 BaseUI.displayName = 'BaseUI';
 
 const LinkItem = ({ href, onClick }) => (
-  <NextLink href={href} passHref>
-    <BaseUI onClick={onClick} as="a" role="link" />
+  <NextLink href={href}>
+    <a>
+      <BaseUI onClick={onClick} role="link" />
+    </a>
   </NextLink>
 );
 

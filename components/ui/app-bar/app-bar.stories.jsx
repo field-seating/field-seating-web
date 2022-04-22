@@ -21,18 +21,23 @@ const story = {
       control: 'boolean',
       defaultValue: true,
     },
+    hasMenu: {
+      control: 'boolean',
+      defaultValue: true,
+    },
   },
 };
 
 export default story;
 
-export const Main = ({ title, type, hasBackward }) => {
+export const Main = ({ title, type, hasBackward, hasMenu }) => {
   if (type === 'link') {
     return (
       <Box width="400px" shadow="outline">
         <AppBar
           title={title}
           hasBackward={Boolean(hasBackward)}
+          hasMenu={Boolean(hasMenu)}
           backHref="#"
           onBack={() => console.log('on back')}
         />
@@ -45,6 +50,7 @@ export const Main = ({ title, type, hasBackward }) => {
       <AppBar
         title={title}
         hasBackward={Boolean(hasBackward)}
+        hasMenu={Boolean(hasMenu)}
         onBack={() => console.log('on back')}
       />
     </Box>
