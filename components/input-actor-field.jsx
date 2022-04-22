@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { FormControl } from '@chakra-ui/react';
+import { FormControl, Box } from '@chakra-ui/react';
 import { useActor } from '@xstate/react';
 import { debounce } from 'throttle-debounce';
 
@@ -44,11 +44,13 @@ const Field = ({ actor }) => {
         onChange={debounce(1000, onChange)}
         onKeyDown={onKeyDown}
       />
-      {!isError ? (
-        <FormHelperText>{helpText}</FormHelperText>
-      ) : (
-        <FormErrorMessage>{errorMsg}</FormErrorMessage>
-      )}
+      <Box h={4}>
+        {!isError ? (
+          <FormHelperText>{helpText}</FormHelperText>
+        ) : (
+          <FormErrorMessage>{errorMsg}</FormErrorMessage>
+        )}
+      </Box>
     </FormControl>
   );
 };
