@@ -1,7 +1,8 @@
 import { Box } from '@chakra-ui/react';
 
-import useAuth from 'lib/hooks/userAuth';
-import ProfileHeader from 'components/profile/ProfileHeader';
+import useAuth from 'lib/hooks/user-auth';
+import ProfileHeader from 'components/profile/profile-header';
+import FunctionList from 'components/profile/function-list';
 
 const ProfilePage = () => {
   const { isLoggedIn } = useAuth('/profile/sign-in');
@@ -9,8 +10,8 @@ const ProfilePage = () => {
   return (
     <>
       {isLoggedIn && (
-        <Box display="flex" flexDir="column">
-          LOGIN
+        <Box>
+          <FunctionList />
         </Box>
       )}
     </>

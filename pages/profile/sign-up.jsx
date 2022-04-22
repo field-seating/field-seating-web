@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 
 import RegisterForm from 'components/profile/register-form';
-import useAuth from 'lib/hooks/userAuth';
+import useAuth from 'lib/hooks/user-auth';
 
 const SignUpPage = () => {
   const { isAnonymous } = useAuth('/profile', false);

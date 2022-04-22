@@ -4,11 +4,11 @@ import { Box, Grid } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { isNil } from 'ramda';
 
-import Button from 'components/ui/Button';
-import Link from 'components/ui/Link';
-import useSnackbar from 'components/ui/Snackbar';
+import Button from 'components/ui/button';
+import Link from 'components/ui/link';
+import useSnackbar from 'components/ui/snackbar';
 
-import Field from 'components/InputActorField';
+import Field from 'components/input-actor-field';
 import machine from './machine';
 
 const RegisterForm = () => {
@@ -58,7 +58,9 @@ const RegisterForm = () => {
           <Field actor={passwordActor} />
           <Field actor={confirmPasswordActor} />
           <Box display="flex" justifyContent="flex-end">
-            <Link href="/profile/sign-in">{'前往登入'}</Link>
+            <Link size="md" href="/profile/sign-in">
+              {'前往登入'}
+            </Link>
           </Box>
         </Grid>
         <Box display="flex" mt={10} justifyContent="flex-end">

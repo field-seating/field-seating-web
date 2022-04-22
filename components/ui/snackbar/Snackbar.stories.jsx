@@ -1,7 +1,7 @@
 import React from 'react';
 
 import useSnackbar from './';
-import Button from '../Button';
+import Button from '../button';
 
 const story = {
   title: 'Snackbar',

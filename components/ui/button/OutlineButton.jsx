@@ -3,7 +3,7 @@ import { Button } from '@chakra-ui/react';
 const OutlineButton = (props) => (
   <Button
     {...props}
-    bg="surface"
+    bg="surface.main"
     color="primary.main"
     variant="outline"
     borderColor="onSurface.gray"

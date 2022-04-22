@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
-import { useMachine } from '@xstate/react';
+import React, { useCallback, useEffect, useContext } from 'react';
+import { useMachine, useActor } from '@xstate/react';
 import { Box, Grid } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
-import Button from 'components/ui/Button';
-import Link from 'components/ui/Link';
-import useSnackbar from 'components/ui/Snackbar';
+import { GlobalStateContext } from 'lib/contexts/globalState';
+import Button from 'components/ui/button';
+import Link from 'components/ui/link';
+import useSnackbar from 'components/ui/snackbar';
 import { set as setToken } from 'lib/storage/token';
-import Field from 'components/InputActorField';
+import Field from 'components/input-actor-field';
 
 import machine from './machine';
 
@@ -27,6 +28,9 @@ const LoginForm = () => {
   const snackbar = useSnackbar();
   const router = useRouter();
 
+  const { authService } = useContext(GlobalStateContext);
+  const [, sendToAuthService] = useActor(authService);
+
   const globalErrorMsg = current.context.globalErrorMsg;
   const token = current.context?.responseData?.token;
   const isIdle = current.matches('idle');
@@ -42,9 +46,9 @@ const LoginForm = () => {
     if (token) {
       setToken(token);
       snackbar({ text: '成功登入' });
-      router.reload();
+      sendToAuthService('SIGNIN');
     }
-  }, [snackbar, token, router]);
+  }, [snackbar, token, router, sendToAuthService]);
 
   return (
     <>
@@ -53,7 +57,9 @@ const LoginForm = () => {
           <Field actor={emailActor} />
           <Field actor={passwordActor} />
           <Box display="flex" justifyContent="flex-end">
-            <Link href="/profile/sign-up">{'前往註冊'}</Link>
+            <Link size="md" href="/profile/sign-up">
+              {'前往註冊'}
+            </Link>
           </Box>
         </Grid>
         <Box display="flex" mt={10} justifyContent="flex-end">

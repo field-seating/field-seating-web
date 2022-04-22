@@ -6,6 +6,10 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const nextConfig = {
+  i18n: {
+    locales: ['zh-Hant'],
+    defaultLocale: 'zh-Hant',
+  },
   reactStrictMode: true,
   serverRuntimeConfig: {},
   experimental: {

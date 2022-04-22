@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box } from '@chakra-ui/react';
-import BottomNavigation from '../BottomNavigation';
-import DefaultHead from './DefaultHead';
+import BottomNavigation from '../bottom-navigation';
+import DefaultHead from './default-head';
 
 const AppLayout = ({ children }) => (
   <Box>
