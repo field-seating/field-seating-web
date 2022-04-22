@@ -5,9 +5,24 @@ import PropTypes from 'prop-types';
 
 import { Link as ChakraLink } from '@chakra-ui/react';
 
-const Link = ({ children, isExternal, href }) => (
+const getFontSize = (size) => {
+  switch (size) {
+    case 'xs':
+      return '12px';
+    case 'md':
+      return '16px';
+    case 'lg':
+      return '18px';
+    case 'sm':
+    default:
+      return '14px';
+  }
+};
+
+const Link = ({ children, isExternal, href, size }) => (
   <NextLink href={href} passHref>
     <ChakraLink
+      fontSize={getFontSize(size)}
       isExternal={isExternal}
       color="primary.light"
       variant="link"
@@ -29,6 +44,7 @@ Link.propTypes = {
   children: PropTypes.node,
   href: PropTypes.string,
   isExternal: PropTypes.bool,
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
 };
 
 Link.defaultProps = {

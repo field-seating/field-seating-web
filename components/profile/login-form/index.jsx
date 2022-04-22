@@ -57,7 +57,9 @@ const LoginForm = () => {
           <Field actor={emailActor} />
           <Field actor={passwordActor} />
           <Box display="flex" justifyContent="flex-end">
-            <Link href="/profile/sign-up">{'前往註冊'}</Link>
+            <Link size="md" href="/profile/sign-up">
+              {'前往註冊'}
+            </Link>
           </Box>
         </Grid>
         <Box display="flex" mt={10} justifyContent="flex-end">

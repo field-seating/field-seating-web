@@ -58,7 +58,9 @@ const RegisterForm = () => {
           <Field actor={passwordActor} />
           <Field actor={confirmPasswordActor} />
           <Box display="flex" justifyContent="flex-end">
-            <Link href="/profile/sign-in">{'前往登入'}</Link>
+            <Link size="md" href="/profile/sign-in">
+              {'前往登入'}
+            </Link>
           </Box>
         </Grid>
         <Box display="flex" mt={10} justifyContent="flex-end">
