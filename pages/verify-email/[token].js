@@ -6,7 +6,7 @@ import { Box, Heading, Spinner, Text } from '@chakra-ui/react';
 import useSnackbar from 'components/ui/snackbar';
 import { GlobalStateContext } from 'lib/contexts/globalState';
 
-import machine from './machine';
+import machine from 'lib/machines/verifiy-email';
 
 const getElement = (state) => {
   if (state.matches('success')) {
