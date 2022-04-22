@@ -14,7 +14,7 @@ const AppBar = ({ title, hasBackward, onBack, backHref, hasMenu, onMenu }) => {
       px={4}
       bg="primary.main"
       color="onPrimary.main"
-      h="14"
+      h={[12, 16]}
       w="100%"
     >
       <Box display="flex" alignItems="center">
