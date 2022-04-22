@@ -35,6 +35,7 @@ const inputOptionMap = {
     helpText: '請確認可接收認證信',
     placeholder: 'mail@fieldtseating.com',
     defaultValue: '',
+    type: 'email',
   },
   password: {
     validateFunc: (context) => {
