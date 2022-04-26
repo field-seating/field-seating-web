@@ -34,10 +34,8 @@ const LinkItem = ({ children, href }) => (
 );
 
 const ButtonItem = ({ children, onClick }) => (
-  <BaseUI>
-    <button type="button" onClick={onClick}>
-      {children}
-    </button>
+  <BaseUI as="button" onClick={onClick} role="button">
+    {children}
   </BaseUI>
 );
 
