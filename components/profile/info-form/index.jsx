@@ -17,9 +17,17 @@ import {
 import machine from './machine';
 
 const InfoForm = () => {
-  const [current, send] = useMachine(machine);
+  const [current, send] = useMachine(machine, { devTools: true });
   const { authService } = useContext(GlobalStateContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const onFormSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      onOpen();
+    },
+    [onOpen]
+  );
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -52,7 +60,7 @@ const InfoForm = () => {
 
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onFormSubmit}>
         <Grid templateColumns="1fr" gap="4">
           <Field actor={nameActor} defaultValue={state.context.name} />
         </Grid>
@@ -61,8 +69,8 @@ const InfoForm = () => {
             isLoading={isLoading}
             isDisabled={isDisabled}
             variant="solid"
+            type="submit"
             size="lg"
-            onClick={onOpen}
           >
             {'送出修改'}
           </Button>
