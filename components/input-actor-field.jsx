@@ -6,6 +6,7 @@ import TextField from 'components/ui/text-field';
 import FormErrorMessage from 'components/ui/form-error-message';
 import FormHelperText from 'components/ui/form-helper-text';
 import FormLabel from 'components/ui/form-label';
+import { selectError } from 'lib/machines/input-machine-creator';
 
 const Field = ({ actor, defaultValue }) => {
   const [state, send] = useActor(actor);
@@ -23,7 +24,7 @@ const Field = ({ actor, defaultValue }) => {
     }
   }, [defaultValue, send]);
 
-  const isError = state.matches('error');
+  const isError = selectError(state);
 
   const { helpText, errorMsg, label, placeholder, value, type, id } =
     state.context;
