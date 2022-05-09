@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { FormControl, Box } from '@chakra-ui/react';
 import { useActor } from '@xstate/react';
-import { debounce } from 'throttle-debounce';
 
 import TextField from 'components/ui/text-field';
 import FormErrorMessage from 'components/ui/form-error-message';
