@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   Drawer,
@@ -18,9 +19,14 @@ const Prompt = ({
   cancelText,
   submitText,
   onClose,
+  onSubmit,
   isOpen,
 }) => {
   const hasDescription = !isNil(description);
+  const wrappedOnSubmit = useCallback(async () => {
+    await onSubmit();
+    onClose();
+  }, [onSubmit, onClose]);
 
   return (
     <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
@@ -38,7 +44,9 @@ const Prompt = ({
           <Button variant="outline" mr={4} onClick={onClose}>
             {cancelText}
           </Button>
-          <Button variant="solid">{submitText}</Button>
+          <Button variant="solid" onClick={wrappedOnSubmit}>
+            {submitText}
+          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
@@ -47,6 +55,7 @@ const Prompt = ({
 Prompt.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
+  onSubmit: PropTypes.func,
   title: PropTypes.string,
   description: PropTypes.string,
   cancelText: PropTypes.string,

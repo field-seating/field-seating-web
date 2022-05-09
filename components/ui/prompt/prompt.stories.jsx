@@ -36,6 +36,9 @@ export const Main = (args) => {
       <Prompt
         isOpen={isOpen}
         onClose={onClose}
+        onSubmit={() => {
+          alert('submit');
+        }}
         title={args.title}
         description={args.description}
       />
