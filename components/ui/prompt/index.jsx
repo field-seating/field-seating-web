@@ -23,10 +23,13 @@ const Prompt = ({
   isOpen,
 }) => {
   const hasDescription = !isNil(description);
-  const wrappedOnSubmit = useCallback(async () => {
-    await onSubmit();
-    onClose();
-  }, [onSubmit, onClose]);
+  const wrappedOnSubmit = useCallback(
+    (e) => {
+      onSubmit(e);
+      onClose(e);
+    },
+    [onSubmit, onClose]
+  );
 
   return (
     <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
