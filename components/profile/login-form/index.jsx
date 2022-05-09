@@ -9,6 +9,12 @@ import Link from 'components/ui/link';
 import useSnackbar from 'components/ui/snackbar';
 import { set as setToken } from 'lib/storage/token';
 import Field from 'components/input-actor-field';
+import {
+  selectDisabled,
+  selectLoading,
+  selectSuccess,
+  selectFailure,
+} from 'lib/machines/form';
 
 import machine from './machine';
 
@@ -26,29 +32,28 @@ const LoginForm = () => {
     current.context.inputRefs;
 
   const snackbar = useSnackbar();
-  const router = useRouter();
 
   const { authService } = useContext(GlobalStateContext);
   const [, sendToAuthService] = useActor(authService);
 
-  const globalErrorMsg = current.context.globalErrorMsg;
   const token = current.context?.responseData?.token;
-  const isIdle = current.matches('idle');
-  const isLoading = current.matches('loading');
+  const isDisabled = selectDisabled(current);
+  const isLoading = selectLoading(current);
 
   useEffect(() => {
-    if (globalErrorMsg) {
+    const globalErrorMsg = current.context.globalErrorMsg;
+    if (selectFailure(current)) {
       snackbar({ text: globalErrorMsg, variant: 'error' });
+      return;
     }
-  }, [snackbar, globalErrorMsg]);
 
-  useEffect(() => {
-    if (token) {
+    if (selectSuccess(current)) {
       setToken(token);
       snackbar({ text: '成功登入' });
       sendToAuthService('SIGNIN');
+      return;
     }
-  }, [snackbar, token, router, sendToAuthService]);
+  }, [current, snackbar, token, sendToAuthService]);
 
   return (
     <>
@@ -65,7 +70,7 @@ const LoginForm = () => {
         <Box display="flex" mt={10} justifyContent="flex-end">
           <Button
             isLoading={isLoading}
-            isDisabled={!isIdle}
+            isDisabled={isDisabled}
             variant="solid"
             type="submit"
             size="lg"
