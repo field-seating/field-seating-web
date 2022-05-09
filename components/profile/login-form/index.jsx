@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useContext } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Box, Grid } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
 
 import { GlobalStateContext } from 'lib/contexts/globalState';
 import Button from 'components/ui/button';
