@@ -2,11 +2,16 @@ import React, { useCallback, useEffect } from 'react';
 import { useMachine } from '@xstate/react';
 import { Box, Grid } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { isNil } from 'ramda';
 
 import Button from 'components/ui/button';
 import Link from 'components/ui/link';
 import useSnackbar from 'components/ui/snackbar';
+import {
+  selectDisabled,
+  selectLoading,
+  selectSuccess,
+  selectFailure,
+} from 'lib/machines/form';
 
 import Field from 'components/input-actor-field';
 import machine from './machine';
@@ -31,23 +36,22 @@ const RegisterForm = () => {
   const snackbar = useSnackbar();
   const router = useRouter();
 
-  const globalErrorMsg = current.context.globalErrorMsg;
-  const responseData = current.context.responseData;
-  const isIdle = current.matches('idle');
-  const isLoading = current.matches('loading');
+  const isDisabled = selectDisabled(current);
+  const isLoading = selectLoading(current);
 
   useEffect(() => {
-    if (globalErrorMsg) {
+    const globalErrorMsg = current.context.globalErrorMsg;
+    if (selectFailure(current)) {
       snackbar({ text: globalErrorMsg, variant: 'error' });
+      return;
     }
-  }, [snackbar, globalErrorMsg]);
 
-  useEffect(() => {
-    if (!isNil(responseData)) {
+    if (selectSuccess(current)) {
       snackbar({ text: '註冊成功，已寄出認證信' });
       router.push('/profile');
+      return;
     }
-  }, [snackbar, responseData, router]);
+  }, [current, snackbar, router]);
 
   return (
     <>
@@ -66,7 +70,7 @@ const RegisterForm = () => {
         <Box display="flex" mt={10} justifyContent="flex-end">
           <Button
             isLoading={isLoading}
-            isDisabled={!isIdle}
+            isDisabled={isDisabled}
             variant="solid"
             type="submit"
             size="lg"

@@ -16,7 +16,7 @@ const FunctionList = () => {
 
   return (
     <Box display="flex" flexDir="column">
-      <FunctionItem href="/profile">個人資訊</FunctionItem>
+      <FunctionItem href="/profile/info">個人資訊</FunctionItem>
       <FunctionItem href="/profile">管理密碼</FunctionItem>
       <FunctionItem onClick={logout}>登出</FunctionItem>
     </Box>

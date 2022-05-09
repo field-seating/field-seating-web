@@ -1,14 +1,14 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FormControl, Box } from '@chakra-ui/react';
 import { useActor } from '@xstate/react';
-import { debounce } from 'throttle-debounce';
 
 import TextField from 'components/ui/text-field';
 import FormErrorMessage from 'components/ui/form-error-message';
 import FormHelperText from 'components/ui/form-helper-text';
 import FormLabel from 'components/ui/form-label';
+import { selectError } from 'lib/machines/input-machine-creator';
 
-const Field = ({ actor }) => {
+const Field = ({ actor, defaultValue }) => {
   const [state, send] = useActor(actor);
   const onChange = useCallback(
     (evt) => {
@@ -18,17 +18,13 @@ const Field = ({ actor }) => {
     [send]
   );
 
-  const onKeyDown = useCallback(
-    (evt) => {
-      if (evt.key === 'Enter') {
-        const { value } = evt.target;
-        send({ type: 'CHANGE', value });
-      }
-    },
-    [send]
-  );
+  useEffect(() => {
+    if (defaultValue) {
+      send({ type: 'CHANGE', value: defaultValue });
+    }
+  }, [defaultValue, send]);
 
-  const isError = state.matches('error');
+  const isError = selectError(state);
 
   const { helpText, errorMsg, label, placeholder, value, type, id } =
     state.context;
@@ -37,12 +33,10 @@ const Field = ({ actor }) => {
     <FormControl id={id} isInvalid={isError}>
       <FormLabel>{label}</FormLabel>
       <TextField
-        defaultValue={value}
+        value={value}
         placeholder={placeholder}
         type={type}
-        onBlur={onChange}
-        onChange={debounce(1000, onChange)}
-        onKeyDown={onKeyDown}
+        onChange={onChange}
       />
       <Box h={4}>
         {!isError ? (

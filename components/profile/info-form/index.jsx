@@ -1,13 +1,12 @@
-import React, { useCallback, useEffect, useContext } from 'react';
+import React, { useEffect, useCallback, useContext } from 'react';
 import { useMachine, useActor } from '@xstate/react';
-import { Box, Grid } from '@chakra-ui/react';
+import { Box, Grid, useDisclosure } from '@chakra-ui/react';
 
 import { GlobalStateContext } from 'lib/contexts/globalState';
 import Button from 'components/ui/button';
-import Link from 'components/ui/link';
-import useSnackbar from 'components/ui/snackbar';
-import { set as setToken } from 'lib/storage/token';
 import Field from 'components/input-actor-field';
+import useSnackbar from 'components/ui/snackbar';
+import Prompt from 'components/ui/prompt';
 import {
   selectDisabled,
   selectLoading,
@@ -17,8 +16,18 @@ import {
 
 import machine from './machine';
 
-const LoginForm = () => {
-  const [current, send] = useMachine(machine);
+const InfoForm = () => {
+  const [current, send] = useMachine(machine, { devTools: true });
+  const { authService } = useContext(GlobalStateContext);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const onFormSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      onOpen();
+    },
+    [onOpen]
+  );
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -27,15 +36,12 @@ const LoginForm = () => {
     [send]
   );
 
-  const { email: emailActor, password: passwordActor } =
-    current.context.inputRefs;
+  const [state] = useActor(authService);
 
   const snackbar = useSnackbar();
 
-  const { authService } = useContext(GlobalStateContext);
-  const [, sendToAuthService] = useActor(authService);
+  const { name: nameActor } = current.context.inputRefs;
 
-  const token = current.context?.responseData?.token;
   const isDisabled = selectDisabled(current);
   const isLoading = selectLoading(current);
 
@@ -47,24 +53,16 @@ const LoginForm = () => {
     }
 
     if (selectSuccess(current)) {
-      setToken(token);
-      snackbar({ text: '成功登入' });
-      sendToAuthService('SIGNIN');
+      snackbar({ text: '成功更新' });
       return;
     }
-  }, [current, snackbar, token, sendToAuthService]);
+  }, [current, snackbar]);
 
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onFormSubmit}>
         <Grid templateColumns="1fr" gap="4">
-          <Field actor={emailActor} />
-          <Field actor={passwordActor} />
-          <Box display="flex" justifyContent="flex-end">
-            <Link size="md" href="/profile/sign-up">
-              {'前往註冊'}
-            </Link>
-          </Box>
+          <Field actor={nameActor} defaultValue={state.context.name} />
         </Grid>
         <Box display="flex" mt={10} justifyContent="flex-end">
           <Button
@@ -74,12 +72,18 @@ const LoginForm = () => {
             type="submit"
             size="lg"
           >
-            {'登入'}
+            {'送出修改'}
           </Button>
         </Box>
       </form>
+      <Prompt
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={onSubmit}
+        title="確定修改個人資訊？"
+      />
     </>
   );
 };
 
-export default LoginForm;
+export default InfoForm;

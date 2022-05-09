@@ -4,13 +4,14 @@ import { Box, Heading } from '@chakra-ui/react';
 
 import { GlobalStateContext } from 'lib/contexts/globalState';
 import Link from 'components/ui/link';
+import { selectLogin, selectLoginInactive } from 'lib/machines/auth';
 
 const ProfileHeader = ({ children }) => {
   const { authService } = useContext(GlobalStateContext);
   const [state] = useActor(authService);
 
-  const isLoggedIn = state.matches('login');
-  const isInactive = state.matches('login.inactive');
+  const isLoggedIn = selectLogin(state);
+  const isInactive = selectLoginInactive(state);
 
   return (
     <Box display="flex" flexDir="column" px={[4, 16]} py={4}>

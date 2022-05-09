@@ -65,9 +65,5 @@
     "jest": "^27.5.1",
     "lint-staged": "^12.3.7",
     "prettier": "^2.6.1"
-  },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
   }
 }

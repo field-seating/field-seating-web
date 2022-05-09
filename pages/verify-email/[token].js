@@ -6,17 +6,20 @@ import { Box, Heading, Spinner, Text } from '@chakra-ui/react';
 import useSnackbar from 'components/ui/snackbar';
 import { GlobalStateContext } from 'lib/contexts/globalState';
 
-import machine from 'lib/machines/verifiy-email';
+import machine, {
+  selectSuccess,
+  selectFailure,
+} from 'lib/machines/verifiy-email';
 
 const getElement = (state) => {
-  if (state.matches('success')) {
+  if (selectSuccess(state)) {
     return {
       headingText: '信箱已驗證成功',
       content: <Text size="md">跳轉至登入頁面...</Text>,
     };
   }
 
-  if (state.matches('failure')) {
+  if (selectFailure(state)) {
     return {
       headingText: '信箱驗證失敗',
       content: <Text size="md">請再次確認連結</Text>,
@@ -54,10 +57,10 @@ const VerifyEmailTokenPage = () => {
 
   useEffect(() => {
     const subscription = service.subscribe((state) => {
-      if (state.matches('failure')) {
+      if (selectFailure(state)) {
         snackbar({ text: state.context.globalErrorMsg, variant: 'error' });
       }
-      if (state.matches('success')) {
+      if (selectSuccess(state)) {
         sendToAuthService('SIGNIN');
 
         router.push('/profile');
