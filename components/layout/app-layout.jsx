@@ -6,7 +6,7 @@ import DefaultHead from './default-head';
 const AppLayout = ({ children }) => (
   <Box>
     <DefaultHead />
-    <Box as="main" pb="56px" px={[4, 16, 32, 48]} py={4}>
+    <Box as="main" pb="56px">
       {children}
     </Box>
     <Box as="footer" w="100%" pos="fixed" bottom="env(safe-area-inset-bottom)">
