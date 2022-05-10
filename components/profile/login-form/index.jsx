@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useContext } from 'react';
 import { useMachine, useActor } from '@xstate/react';
-import { Box, Grid } from '@chakra-ui/react';
+import { Box, Grid, Text } from '@chakra-ui/react';
 
 import { GlobalStateContext } from 'lib/contexts/globalState';
 import Button from 'components/ui/button';
@@ -61,22 +61,32 @@ const LoginForm = () => {
           <Field actor={emailActor} />
           <Field actor={passwordActor} />
           <Box display="flex" justifyContent="flex-end">
-            <Link size="md" href="/profile/sign-up">
-              {'前往註冊'}
+            <Link size="md" href="/profile/reset-password">
+              {'忘記密碼'}
             </Link>
           </Box>
         </Grid>
-        <Box display="flex" mt={10} justifyContent="flex-end">
-          <Button
-            isLoading={isLoading}
-            isDisabled={isDisabled}
-            variant="solid"
-            type="submit"
-            size="lg"
-            width="100%"
-          >
-            {'登入'}
-          </Button>
+        <Box display="flex" mt={10} flexDir="column">
+          <Box mb="3">
+            <Button
+              isLoading={isLoading}
+              isDisabled={isDisabled}
+              variant="solid"
+              type="submit"
+              size="lg"
+              width="100%"
+            >
+              {'登入'}
+            </Button>
+          </Box>
+          <Box display="flex" justifyContent="center">
+            <Text fontSize="sm" color="onSurface.40" mr="1">
+              已經有帳號了？
+            </Text>
+            <Link size="sm" href="/profile/sign-up">
+              {'前往註冊'}
+            </Link>
+          </Box>
         </Box>
       </form>
     </>
