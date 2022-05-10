@@ -1,13 +1,11 @@
-import React, { useCallback, useEffect, useContext } from 'react';
-import { useMachine, useActor } from '@xstate/react';
-import { Box, Grid, Text } from '@chakra-ui/react';
+import React, { useCallback, useEffect } from 'react';
+import { useMachine } from '@xstate/react';
+import { Box, Grid } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
-import { GlobalStateContext } from 'lib/contexts/globalState';
 import Button from 'components/ui/button';
 import Link from 'components/ui/link';
 import useSnackbar from 'components/ui/snackbar';
-import { set as setToken } from 'lib/storage/token';
-import Field from 'components/input-actor-field';
 import {
   selectDisabled,
   selectLoading,
@@ -15,9 +13,10 @@ import {
   selectFailure,
 } from 'lib/machines/form';
 
+import Field from 'components/input-actor-field';
 import machine from './machine';
 
-const LoginForm = () => {
+const RecoveryPasswordForm = () => {
   const [current, send] = useMachine(machine);
   const onSubmit = useCallback(
     (e) => {
@@ -27,15 +26,11 @@ const LoginForm = () => {
     [send]
   );
 
-  const { email: emailActor, password: passwordActor } =
-    current.context.inputRefs;
+  const { email: emailActor } = current.context.inputRefs;
 
   const snackbar = useSnackbar();
+  const router = useRouter();
 
-  const { authService } = useContext(GlobalStateContext);
-  const [, sendToAuthService] = useActor(authService);
-
-  const token = current.context?.responseData?.token;
   const isDisabled = selectDisabled(current);
   const isLoading = selectLoading(current);
 
@@ -47,26 +42,19 @@ const LoginForm = () => {
     }
 
     if (selectSuccess(current)) {
-      setToken(token);
-      snackbar({ text: '成功登入' });
-      sendToAuthService('SIGNIN');
+      snackbar({ text: '密碼重置信件已寄出，請確認您的信箱' });
+      router.push('/profile');
       return;
     }
-  }, [current, snackbar, token, sendToAuthService]);
+  }, [current, snackbar, router]);
 
   return (
     <>
       <form onSubmit={onSubmit}>
         <Grid templateColumns="1fr" gap="4">
           <Field actor={emailActor} />
-          <Field actor={passwordActor} />
-          <Box display="flex" justifyContent="flex-end">
-            <Link size="md" href="/profile/recovery-password">
-              {'忘記密碼'}
-            </Link>
-          </Box>
         </Grid>
-        <Box display="flex" mt={10} flexDir="column">
+        <Box display="flex" mt="16" flexDir="column">
           <Box mb="3">
             <Button
               isLoading={isLoading}
@@ -76,15 +64,12 @@ const LoginForm = () => {
               size="lg"
               width="100%"
             >
-              {'登入'}
+              {'送出'}
             </Button>
           </Box>
           <Box display="flex" justifyContent="center">
-            <Text fontSize="sm" color="onSurface.40" mr="1">
-              已經有帳號了？
-            </Text>
-            <Link size="sm" href="/profile/sign-up">
-              {'前往註冊'}
+            <Link size="sm" href="/profile/sign-in">
+              {'返回登入'}
             </Link>
           </Box>
         </Box>
@@ -93,4 +78,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RecoveryPasswordForm;

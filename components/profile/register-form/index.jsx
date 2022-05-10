@@ -61,22 +61,25 @@ const RegisterForm = () => {
           <Field actor={emailActor} />
           <Field actor={passwordActor} />
           <Field actor={confirmPasswordActor} />
-          <Box display="flex" justifyContent="flex-end">
-            <Link size="md" href="/profile/sign-in">
+        </Grid>
+        <Box display="flex" mt={10} flexDir="column">
+          <Box mb="3">
+            <Button
+              isLoading={isLoading}
+              isDisabled={isDisabled}
+              variant="solid"
+              type="submit"
+              size="lg"
+              width="100%"
+            >
+              {'確定註冊'}
+            </Button>
+          </Box>
+          <Box display="flex" justifyContent="center">
+            <Link size="sm" href="/profile/sign-in">
               {'前往登入'}
             </Link>
           </Box>
-        </Grid>
-        <Box display="flex" mt={10} justifyContent="flex-end">
-          <Button
-            isLoading={isLoading}
-            isDisabled={isDisabled}
-            variant="solid"
-            type="submit"
-            size="lg"
-          >
-            {'確定註冊'}
-          </Button>
         </Box>
       </form>
     </>
