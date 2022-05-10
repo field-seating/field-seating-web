@@ -54,7 +54,7 @@ const PasswordResetForm = () => {
     }
 
     if (selectSuccess(current)) {
-      snackbar({ text: '密碼已更新' });
+      snackbar({ text: '密碼已更新，請重新登入' });
       router.push('/profile');
       return;
     }
