@@ -36,7 +36,7 @@ const InfoForm = () => {
     [send]
   );
 
-  const [state] = useActor(authService);
+  const [state, sendToAuthService] = useActor(authService);
 
   const snackbar = useSnackbar();
 
@@ -44,6 +44,10 @@ const InfoForm = () => {
 
   const isDisabled = selectDisabled(current);
   const isLoading = selectLoading(current);
+
+  const login = useCallback(() => {
+    sendToAuthService('SIGNIN');
+  }, [sendToAuthService]);
 
   useEffect(() => {
     const globalErrorMsg = current.context.globalErrorMsg;
@@ -54,9 +58,10 @@ const InfoForm = () => {
 
     if (selectSuccess(current)) {
       snackbar({ text: '成功更新' });
+      login();
       return;
     }
-  }, [current, snackbar]);
+  }, [current, snackbar, login]);
 
   return (
     <>
