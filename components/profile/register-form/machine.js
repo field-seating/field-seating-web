@@ -28,7 +28,7 @@ const inputOptionMap = {
 
       return {
         valid,
-        message: '請輸入正確信箱格式',
+        message: '請輸入正確的信箱格式',
       };
     },
     label: '電子信箱',

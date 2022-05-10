@@ -14,7 +14,7 @@ const ProfileHeader = ({ children }) => {
   const isInactive = selectLoginInactive(state);
 
   return (
-    <Box display="flex" flexDir="column" py={4}>
+    <Box display="flex" flexDir="column" pb={4}>
       <Box mb={4}>
         <Box h="45px">
           <Heading as="h2" size="xl" color="onSurface.main">
