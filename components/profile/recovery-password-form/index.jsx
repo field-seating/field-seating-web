@@ -16,7 +16,7 @@ import {
 import Field from 'components/input-actor-field';
 import machine from './machine';
 
-const ForgetPasswordForm = () => {
+const RecoveryPasswordForm = () => {
   const [current, send] = useMachine(machine);
   const onSubmit = useCallback(
     (e) => {
@@ -78,4 +78,4 @@ const ForgetPasswordForm = () => {
   );
 };
 
-export default ForgetPasswordForm;
+export default RecoveryPasswordForm;

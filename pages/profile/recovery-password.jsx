@@ -1,20 +1,20 @@
 import { Box } from '@chakra-ui/react';
 
-import ForgetPasswordForm from 'components/profile/forget-password-form';
+import RecoveryPasswordForm from 'components/profile/recovery-password-form';
 import useAuth from 'lib/hooks/user-auth';
 
-const ForgetPasswordPage = () => {
+const RecoveryPasswordPage = () => {
   const { isAnonymous } = useAuth('/profile', false);
 
   return (
     <>
       {isAnonymous && (
         <Box display="flex" flexDir="column">
-          <ForgetPasswordForm />
+          <RecoveryPasswordForm />
         </Box>
       )}
     </>
   );
 };
 
-export default ForgetPasswordPage;
+export default RecoveryPasswordPage;

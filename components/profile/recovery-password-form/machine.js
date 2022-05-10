@@ -21,7 +21,7 @@ const inputOptionMap = {
   },
 };
 
-const machine = formMachineCreator({ machineId: 'forget-password-form' })(
+const machine = formMachineCreator({ machineId: 'recovery-password-form' })(
   inputOptionMap
 ).withConfig({
   services: {

@@ -61,7 +61,7 @@ const LoginForm = () => {
           <Field actor={emailActor} />
           <Field actor={passwordActor} />
           <Box display="flex" justifyContent="flex-end">
-            <Link size="md" href="/profile/forget-password">
+            <Link size="md" href="/profile/recovery-password">
               {'忘記密碼'}
             </Link>
           </Box>
