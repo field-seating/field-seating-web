@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
-import { useMachine } from '@xstate/react';
+import React, { useCallback, useEffect, useContext } from 'react';
+import { useMachine, useActor } from '@xstate/react';
 import { Box, Grid, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
+import { GlobalStateContext } from 'lib/contexts/globalState';
 import Button from 'components/ui/button';
 import Link from 'components/ui/link';
 import useSnackbar from 'components/ui/snackbar';
@@ -20,6 +21,12 @@ import machine from './machine';
 const PasswordResetForm = () => {
   const [current, send] = useMachine(machine, { devTools: true });
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { authService } = useContext(GlobalStateContext);
+  const [, sendToAuthService] = useActor(authService);
+
+  const logout = useCallback(() => {
+    sendToAuthService('LOGOUT');
+  }, [sendToAuthService]);
 
   const onFormSubmit = useCallback(
     (e) => {
@@ -55,10 +62,11 @@ const PasswordResetForm = () => {
 
     if (selectSuccess(current)) {
       snackbar({ text: '密碼已更新，請重新登入' });
+      logout();
       router.push('/profile');
       return;
     }
-  }, [current, snackbar, router]);
+  }, [current, snackbar, router, logout]);
 
   useEffect(() => {
     if (token) {

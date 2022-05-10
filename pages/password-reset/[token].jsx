@@ -4,7 +4,7 @@ import PasswordResetForm from 'components/profile/password-reset-form';
 
 const PasswordResetPage = () => {
   return (
-    <Box>
+    <Box px={[4, 16, 32, 48]} py={4}>
       <Box display="flex" flexDir="column">
         <PasswordResetForm />
       </Box>
