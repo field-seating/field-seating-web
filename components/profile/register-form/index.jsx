@@ -74,6 +74,7 @@ const RegisterForm = () => {
             variant="solid"
             type="submit"
             size="lg"
+            width="100%"
           >
             {'確定註冊'}
           </Button>

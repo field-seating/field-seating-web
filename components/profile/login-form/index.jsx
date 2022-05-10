@@ -73,6 +73,7 @@ const LoginForm = () => {
             variant="solid"
             type="submit"
             size="lg"
+            width="100%"
           >
             {'登入'}
           </Button>
