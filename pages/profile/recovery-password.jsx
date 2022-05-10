@@ -1,20 +1,20 @@
 import { Box } from '@chakra-ui/react';
 
-import RegisterForm from 'components/profile/register-form';
+import RecoveryPasswordForm from 'components/profile/recovery-password-form';
 import useAuth from 'lib/hooks/user-auth';
 
-const SignUpPage = () => {
+const RecoveryPasswordPage = () => {
   const { isAnonymous } = useAuth('/profile', false);
 
   return (
     <Box px={[4, 16, 32, 48]} py={4}>
       {isAnonymous && (
         <Box display="flex" flexDir="column">
-          <RegisterForm />
+          <RecoveryPasswordForm />
         </Box>
       )}
     </Box>
   );
 };
 
-export default SignUpPage;
+export default RecoveryPasswordPage;
