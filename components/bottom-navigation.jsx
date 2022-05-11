@@ -1,26 +1,13 @@
-import { useContext } from 'react';
 import { Box, IconButton } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { useActor } from '@xstate/react';
-import { defaultTo, prop, find, compose, filter } from 'ramda';
+import { defaultTo, prop, find, compose } from 'ramda';
 
-import { GlobalStateContext } from 'lib/contexts/globalState';
-import { tabList, authStateRouteMap } from 'lib/constants/route';
+import { tabList } from 'lib/constants/route';
 import matchRoute from 'lib/utils/match-route';
-import { validateRouteByMap } from 'lib/utils/validate-route';
 
 const BottomNavigation = () => {
-  const { authService } = useContext(GlobalStateContext);
   const router = useRouter();
-
-  const [state] = useActor(authService);
-  const authState = state.value;
-
-  const filterFunc = filter(
-    compose(validateRouteByMap(authStateRouteMap)(authState), prop('pathname'))
-  );
-  const effectiveTabList = filterFunc(tabList);
 
   const findFunc = compose(
     matchRoute({ exact: false })(router),
@@ -28,11 +15,11 @@ const BottomNavigation = () => {
   );
   const matchFunc = compose(prop('id'), defaultTo({}), find(findFunc));
 
-  const matchId = matchFunc(effectiveTabList);
+  const matchId = matchFunc(tabList);
 
   return (
     <Box as="nav" display="flex">
-      {effectiveTabList.map((tab) => (
+      {tabList.map((tab) => (
         <NextLink key={tab.id} href={tab.pathname} passHref>
           <IconButton
             as="a"
