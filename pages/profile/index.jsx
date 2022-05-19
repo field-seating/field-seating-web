@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import { Box } from '@chakra-ui/react';
 
 import useAuth from 'lib/hooks/user-auth';
@@ -9,6 +10,9 @@ const ProfilePage = () => {
 
   return (
     <>
+      <Head>
+        <title>個人帳號 | 球場坐座</title>
+      </Head>
       {isLoggedIn && (
         <Box>
           <FunctionList />
