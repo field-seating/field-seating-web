@@ -7,7 +7,7 @@ const inputOptionMap = {
   },
 };
 
-const machine = formMachineCreator({ machineId: 'login-form' })(
+const machine = formMachineCreator({ machineId: 'filter-zone-form' })(
   inputOptionMap
 ).withConfig({
   services: {
