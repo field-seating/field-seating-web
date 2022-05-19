@@ -2,13 +2,15 @@ import { useMachine } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
 
 import SelectActorField from 'components/select-actor-field';
+import uploadStepperMachine from 'lib/machines/upload-stepper-machine';
 
 import { fieldOptions } from './fake-data';
 import machine from './machine';
 
 const UploadContent = () => {
-  const [current] = useMachine(machine);
-  const { field: fieldActor } = current.context.inputRefs;
+  useMachine(uploadStepperMachine, { devTools: true });
+  const [currentForm] = useMachine(machine);
+  const { field: fieldActor } = currentForm.context.inputRefs;
   return (
     <>
       <form>
