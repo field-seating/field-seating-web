@@ -26,12 +26,17 @@ const SelectActorField = ({ actor, defaultValue, size, options }) => {
 
   const isError = selectError(state);
 
-  const { helpText, errorMsg, label, value, id } = state.context;
+  const { helpText, errorMsg, label, value, id, placeholder } = state.context;
 
   return (
     <FormControl id={id} isInvalid={isError}>
       <FormLabel>{label}</FormLabel>
-      <Select size={size} value={value} onChange={onChange}>
+      <Select
+        size={size}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      >
         {options.map((option) => (
           <option key={option.id} value={option.id}>
             {option.name}

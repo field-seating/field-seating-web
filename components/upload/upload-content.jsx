@@ -25,7 +25,7 @@ const UploadContent = () => {
           m={0}
         >{`${current.context.stepIndex}：${current.context.title}`}</Heading>
       </Box>
-      <Box flex="1">
+      <Box flex="1" p={[4, 12]}>
         <FilterZones />
       </Box>
       <Box
