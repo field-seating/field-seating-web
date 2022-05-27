@@ -23,7 +23,6 @@ const SelectActorField = ({ actor, defaultValue, size, options }) => {
       send({ type: 'CHANGE', value: defaultValue });
     }
   }, [defaultValue, send]);
-
   const isError = selectError(state);
 
   const { helpText, errorMsg, label, value, id, placeholder } = state.context;

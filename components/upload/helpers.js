@@ -15,16 +15,16 @@ const getForwardOptions = (send) => (stepIndex, totalStep) => {
   if (stepIndex === totalStep) {
     return {
       title: '送出',
-      action: () => {
-        send('NEXT');
+      action: (data) => {
+        send({ type: 'NEXT', ...data });
       },
     };
   }
 
   return {
     title: '下一步',
-    action: () => {
-      send('NEXT');
+    action: (data) => {
+      send({ type: 'NEXT', ...data });
     },
   };
 };

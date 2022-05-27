@@ -1,26 +1,45 @@
-import { useMachine, useActor } from '@xstate/react';
+import { useMachine } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
+//import { defaultTo } from 'ramda';
 
 import SelectActorField from 'components/select-actor-field';
-import { useFetchFields } from 'lib/fetch/fields/list-fields';
-import { useFetchOrientations } from 'lib/fetch/fields/list-orientations';
+import { useFetchZones } from 'lib/fetch/fields/list-zones';
 
 import Stepper from './stepper';
-import machine from './filter-zones-machine';
+import machine from './select-space-machine';
 
-const SelectSpace = ({ forwardTitle, onForward, backTitle, onBack, title }) => {
+//const defaultToEmptyObject = defaultTo({});
+
+const SelectSpace = ({
+  forwardTitle,
+  onForward,
+  backTitle,
+  onBack,
+  title,
+  flowData,
+}) => {
   const [currentForm] = useMachine(machine);
-  const { field: fieldActor, orientation: orientationActor } =
-    currentForm.context.inputRefs;
+  const {
+    zone: zoneActor,
+    row: rowActor,
+    column: columnActor,
+  } = currentForm.context.inputRefs;
 
-  const [fieldState] = useActor(fieldActor);
-  const fieldId = fieldState.context.value;
+  //const [zoneState] = useActor(zoneActor);
+  //const zoneId = zoneState.context.value;
+
+  const { fieldId, orientationId, levelId } = flowData;
 
   // TODO: handle error
-  const { data: fieldOptions } = useFetchFields();
+  const { data: fieldOptions } = useFetchZones(fieldId, orientationId, levelId);
 
   // TODO: handle error
-  const { data: orientationOptions } = useFetchOrientations(fieldId);
+  //const { data } = useFetchRowColOptions(zoneId);
+
+  //const rowOptions = defaultToEmptyObject(data).rowOptions || [];
+  //const columnOptions = defaultToEmptyObject(data).columnOptions || [];
+  const rowOptions = [];
+  const columnOptions = [];
 
   return (
     <Stepper
@@ -32,11 +51,9 @@ const SelectSpace = ({ forwardTitle, onForward, backTitle, onBack, title }) => {
     >
       <form>
         <Grid templateColumns="1fr" gap="4">
-          <SelectActorField actor={fieldActor} options={fieldOptions} />
-          <SelectActorField
-            actor={orientationActor}
-            options={orientationOptions}
-          />
+          <SelectActorField actor={zoneActor} options={fieldOptions} />
+          <SelectActorField actor={rowActor} options={rowOptions} />
+          <SelectActorField actor={columnActor} options={columnOptions} />
         </Grid>
       </form>
     </Stepper>

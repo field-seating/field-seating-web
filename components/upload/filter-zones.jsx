@@ -1,16 +1,41 @@
+import { useCallback, useEffect } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
+import { defaultTo } from 'ramda';
 
 import SelectActorField from 'components/select-actor-field';
 import { useFetchFields } from 'lib/fetch/fields/list-fields';
 import { useFetchOrientations } from 'lib/fetch/fields/list-orientations';
 import { useFetchLevels } from 'lib/fetch/fields/list-levels';
+import {
+  //selectDisabled,
+  //selectLoading,
+  selectSuccess,
+  selectFailure,
+} from 'lib/machines/form';
+import useSnackbar from 'components/ui/snackbar';
 
 import Stepper from './stepper';
 import machine from './filter-zones-machine';
 
+//const getDefaultValue = (valueInContext, options) => {
+//if (options.length === 0) {
+//return null;
+//}
+
+//const optionSet = new Set(options.map((option) => option.id));
+
+//if (valueInContext && optionSet.has(valueInContext)) {
+//return valueInContext;
+//}
+
+//return head(options).id;
+//};
+
+const defaultToEmptyArray = defaultTo([]);
+
 const FilterZones = ({ forwardTitle, onForward, backTitle, onBack, title }) => {
-  const [currentForm] = useMachine(machine);
+  const [currentForm, send] = useMachine(machine, { devTools: true });
   const {
     field: fieldActor,
     orientation: orientationActor,
@@ -20,17 +45,53 @@ const FilterZones = ({ forwardTitle, onForward, backTitle, onBack, title }) => {
   const [fieldState] = useActor(fieldActor);
   const fieldId = fieldState.context.value;
 
-  // TODO: handle error
-  const { data: fieldOptions } = useFetchFields();
+  const [orientationState] = useActor(orientationActor);
+  const orientationId = orientationState.context.value;
+
+  const [levelState] = useActor(levelActor);
+  const levelId = levelState.context.value;
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      send('SUBMIT');
+    },
+    [send]
+  );
+  const snackbar = useSnackbar();
+
+  useEffect(() => {
+    const globalErrorMsg = currentForm.context.globalErrorMsg;
+    if (selectFailure(currentForm)) {
+      snackbar({ text: globalErrorMsg, variant: 'error' });
+      return;
+    }
+
+    if (selectSuccess(currentForm)) {
+      onForward({
+        fieldId,
+        orientationId,
+        levelId,
+      });
+      return;
+    }
+  }, [currentForm, snackbar, fieldId, orientationId, levelId, onForward]);
 
   // TODO: handle error
-  const { data: orientationOptions } = useFetchOrientations(fieldId);
-  const { data: levelOptions } = useFetchLevels(fieldId);
+  const { data: fields } = useFetchFields();
+
+  // TODO: handle error
+  const { data: orientations } = useFetchOrientations(fieldId);
+  const { data: levels } = useFetchLevels(fieldId);
+
+  const fieldOptions = defaultToEmptyArray(fields);
+  const orientationOptions = defaultToEmptyArray(orientations);
+  const levelOptions = defaultToEmptyArray(levels);
 
   return (
     <Stepper
       forwardTitle={forwardTitle}
-      onForward={onForward}
+      onForward={onSubmit}
       backTitle={backTitle}
       onBack={onBack}
       title={title}

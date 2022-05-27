@@ -39,6 +39,7 @@ const UploadContent = () => {
       backTitle={backTitle}
       onBack={onBack}
       title={`${stepIndex}：${title}`}
+      flowData={current.context.flowData}
     />
   );
 };
