@@ -5,9 +5,10 @@ import SelectActorField from 'components/select-actor-field';
 import { useFetchFields } from 'lib/fetch/fields/list-fields';
 import { useFetchOrientations } from 'lib/fetch/fields/list-orientations';
 
+import Stepper from './stepper';
 import machine from './filter-zones-machine';
 
-const SelectSpace = () => {
+const SelectSpace = ({ forwardTitle, onForward, backTitle, onBack, title }) => {
   const [currentForm] = useMachine(machine);
   const { field: fieldActor, orientation: orientationActor } =
     currentForm.context.inputRefs;
@@ -22,7 +23,13 @@ const SelectSpace = () => {
   const { data: orientationOptions } = useFetchOrientations(fieldId);
 
   return (
-    <>
+    <Stepper
+      forwardTitle={forwardTitle}
+      onForward={onForward}
+      backTitle={backTitle}
+      onBack={onBack}
+      title={title}
+    >
       <form>
         <Grid templateColumns="1fr" gap="4">
           <SelectActorField actor={fieldActor} options={fieldOptions} />
@@ -32,7 +39,7 @@ const SelectSpace = () => {
           />
         </Grid>
       </form>
-    </>
+    </Stepper>
   );
 };
 

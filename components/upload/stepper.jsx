@@ -3,7 +3,14 @@ import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
 
 import Button from 'components/ui/button';
 
-const Stepper = ({ children, stepIndex, title, back, forward }) => {
+const Stepper = ({
+  children,
+  title,
+  forwardTitle,
+  onForward,
+  backTitle,
+  onBack,
+}) => {
   const barHeight = [10, 16];
 
   return (
@@ -17,7 +24,9 @@ const Stepper = ({ children, stepIndex, title, back, forward }) => {
         color="onSecondary.main"
         px={[8]}
       >
-        <Heading as="h1" size="sm" m={0}>{`${stepIndex}：${title}`}</Heading>
+        <Heading as="h1" size="sm" m={0}>
+          {title}
+        </Heading>
       </Box>
       <Box flex="1" p={[4, 12]}>
         {children}
@@ -33,28 +42,28 @@ const Stepper = ({ children, stepIndex, title, back, forward }) => {
         justifyContent="space-between"
       >
         <Box>
-          {back && (
+          {backTitle && (
             <Button
               size="sm"
               color="onSecondary.main"
               variant="ghost"
               leftIcon={<ArrowBackIcon />}
-              onClick={back.onClick}
+              onClick={onBack}
             >
-              {back.title}
+              {backTitle}
             </Button>
           )}
         </Box>
         <Box>
-          {forward && (
+          {forwardTitle && (
             <Button
               size="sm"
               variant="ghost"
               color="onSecondary.main"
               rightIcon={<ArrowForwardIcon />}
-              onClick={forward.onClick}
+              onClick={onForward}
             >
-              {forward.title}
+              {forwardTitle}
             </Button>
           )}
         </Box>

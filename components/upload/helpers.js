@@ -5,7 +5,7 @@ const getBackOptions = (send) => (stepIndex) => {
 
   return {
     title: '上一步',
-    onClick: () => {
+    action: () => {
       send('BACK');
     },
   };
@@ -15,23 +15,27 @@ const getForwardOptions = (send) => (stepIndex, totalStep) => {
   if (stepIndex === totalStep) {
     return {
       title: '送出',
-      onClick: () => {
-        send('SUBMIT');
+      action: () => {
+        send('NEXT');
       },
     };
   }
 
   return {
     title: '下一步',
-    onClick: () => {
+    action: () => {
       send('NEXT');
     },
   };
 };
 
-export const getFooterOptions = (send) => (stepIndex, totalStep) => {
+export const getChildProps = (send) => (stepIndex, totalStep) => {
+  const backOption = getBackOptions(send)(stepIndex) || {};
+  const forwardOption = getForwardOptions(send)(stepIndex, totalStep) || {};
   return {
-    back: getBackOptions(send)(stepIndex),
-    forward: getForwardOptions(send)(stepIndex, totalStep),
+    forwardTitle: forwardOption.title,
+    onForward: forwardOption.action,
+    backTitle: backOption.title,
+    onBack: backOption.action,
   };
 };

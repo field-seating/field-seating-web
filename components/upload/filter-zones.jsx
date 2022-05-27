@@ -6,9 +6,10 @@ import { useFetchFields } from 'lib/fetch/fields/list-fields';
 import { useFetchOrientations } from 'lib/fetch/fields/list-orientations';
 import { useFetchLevels } from 'lib/fetch/fields/list-levels';
 
+import Stepper from './stepper';
 import machine from './filter-zones-machine';
 
-const FilterZones = () => {
+const FilterZones = ({ forwardTitle, onForward, backTitle, onBack, title }) => {
   const [currentForm] = useMachine(machine);
   const {
     field: fieldActor,
@@ -27,7 +28,13 @@ const FilterZones = () => {
   const { data: levelOptions } = useFetchLevels(fieldId);
 
   return (
-    <>
+    <Stepper
+      forwardTitle={forwardTitle}
+      onForward={onForward}
+      backTitle={backTitle}
+      onBack={onBack}
+      title={title}
+    >
       <form>
         <Grid templateColumns="1fr" gap="4">
           <SelectActorField actor={fieldActor} options={fieldOptions} />
@@ -38,7 +45,7 @@ const FilterZones = () => {
           <SelectActorField actor={levelActor} options={levelOptions} />
         </Grid>
       </form>
-    </>
+    </Stepper>
   );
 };
 
