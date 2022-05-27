@@ -4,7 +4,7 @@ const GhostButton = (props) => (
   <Button
     {...props}
     bg="surface"
-    color="primary.main"
+    color={props.color || 'primary.main'}
     variant="ghost"
     _hover={{ bg: 'primary.transparent', borderColor: 'primary.main' }}
     _active={{
