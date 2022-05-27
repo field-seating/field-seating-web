@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
-import { defaultTo } from 'ramda';
+import { head, defaultTo } from 'ramda';
 
 import SelectActorField from 'components/select-actor-field';
 import { useFetchFields } from 'lib/fetch/fields/list-fields';
@@ -18,23 +18,30 @@ import useSnackbar from 'components/ui/snackbar';
 import Stepper from './stepper';
 import machine from './filter-zones-machine';
 
-//const getDefaultValue = (valueInContext, options) => {
-//if (options.length === 0) {
-//return null;
-//}
+const getDefaultValue = (valueInContext, options) => {
+  if (options.length === 0) {
+    return null;
+  }
 
-//const optionSet = new Set(options.map((option) => option.id));
+  const optionSet = new Set(options.map((option) => String(option.id)));
 
-//if (valueInContext && optionSet.has(valueInContext)) {
-//return valueInContext;
-//}
+  if (valueInContext && optionSet.has(String(valueInContext))) {
+    return valueInContext;
+  }
 
-//return head(options).id;
-//};
+  return head(options).id;
+};
 
 const defaultToEmptyArray = defaultTo([]);
 
-const FilterZones = ({ forwardTitle, onForward, backTitle, onBack, title }) => {
+const FilterZones = ({
+  forwardTitle,
+  onForward,
+  backTitle,
+  onBack,
+  title,
+  flowData,
+}) => {
   const [currentForm, send] = useMachine(machine, { devTools: true });
   const {
     field: fieldActor,
@@ -98,12 +105,24 @@ const FilterZones = ({ forwardTitle, onForward, backTitle, onBack, title }) => {
     >
       <form>
         <Grid templateColumns="1fr" gap="4">
-          <SelectActorField actor={fieldActor} options={fieldOptions} />
+          <SelectActorField
+            actor={fieldActor}
+            options={fieldOptions}
+            defaultValue={getDefaultValue(flowData.fieldId, fieldOptions)}
+          />
           <SelectActorField
             actor={orientationActor}
             options={orientationOptions}
+            defaultValue={getDefaultValue(
+              flowData.orientationId,
+              orientationOptions
+            )}
           />
-          <SelectActorField actor={levelActor} options={levelOptions} />
+          <SelectActorField
+            actor={levelActor}
+            options={levelOptions}
+            defaultValue={getDefaultValue(flowData.levelId, levelOptions)}
+          />
         </Grid>
       </form>
     </Stepper>
