@@ -1,14 +1,17 @@
-import { useMachine } from '@xstate/react';
+import { useMemo } from 'react';
+import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
-//import { defaultTo } from 'ramda';
+import { defaultTo } from 'ramda';
 
 import SelectActorField from 'components/select-actor-field';
 import { useFetchZones } from 'lib/fetch/fields/list-zones';
+import { useFetchSpaces } from 'lib/fetch/fields/list-spaces';
 
 import Stepper from './stepper';
 import machine from './select-space-machine';
+import { spacesToRowOptions, spacesToColOptions } from './helpers';
 
-//const defaultToEmptyObject = defaultTo({});
+const defaultToEmptyArray = defaultTo([]);
 
 const SelectSpace = ({
   forwardTitle,
@@ -18,28 +21,35 @@ const SelectSpace = ({
   title,
   flowData,
 }) => {
-  const [currentForm] = useMachine(machine);
+  const [currentForm] = useMachine(machine, { devTools: true });
   const {
     zone: zoneActor,
     row: rowActor,
     column: columnActor,
   } = currentForm.context.inputRefs;
 
-  //const [zoneState] = useActor(zoneActor);
-  //const zoneId = zoneState.context.value;
+  const [zoneState] = useActor(zoneActor);
+  const zoneId = zoneState.context.value;
+
+  const [rowState] = useActor(rowActor);
+  const rowId = rowState.context.value;
 
   const { fieldId, orientationId, levelId } = flowData;
 
   // TODO: handle error
-  const { data: fieldOptions } = useFetchZones(fieldId, orientationId, levelId);
+  const { data: zones } = useFetchZones(fieldId, orientationId, levelId);
 
   // TODO: handle error
-  //const { data } = useFetchRowColOptions(zoneId);
+  const { data: spaces } = useFetchSpaces(zoneId);
 
-  //const rowOptions = defaultToEmptyObject(data).rowOptions || [];
-  //const columnOptions = defaultToEmptyObject(data).columnOptions || [];
-  const rowOptions = [];
-  const columnOptions = [];
+  const zoneOptions = defaultToEmptyArray(zones);
+
+  const { rowSpaceMap, rowOptions } = useMemo(
+    () => spacesToRowOptions(defaultToEmptyArray(spaces)),
+    [spaces]
+  );
+
+  const columnOptions = spacesToColOptions(rowSpaceMap[Number(rowId)]);
 
   return (
     <Stepper
@@ -51,7 +61,7 @@ const SelectSpace = ({
     >
       <form>
         <Grid templateColumns="1fr" gap="4">
-          <SelectActorField actor={zoneActor} options={fieldOptions} />
+          <SelectActorField actor={zoneActor} options={zoneOptions} />
           <SelectActorField actor={rowActor} options={rowOptions} />
           <SelectActorField actor={columnActor} options={columnOptions} />
         </Grid>

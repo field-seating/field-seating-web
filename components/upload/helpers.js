@@ -1,3 +1,5 @@
+import { compose, sort, groupBy, map, defaultTo } from 'ramda';
+
 const getBackOptions = (send) => (stepIndex) => {
   if (stepIndex === 1) {
     return null;
@@ -39,3 +41,30 @@ export const getChildProps = (send) => (stepIndex, totalStep) => {
     onBack: backOption.action,
   };
 };
+
+const sortById = sort((a, b) => a.id - b.id);
+
+const groupByRow = groupBy((space) => space.rowNumber);
+
+export const spacesToRowOptions = (spaces) => {
+  const rowSpaceMap = groupByRow(spaces);
+
+  const rowOptions = Object.keys(rowSpaceMap).map((row) => ({
+    id: row,
+    name: row,
+  }));
+
+  return {
+    rowOptions: sortById(rowOptions),
+    rowSpaceMap,
+  };
+};
+
+export const spacesToColOptions = compose(
+  sortById,
+  map((space) => ({
+    id: space.colNumber,
+    name: space.colNumber,
+  })),
+  defaultTo([])
+);
