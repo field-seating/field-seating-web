@@ -3,11 +3,13 @@ import { useMachine } from '@xstate/react';
 import uploadStepperMachine, {
   selectFilterZone,
   selectSelectSpace,
+  selectPreviewImages,
 } from 'lib/machines/upload-stepper-machine';
 
 import { getChildProps } from './helpers';
 import FilterZones from './filter-zones';
 import SelectSpace from './select-space';
+import PreviewImages from './preview-images';
 
 const getFormComponent = (state) => {
   if (selectFilterZone(state)) {
@@ -16,6 +18,10 @@ const getFormComponent = (state) => {
 
   if (selectSelectSpace(state)) {
     return SelectSpace;
+  }
+
+  if (selectPreviewImages(state)) {
+    return PreviewImages;
   }
   return null;
 };

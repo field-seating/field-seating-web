@@ -48,7 +48,7 @@ const Stepper = ({
               color="onSecondary.main"
               variant="ghost"
               leftIcon={<ArrowBackIcon />}
-              onClick={onBack}
+              onClick={() => onBack()}
             >
               {backTitle}
             </Button>
@@ -61,7 +61,7 @@ const Stepper = ({
               variant="ghost"
               color="onSecondary.main"
               rightIcon={<ArrowForwardIcon />}
-              onClick={onForward}
+              onClick={() => onForward()}
             >
               {forwardTitle}
             </Button>

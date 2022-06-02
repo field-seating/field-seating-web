@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
 import { defaultTo } from 'ramda';
@@ -6,10 +6,17 @@ import { defaultTo } from 'ramda';
 import SelectActorField from 'components/select-actor-field';
 import { useFetchZones } from 'lib/fetch/fields/list-zones';
 import { useFetchSpaces } from 'lib/fetch/fields/list-spaces';
+import useSnackbar from 'components/ui/snackbar';
+import {
+  //selectDisabled,
+  //selectLoading,
+  selectSuccess,
+  selectFailure,
+} from 'lib/machines/form';
 
 import Stepper from './stepper';
 import machine from './select-space-machine';
-import { spacesToRowOptions, spacesToColOptions } from './helpers';
+import { spacesToRowOptions, spacesToColumnOptions } from './helpers';
 
 const defaultToEmptyArray = defaultTo([]);
 
@@ -21,7 +28,9 @@ const SelectSpace = ({
   title,
   flowData,
 }) => {
-  const [currentForm] = useMachine(machine, { devTools: true });
+  const { fieldId, orientationId, levelId } = flowData;
+
+  const [currentForm, send] = useMachine(machine, { devTools: true });
   const {
     zone: zoneActor,
     row: rowActor,
@@ -34,7 +43,35 @@ const SelectSpace = ({
   const [rowState] = useActor(rowActor);
   const rowId = rowState.context.value;
 
-  const { fieldId, orientationId, levelId } = flowData;
+  const [columnState] = useActor(columnActor);
+  const columnId = columnState.context.value;
+
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      send('SUBMIT');
+    },
+    [send]
+  );
+
+  const snackbar = useSnackbar();
+
+  useEffect(() => {
+    const globalErrorMsg = currentForm.context.globalErrorMsg;
+    if (selectFailure(currentForm)) {
+      snackbar({ text: globalErrorMsg, variant: 'error' });
+      return;
+    }
+
+    if (selectSuccess(currentForm)) {
+      onForward({
+        rowId,
+        columnId,
+        zoneId,
+      });
+      return;
+    }
+  }, [currentForm, snackbar, rowId, columnId, zoneId, onForward]);
 
   // TODO: handle error
   const { data: zones } = useFetchZones(fieldId, orientationId, levelId);
@@ -49,12 +86,12 @@ const SelectSpace = ({
     [spaces]
   );
 
-  const columnOptions = spacesToColOptions(rowSpaceMap[Number(rowId)]);
+  const columnOptions = spacesToColumnOptions(rowSpaceMap[Number(rowId)]);
 
   return (
     <Stepper
       forwardTitle={forwardTitle}
-      onForward={onForward}
+      onForward={onSubmit}
       backTitle={backTitle}
       onBack={onBack}
       title={title}

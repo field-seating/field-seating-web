@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
-import { head, defaultTo } from 'ramda';
+import { defaultTo } from 'ramda';
 
 import SelectActorField from 'components/select-actor-field';
 import { useFetchFields } from 'lib/fetch/fields/list-fields';
@@ -17,20 +17,7 @@ import useSnackbar from 'components/ui/snackbar';
 
 import Stepper from './stepper';
 import machine from './filter-zones-machine';
-
-const getDefaultValue = (valueInContext, options) => {
-  if (options.length === 0) {
-    return null;
-  }
-
-  const optionSet = new Set(options.map((option) => String(option.id)));
-
-  if (valueInContext && optionSet.has(String(valueInContext))) {
-    return valueInContext;
-  }
-
-  return head(options).id;
-};
+import { getDefaultValue } from './helpers';
 
 const defaultToEmptyArray = defaultTo([]);
 
@@ -65,6 +52,7 @@ const FilterZones = ({
     },
     [send]
   );
+
   const snackbar = useSnackbar();
 
   useEffect(() => {
