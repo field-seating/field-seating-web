@@ -1,5 +1,7 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Box } from '@chakra-ui/react';
+import Image from 'next/image';
+import { isNil } from 'ramda';
 
 import ImageUploadContext from 'lib/contexts/image-upload';
 
@@ -12,8 +14,19 @@ const PreviewImages = ({
   onBack,
   title,
 }) => {
+  const [imageURLs, setImageURLs] = useState(null);
   const { images } = useContext(ImageUploadContext);
-  console.log(images);
+
+  useEffect(() => {
+    if (images) {
+      const urls = Array.from(images).map((imageFile, index) => ({
+        id: index,
+        url: URL.createObjectURL(imageFile),
+        alt: 'image preview',
+      }));
+      setImageURLs(urls);
+    }
+  }, [images]);
 
   return (
     <Stepper
@@ -23,7 +36,19 @@ const PreviewImages = ({
       onBack={onBack}
       title={title}
     >
-      <Box></Box>
+      <Box>
+        {!isNil(imageURLs) &&
+          imageURLs.map(({ id, url, alt }) => (
+            <Image
+              key={id}
+              src={url}
+              alt={alt}
+              layout="responsive"
+              width="300"
+              height="300"
+            />
+          ))}
+      </Box>
     </Stepper>
   );
 };
