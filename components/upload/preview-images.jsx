@@ -1,4 +1,4 @@
-const { Box } = require('@chakra-ui/react');
+import { Box } from '@chakra-ui/react';
 
 import Stepper from './stepper';
 
@@ -17,7 +17,7 @@ const PreviewImages = ({
       onBack={onBack}
       title={title}
     >
-      <Box>PreviewImages</Box>
+      <Box></Box>
     </Stepper>
   );
 };
