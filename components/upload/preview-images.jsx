@@ -1,4 +1,7 @@
+import { useContext } from 'react';
 import { Box } from '@chakra-ui/react';
+
+import ImageUploadContext from 'lib/contexts/image-upload';
 
 import Stepper from './stepper';
 
@@ -9,6 +12,9 @@ const PreviewImages = ({
   onBack,
   title,
 }) => {
+  const { images } = useContext(ImageUploadContext);
+  console.log(images);
+
   return (
     <Stepper
       forwardTitle={forwardTitle}
