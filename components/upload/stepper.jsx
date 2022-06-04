@@ -28,7 +28,7 @@ const Stepper = ({
           {title}
         </Heading>
       </Box>
-      <Box flex="1" p={[4, 12]}>
+      <Box flex="1" p={[4, 12]} overflowY="auto">
         {children}
       </Box>
       <Box

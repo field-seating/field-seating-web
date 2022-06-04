@@ -45,13 +45,9 @@ const FilterZones = ({
   const [levelState] = useActor(levelActor);
   const levelId = levelState.context.value;
 
-  const onSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      send('SUBMIT');
-    },
-    [send]
-  );
+  const onSubmit = useCallback(() => {
+    send('SUBMIT');
+  }, [send]);
 
   const snackbar = useSnackbar();
 
