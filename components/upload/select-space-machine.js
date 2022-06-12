@@ -2,41 +2,15 @@ import formMachineCreator from 'lib/machines/form';
 import { number } from 'yup';
 
 const inputOptionMap = {
-  zone: {
-    label: '區',
+  space: {
     validateFunc: (context) => {
       const valid = number().required().isValidSync(context.value);
 
       return {
         valid,
-        message: '請選擇區域',
+        message: '請選擇座位',
       };
     },
-    placeholder: '選擇區域',
-  },
-  row: {
-    label: '第幾排',
-    validateFunc: (context) => {
-      const valid = number().required().isValidSync(context.value);
-
-      return {
-        valid,
-        message: '請選擇排',
-      };
-    },
-    placeholder: '選擇排',
-  },
-  column: {
-    label: '第幾列',
-    validateFunc: (context) => {
-      const valid = number().required().isValidSync(context.value);
-
-      return {
-        valid,
-        message: '請選擇列',
-      };
-    },
-    placeholder: '選擇幾列',
   },
 };
 

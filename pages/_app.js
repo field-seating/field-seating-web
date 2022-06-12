@@ -6,7 +6,6 @@ import { SWRConfig } from 'swr';
 import { GlobalStateProvider } from 'lib/contexts/globalState';
 import AppLayout from 'components/layout/app-layout';
 import theme from 'lib/theme/customTheme';
-import { ImageUploadContextProvider } from 'lib/contexts/image-upload';
 
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   inspect({
@@ -25,9 +24,7 @@ function MyApp({ Component, pageProps }) {
     >
       <ChakraProvider theme={theme}>
         <GlobalStateProvider>
-          <ImageUploadContextProvider>
-            <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
-          </ImageUploadContextProvider>
+          <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
         </GlobalStateProvider>
       </ChakraProvider>
     </SWRConfig>

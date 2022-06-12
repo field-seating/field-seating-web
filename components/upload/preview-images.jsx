@@ -1,32 +1,42 @@
 import { useContext, useEffect, useState } from 'react';
+import { useActor } from '@xstate/react';
 import { Box } from '@chakra-ui/react';
 import Image from 'next/image';
 import { isNil } from 'ramda';
 
-import ImageUploadContext from 'lib/contexts/image-upload';
+import { GlobalStateContext } from 'lib/contexts/global-state';
 
 import Stepper from './stepper';
+import { getChildProps } from './helpers';
 
-const PreviewImages = ({
-  forwardTitle,
-  onForward,
-  backTitle,
-  onBack,
-  title,
-}) => {
+const PreviewImages = () => {
   const [imageURLs, setImageURLs] = useState(null);
-  const { images } = useContext(ImageUploadContext);
+
+  const { uploadStepperService } = useContext(GlobalStateContext);
+  const [uploadStepperState, sendToUploadStepperActor] =
+    useActor(uploadStepperService);
+
+  const {
+    stepIndex,
+    title,
+    totalStep,
+    flowData: { imageFiles },
+  } = uploadStepperState.context;
+
+  const { forwardTitle, onForward, backTitle, onBack } = getChildProps(
+    sendToUploadStepperActor
+  )(stepIndex, totalStep);
 
   useEffect(() => {
-    if (images) {
-      const urls = Array.from(images).map((imageFile, index) => ({
+    if (imageFiles) {
+      const urls = Array.from(imageFiles).map((imageFile, index) => ({
         id: index,
         url: URL.createObjectURL(imageFile),
         alt: 'image preview',
       }));
       setImageURLs(urls);
     }
-  }, [images]);
+  }, [imageFiles]);
 
   return (
     <Stepper

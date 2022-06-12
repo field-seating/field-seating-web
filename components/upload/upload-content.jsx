@@ -1,53 +1,39 @@
-import { useMachine } from '@xstate/react';
+import { useContext } from 'react';
+import { useActor } from '@xstate/react';
 
-import uploadStepperMachine, {
-  selectFilterZone,
-  selectSelectSpace,
-  selectPreviewImages,
+import {
+  selectImagePreviewer,
+  selectInfoSelector,
+  selectSpaceSelector,
 } from 'lib/machines/upload-stepper-machine';
+import { GlobalStateContext } from 'lib/contexts/global-state';
 
-import { getChildProps } from './helpers';
-import FilterZones from './filter-zones';
-import SelectSpace from './select-space';
 import PreviewImages from './preview-images';
+import SelectSpace from './select-space';
 
 const getFormComponent = (state) => {
-  if (selectFilterZone(state)) {
-    return FilterZones;
+  if (selectImagePreviewer(state)) {
+    return PreviewImages;
   }
 
-  if (selectSelectSpace(state)) {
+  if (selectSpaceSelector(state)) {
     return SelectSpace;
   }
 
-  if (selectPreviewImages(state)) {
-    return PreviewImages;
+  if (selectInfoSelector) {
+    return () => null;
   }
-  return null;
+
+  return () => null;
 };
 
 const UploadContent = () => {
-  const [current, send] = useMachine(uploadStepperMachine, { devTools: true });
+  const { uploadStepperService } = useContext(GlobalStateContext);
+  const [uploadStepperState] = useActor(uploadStepperService);
 
-  const { stepIndex, title, totalStep } = current.context;
+  const Component = getFormComponent(uploadStepperState);
 
-  const { forwardTitle, onForward, backTitle, onBack } = getChildProps(send)(
-    stepIndex,
-    totalStep
-  );
-
-  const Component = getFormComponent(current);
-
-  return (
-    <Component
-      forwardTitle={forwardTitle}
-      onForward={onForward}
-      backTitle={backTitle}
-      onBack={onBack}
-      title={`${stepIndex}：${title}`}
-      flowData={current.context.flowData}
-    />
-  );
+  return <Component />;
 };
 
 export default UploadContent;

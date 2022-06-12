@@ -1,11 +1,13 @@
 import { useCallback, useContext } from 'react';
+import { useActor } from '@xstate/react';
 import { CloudUpload } from '@mui/icons-material';
 import { Box } from '@chakra-ui/react';
 import Router from 'next/router';
 
 import BottomNavigationButton from 'components/ui/bottom-navigation-button';
-import ImageUploadContext from 'lib/contexts/image-upload';
 import useSnackbar from 'components/ui/snackbar';
+
+import { GlobalStateContext } from 'lib/contexts/global-state';
 
 const FILES_LIMIT = 3;
 
@@ -18,7 +20,9 @@ const isFilesValid = (files) => {
 };
 
 const ImageUploader = ({ isActive }) => {
-  const { setImages } = useContext(ImageUploadContext);
+  const { uploadStepperService } = useContext(GlobalStateContext);
+  const [, sendToUploadStepperActor] = useActor(uploadStepperService);
+
   const snackbar = useSnackbar();
 
   const onChange = useCallback(
@@ -38,10 +42,11 @@ const ImageUploader = ({ isActive }) => {
         return;
       }
 
-      setImages(files);
+      sendToUploadStepperActor({ type: 'START_FLOW', imageFiles: files });
+
       Router.push('/upload');
     },
-    [setImages, snackbar]
+    [sendToUploadStepperActor, snackbar]
   );
 
   return (
