@@ -10,6 +10,7 @@ import { GlobalStateContext } from 'lib/contexts/global-state';
 
 import PreviewImages from './preview-images';
 import SelectSpace from './select-space';
+import InfoSelector from './info-selector';
 
 const getFormComponent = (state) => {
   if (selectImagePreviewer(state)) {
@@ -21,7 +22,7 @@ const getFormComponent = (state) => {
   }
 
   if (selectInfoSelector) {
-    return () => null;
+    return InfoSelector;
   }
 
   return () => null;
