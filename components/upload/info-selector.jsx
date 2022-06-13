@@ -9,6 +9,7 @@ import { GlobalStateContext } from 'lib/contexts/global-state';
 import machine from './info-selector-machine';
 import Stepper from './stepper';
 import { getChildProps } from './helpers';
+import Button from 'components/ui/button';
 
 const InfoSelector = () => {
   const [currentForm] = useMachine(machine, { devTools: true });
@@ -33,6 +34,9 @@ const InfoSelector = () => {
       onBack={onBack}
       title={title}
     >
+      <Box mb={8}>
+        <Button size="md">選擇座位</Button>
+      </Box>
       <Box>
         <DatetimeActorField actor={datetimeActor} />
       </Box>
