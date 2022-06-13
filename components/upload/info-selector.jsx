@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useCallback } from 'react';
 import { useActor } from '@xstate/react';
 import { Box } from '@chakra-ui/react';
 import { useMachine } from '@xstate/react';
@@ -26,6 +26,10 @@ const InfoSelector = () => {
 
   const { datetime: datetimeActor } = currentForm.context.inputRefs;
 
+  const toSpaceSelector = useCallback(() => {
+    sendToUploadStepperActor('OPEN_SPACE_SELECTOR');
+  }, [sendToUploadStepperActor]);
+
   return (
     <Stepper
       forwardTitle={forwardTitle}
@@ -35,7 +39,9 @@ const InfoSelector = () => {
       title={title}
     >
       <Box mb={8}>
-        <Button size="md">選擇座位</Button>
+        <Button onClick={toSpaceSelector} size="md">
+          選擇座位
+        </Button>
       </Box>
       <Box>
         <DatetimeActorField actor={datetimeActor} />

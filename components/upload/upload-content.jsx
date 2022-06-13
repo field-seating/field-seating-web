@@ -9,7 +9,7 @@ import {
 import { GlobalStateContext } from 'lib/contexts/global-state';
 
 import PreviewImages from './preview-images';
-import SelectSpace from './select-space';
+import SpaceSelector from './space-selector';
 import InfoSelector from './info-selector';
 
 const getFormComponent = (state) => {
@@ -18,7 +18,7 @@ const getFormComponent = (state) => {
   }
 
   if (selectSpaceSelector(state)) {
-    return SelectSpace;
+    return SpaceSelector;
   }
 
   if (selectInfoSelector) {
