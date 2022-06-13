@@ -1,20 +1,24 @@
-import formMachineCreator from 'lib/machines/form';
 import { number } from 'yup';
 
+import formMachineCreator from 'lib/machines/form';
+import { formatForDatetimeLocal } from 'lib/utils/datetime';
+
 const inputOptionMap = {
-  space: {
+  datetime: {
     validateFunc: (context) => {
       const valid = number().required().isValidSync(context.value);
 
       return {
         valid,
-        message: '請選擇座位',
+        message: '請選擇打卡時間',
       };
     },
+    defaultValue: formatForDatetimeLocal(new Date()),
   },
+  label: '打卡時間',
 };
 
-const machine = formMachineCreator({ machineId: 'select-space-form' })(
+const machine = formMachineCreator({ machineId: 'info-selector-form' })(
   inputOptionMap
 ).withConfig({
   services: {
