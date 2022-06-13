@@ -14,8 +14,9 @@ const inputOptionMap = {
       };
     },
     defaultValue: formatForDatetimeLocal(new Date()),
+    label: '打卡時間',
+    helpText: '預設為當下時間',
   },
-  label: '打卡時間',
 };
 
 const machine = formMachineCreator({ machineId: 'info-selector-form' })(
