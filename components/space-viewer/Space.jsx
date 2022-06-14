@@ -2,14 +2,30 @@ import { useCallback } from 'react';
 
 import { colors } from 'lib/theme/customTheme';
 
-const Space = ({ id, title, x, y, width, height }) => {
-  const onClick = useCallback(() => {
+const spaceTypeClassNameMap = {
+  seat: 'seat',
+  pillar: 'pillar',
+};
+
+const allowList = new Set(['seat', 'group']);
+
+const Space = ({ id, title, x, y, width, height, spaceType }) => {
+  const onSelect = useCallback(() => {
     alert(`select the seat: ${id}`);
   }, [id]);
 
+  const spaceClassname = spaceTypeClassNameMap[spaceType] || 'seat';
+  const isClickable = allowList.has(spaceType);
+
   return (
-    <g className="group" onClick={onClick}>
-      <rect className="space" x={x} y={y} width={width} height={height}></rect>
+    <g className="group" onClick={isClickable ? onSelect : null}>
+      <rect
+        className={spaceClassname}
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+      ></rect>
       <text
         x={x + 0.5 * width}
         y={y + 0.5 * height}
@@ -25,10 +41,13 @@ const Space = ({ id, title, x, y, width, height }) => {
         .group {
           cursor: pointer;
         }
-        .space {
+        .seat {
           fill: ${colors.secondary.main};
         }
-        .group:hover > .space {
+        .pillar {
+          fill: ${colors.onSurface.main};
+        }
+        .group:hover > .seat {
           fill: ${colors.secondary.light};
         }
         .title {

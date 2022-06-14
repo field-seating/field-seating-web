@@ -30,7 +30,7 @@ const SpaceViewer = ({ spaces }) => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      {normalizedSpaces.map(({ id, colNumber, rowNumber, x, y }) => (
+      {normalizedSpaces.map(({ id, colNumber, rowNumber, spaceType, x, y }) => (
         <Space
           key={id}
           title={`${rowNumber}-${colNumber}`}
@@ -39,6 +39,7 @@ const SpaceViewer = ({ spaces }) => {
           y={y}
           width={SIDE}
           height={SIDE}
+          spaceType={spaceType}
         />
       ))}
       <style jsx>{`
