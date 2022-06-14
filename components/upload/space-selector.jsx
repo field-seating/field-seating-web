@@ -1,6 +1,6 @@
 import { useContext, useCallback } from 'react';
 import { useActor } from '@xstate/react';
-import { useDisclosure } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 
 import { useFetchSpaces } from 'lib/fetch/fields/list-spaces';
 import { GlobalStateContext } from 'lib/contexts/global-state';
@@ -8,7 +8,7 @@ import SpaceViewer from 'components/space-viewer';
 import AppBar from 'components/ui/app-bar';
 import ZoneCriteriaDrawer from './zone-criteria-drawer';
 
-const SelectSpace = () => {
+const SpaceSelector = () => {
   const { uploadStepperService } = useContext(GlobalStateContext);
   const [uploadStepperState, sendToUploadStepperActor] =
     useActor(uploadStepperService);
@@ -43,12 +43,15 @@ const SelectSpace = () => {
 
   return (
     <>
-      <AppBar title="" hasBackward onBack={onBack} hasMenu onMenu={onOpen}>
-        <SpaceViewer spaces={spaces} onSpaceSelect={onSpaceSelect} />;
-      </AppBar>
+      <Box display="flex" flexDir="column" height="100%">
+        <AppBar title="" hasBackward onBack={onBack} hasMenu onMenu={onOpen} />
+        <Box flex="1" width="100%" overflowX="auto" pt={[4, 8]} pl={[4, 8]}>
+          <SpaceViewer spaces={spaces || []} onSpaceSelect={onSpaceSelect} />
+        </Box>
+      </Box>
       <ZoneCriteriaDrawer isOpen={isOpen} onClose={onClose} onSave={onSave} />
     </>
   );
 };
 
-export default SelectSpace;
+export default SpaceSelector;
