@@ -26,17 +26,19 @@ const Space = ({ id, title, x, y, width, height, spaceType }) => {
         width={width}
         height={height}
       ></rect>
-      <text
-        x={x + 0.5 * width}
-        y={y + 0.5 * height}
-        fontFamily="Verdana"
-        fontSize="12"
-        textAnchor="middle"
-        alignmentBaseline="central"
-        className="title"
-      >
-        {title}
-      </text>
+      {isClickable && (
+        <text
+          x={x + 0.5 * width}
+          y={y + 0.5 * height}
+          fontFamily="Verdana"
+          fontSize="12"
+          textAnchor="middle"
+          alignmentBaseline="central"
+          className="title"
+        >
+          {title}
+        </text>
+      )}
       <style jsx>{`
         .group {
           cursor: pointer;
