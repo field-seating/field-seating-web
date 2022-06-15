@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { SIDE, getCoordinate } from './helpers';
+import { SIDE, getCoordinate, getCanvasSize } from './helpers';
 import Space from './Space';
 import EmptyState from './EmptyState';
 
@@ -18,13 +18,17 @@ const SpaceViewer = ({ spaces }) => {
     });
   }, [spaces]);
 
+  const canvasSize = useMemo(() => {
+    return getCanvasSize(spaces);
+  }, [spaces]);
+
   if (normalizedSpaces.length === 0) {
     return <EmptyState />;
   }
 
   return (
     <svg
-      viewBox="0 0 2000 1000"
+      viewBox={`0 0 ${canvasSize.width} ${canvasSize.height}`}
       className="container"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -48,8 +52,8 @@ const SpaceViewer = ({ spaces }) => {
       )}
       <style jsx>{`
         .container {
-          width: 2000px;
-          height: 1000px;
+          width: ${canvasSize.width}px;
+          height: ${canvasSize.height}px;
         }
       `}</style>
     </svg>

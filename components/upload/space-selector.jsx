@@ -66,7 +66,7 @@ const SpaceSelector = () => {
           hasMenu
           onMenu={onOpen}
         />
-        <Box flex="1" width="100%" overflowX="auto" py={[4, 8]} px={[4, 8]}>
+        <Box flex="1" width="100%" overflowX="auto" pt={[4, 8]} px={[4, 8]}>
           <SpaceViewer spaces={spaces || []} onSpaceSelect={onSpaceSelect} />
         </Box>
       </Box>
