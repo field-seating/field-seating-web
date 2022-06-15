@@ -45,7 +45,7 @@ const SpaceSelector = () => {
     <>
       <Box display="flex" flexDir="column" height="100%">
         <AppBar title="" hasBackward onBack={onBack} hasMenu onMenu={onOpen} />
-        <Box flex="1" width="100%" overflowX="auto" pt={[4, 8]} pl={[4, 8]}>
+        <Box flex="1" width="100%" overflowX="auto" py={[4, 8]} px={[4, 8]}>
           <SpaceViewer spaces={spaces || []} onSpaceSelect={onSpaceSelect} />
         </Box>
       </Box>
