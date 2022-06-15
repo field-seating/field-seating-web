@@ -6,8 +6,8 @@ import EmptyState from './EmptyState';
 
 const SpaceViewer = ({ spaces }) => {
   const normalizedSpaces = useMemo(() => {
+    console.log('getCoordinate heavy computing again');
     return spaces.map((space) => {
-      console.log('getCoordinate heavy computing again');
       const { x, y } = getCoordinate(space);
 
       return {
@@ -30,18 +30,22 @@ const SpaceViewer = ({ spaces }) => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      {normalizedSpaces.map(({ id, colNumber, rowNumber, spaceType, x, y }) => (
-        <Space
-          key={id}
-          title={`${rowNumber}-${colNumber}`}
-          id={`${rowNumber}-${colNumber}`}
-          x={x}
-          y={y}
-          width={SIDE}
-          height={SIDE}
-          spaceType={spaceType}
-        />
-      ))}
+      {normalizedSpaces.map(
+        ({ id, name, colNumber, rowNumber, spaceType, x, y }) => (
+          <Space
+            key={id}
+            id={`${rowNumber}-${colNumber}`}
+            name={name}
+            rowNumber={rowNumber}
+            colNumber={colNumber}
+            x={x}
+            y={y}
+            width={SIDE}
+            height={SIDE}
+            spaceType={spaceType}
+          />
+        )
+      )}
       <style jsx>{`
         .container {
           width: 2000px;

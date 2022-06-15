@@ -5,20 +5,48 @@ import { colors } from 'lib/theme/customTheme';
 const spaceTypeClassNameMap = {
   seat: 'seat',
   pillar: 'pillar',
+  group: 'group',
 };
 
 const allowList = new Set(['seat', 'group']);
 
-const Space = ({ id, title, x, y, width, height, spaceType }) => {
+const renderTitle =
+  (spaceType) =>
+  ({ rowNumber, colNumber, name }) => {
+    if (spaceType === 'group') {
+      return name;
+    }
+
+    return `${rowNumber}-${colNumber}`;
+  };
+
+const Space = ({
+  id,
+  rowNumber,
+  colNumber,
+  name,
+  x,
+  y,
+  width,
+  height,
+  spaceType,
+}) => {
   const onSelect = useCallback(() => {
     alert(`select the seat: ${id}`);
   }, [id]);
 
   const spaceClassname = spaceTypeClassNameMap[spaceType] || 'seat';
+
   const isClickable = allowList.has(spaceType);
 
+  const title = renderTitle(spaceType)({
+    name,
+    rowNumber,
+    colNumber,
+  });
+
   return (
-    <g className="group" onClick={isClickable ? onSelect : null}>
+    <g className="container" onClick={isClickable ? onSelect : null}>
       <rect
         className={spaceClassname}
         x={x}
@@ -40,11 +68,14 @@ const Space = ({ id, title, x, y, width, height, spaceType }) => {
         </text>
       )}
       <style jsx>{`
-        .group {
+        .container {
           cursor: pointer;
         }
+        .group {
+          fill: ${colors.secondary.light};
+        }
         .seat {
-          fill: ${colors.secondary.main};
+          fill: ${colors.secondary.dark};
         }
         .pillar {
           fill: ${colors.onSurface.main};

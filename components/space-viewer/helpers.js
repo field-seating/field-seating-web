@@ -1,5 +1,5 @@
 export const GAP = 5;
-export const SIDE = 40;
+export const SIDE = 50;
 
 export const getCoordinate = ({ positionRowNumber, positionColNumber }) => {
   const y = (positionRowNumber - 1) * (SIDE + GAP);
