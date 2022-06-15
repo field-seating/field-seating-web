@@ -6,7 +6,6 @@ import EmptyState from './EmptyState';
 
 const SpaceViewer = ({ spaces, onSpaceSelect }) => {
   const normalizedSpaces = useMemo(() => {
-    console.log('getCoordinate heavy computing again');
     return spaces.map((space) => {
       const { x, y } = getCoordinate(space);
 

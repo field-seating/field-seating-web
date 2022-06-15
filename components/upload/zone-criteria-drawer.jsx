@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useContext } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
 import { defaultTo } from 'ramda';
@@ -11,12 +11,13 @@ import {
 } from '@chakra-ui/react';
 
 import SelectActorField from 'components/select-actor-field';
+import useSnackbar from 'components/ui/snackbar';
+import Button from 'components/ui/button';
 import { useFetchFields } from 'lib/fetch/fields/list-fields';
 import { useFetchOrientations } from 'lib/fetch/fields/list-orientations';
 import { useFetchLevels } from 'lib/fetch/fields/list-levels';
 import { selectSuccess, selectFailure } from 'lib/machines/form';
-import useSnackbar from 'components/ui/snackbar';
-import Button from 'components/ui/button';
+import { GlobalStateContext } from 'lib/contexts/global-state';
 
 import machine from './zone-criteria-form-machine';
 import { useFetchZones } from 'lib/fetch/fields/list-zones';
@@ -24,6 +25,18 @@ import { useFetchZones } from 'lib/fetch/fields/list-zones';
 const defaultToEmptyArray = defaultTo([]);
 
 const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
+  const { uploadStepperService } = useContext(GlobalStateContext);
+  const [uploadStepperState] = useActor(uploadStepperService);
+
+  const {
+    flowData: {
+      fieldId: defaultFieldId,
+      levelId: defaultLevelId,
+      orientationId: defaultOrientationId,
+      zoneId: defaultZoneId,
+    },
+  } = uploadStepperState.context;
+
   const [currentForm, sendToForm] = useMachine(machine, { devTools: true });
   const {
     field: fieldActor,
@@ -92,13 +105,26 @@ const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
         <DrawerBody>
           <form>
             <Grid mt={8} templateColumns="1fr" gap="4">
-              <SelectActorField actor={fieldActor} options={fieldOptions} />
+              <SelectActorField
+                actor={fieldActor}
+                options={fieldOptions}
+                defaultValue={Number(defaultFieldId)}
+              />
               <SelectActorField
                 actor={orientationActor}
                 options={orientationOptions}
+                defaultValue={Number(defaultOrientationId)}
               />
-              <SelectActorField actor={levelActor} options={levelOptions} />
-              <SelectActorField actor={zoneActor} options={zoneOptions} />
+              <SelectActorField
+                actor={levelActor}
+                options={levelOptions}
+                defaultValue={Number(defaultLevelId)}
+              />
+              <SelectActorField
+                actor={zoneActor}
+                options={zoneOptions}
+                defaultValue={Number(defaultZoneId)}
+              />
             </Grid>
           </form>
         </DrawerBody>
