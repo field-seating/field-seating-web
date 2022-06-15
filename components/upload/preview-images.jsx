@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useActor } from '@xstate/react';
-import { Box } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Box, Image } from '@chakra-ui/react';
 import { isNil } from 'ramda';
 
 import { GlobalStateContext } from 'lib/contexts/global-state';
@@ -53,7 +52,7 @@ const PreviewImages = () => {
               key={id}
               src={url}
               alt={alt}
-              layout="responsive"
+              objectFit="cover"
               width="300"
               height="300"
             />
