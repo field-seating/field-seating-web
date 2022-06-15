@@ -5,6 +5,12 @@ import { ThumbDownOutlined, ThumbUpOutlined } from '@mui/icons-material';
 
 import machine, { selectLoaded } from './machine';
 
+const RateNumber = ({ children }) => (
+  <Text fontSize={['xs', 'lg']}>{children}</Text>
+);
+
+const RateIcon = ({ as }) => <Icon boxSize={['3', '6']} as={as} mr="1" />;
+
 const PhotoPreviewCard = ({ thumbUp, thumbDown, src, alt }) => {
   const [current, send] = useMachine(machine);
   const onLoad = useCallback(() => {
@@ -19,7 +25,7 @@ const PhotoPreviewCard = ({ thumbUp, thumbDown, src, alt }) => {
 
   return (
     <Box
-      w="150px"
+      w={['160px', '320px', '320px', '480px']}
       display="flex"
       flexDir="column"
       borderColor="onSurface.light"
@@ -28,7 +34,7 @@ const PhotoPreviewCard = ({ thumbUp, thumbDown, src, alt }) => {
       overflow="hidden"
     >
       <Skeleton isLoaded={isLoaded}>
-        <Box w="100%" h="90px">
+        <Box w="100%" h={['120px', '240px', '240px', '360px']}>
           <Image
             src={src}
             alt={alt}
@@ -42,14 +48,19 @@ const PhotoPreviewCard = ({ thumbUp, thumbDown, src, alt }) => {
         </Box>
       </Skeleton>
 
-      <Box display="flex" justifyContent="space-between" h="8" px="2">
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        h={['8', '16', '16', '24']}
+        px={['2', '8']}
+      >
         <Box display="flex" alignItems="center">
-          <Icon boxSize="11px" as={ThumbUpOutlined} mr="1" />
-          <Text fontSize="xs">{thumbUp}</Text>
+          <RateIcon boxSize="11px" as={ThumbUpOutlined} mr="1" />
+          <RateNumber>{thumbUp}</RateNumber>
         </Box>
         <Box display="flex" alignItems="center">
-          <Icon boxSize="11px" as={ThumbDownOutlined} mr="1" />
-          <Text fontSize="xs">{thumbDown}</Text>
+          <RateIcon boxSize="11px" as={ThumbDownOutlined} mr="1" />
+          <RateNumber>{thumbDown}</RateNumber>
         </Box>
       </Box>
     </Box>

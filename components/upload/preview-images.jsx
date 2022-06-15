@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { useActor } from '@xstate/react';
-import { Box, Image } from '@chakra-ui/react';
+import { Box, Grid } from '@chakra-ui/react';
 import { isNil } from 'ramda';
 
 import { GlobalStateContext } from 'lib/contexts/global-state';
+import PhotoPreviewCard from 'components/ui/photo-preview-card';
 
 import Stepper from './stepper';
 import { getChildProps } from './helpers';
@@ -45,19 +46,19 @@ const PreviewImages = () => {
       onBack={onBack}
       title={title}
     >
-      <Box>
+      <Grid templateColumns={['repeat(2, 1fr)']} rowGap="8">
         {!isNil(imageURLs) &&
           imageURLs.map(({ id, url, alt }) => (
-            <Image
-              key={id}
-              src={url}
-              alt={alt}
-              objectFit="cover"
-              width="300"
-              height="300"
-            />
+            <Box key={id} display="flex" justifyContent="center">
+              <PhotoPreviewCard
+                thumbUp={100}
+                thumbDown={3}
+                src={url}
+                alt={alt}
+              />
+            </Box>
           ))}
-      </Box>
+      </Grid>
     </Stepper>
   );
 };
