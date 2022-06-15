@@ -11,7 +11,7 @@ const Stepper = ({
   backTitle,
   onBack,
 }) => {
-  const barHeight = [10, 16];
+  const barHeight = [12, 16];
 
   return (
     <Box h="100%" display="flex" flexDir="column">
