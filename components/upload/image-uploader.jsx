@@ -7,6 +7,7 @@ import Router from 'next/router';
 import BottomNavigationButton from 'components/ui/bottom-navigation-button';
 import useSnackbar from 'components/ui/snackbar';
 import { selectLoginActive } from 'lib/machines/auth';
+import { selectPrepareImages } from 'lib/machines/upload-stepper-machine';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 
 const FILES_LIMIT = 3;
@@ -22,7 +23,8 @@ const isFilesValid = (files) => {
 const ImageUploader = ({ isActive }) => {
   const { uploadStepperService, authService } = useContext(GlobalStateContext);
   const [authState] = useActor(authService);
-  const [, sendToUploadStepperActor] = useActor(uploadStepperService);
+  const [uploadStepperState, sendToUploadStepperActor] =
+    useActor(uploadStepperService);
 
   const snackbar = useSnackbar();
 
@@ -52,13 +54,19 @@ const ImageUploader = ({ isActive }) => {
 
   const onClick = useCallback(
     (e) => {
-      if (selectLoginActive(authState)) {
+      if (!selectLoginActive(authState)) {
+        e.preventDefault();
+        snackbar({ text: '上傳前請先登入', variant: 'error' });
+        Router.push('/profile');
         return;
       }
-      e.preventDefault();
-      snackbar({ text: '上傳前請先登入', variant: 'error' });
+
+      if (!selectPrepareImages(uploadStepperState)) {
+        e.preventDefault();
+        return;
+      }
     },
-    [authState, snackbar]
+    [authState, snackbar, uploadStepperState]
   );
 
   return (
