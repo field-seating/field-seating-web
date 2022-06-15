@@ -62,7 +62,7 @@ const InfoSelector = () => {
       title={title}
     >
       <Box mb={8}>
-        <Button onClick={toSpaceSelector} size="md">
+        <Button variant="outline" onClick={toSpaceSelector} size="md">
           {spaceLabel}
         </Button>
       </Box>

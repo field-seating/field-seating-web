@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { FormControl, Box } from '@chakra-ui/react';
 import { useActor } from '@xstate/react';
+import { isNil, isEmpty } from 'ramda';
 
 import Select from 'components/ui/select';
 import FormErrorMessage from 'components/ui/form-error-message';
@@ -27,6 +28,8 @@ const SelectActorField = ({ actor, defaultValue, size, options }) => {
 
   const { helpText, errorMsg, label, value, id, placeholder } = state.context;
 
+  const isDisabled = isNil(options) || isEmpty(options);
+
   return (
     <FormControl id={id} isInvalid={isError}>
       <FormLabel>{label}</FormLabel>
@@ -35,6 +38,7 @@ const SelectActorField = ({ actor, defaultValue, size, options }) => {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        isDisabled={isDisabled}
       >
         {options.map((option) => (
           <option key={option.id} value={option.id}>
