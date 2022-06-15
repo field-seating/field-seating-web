@@ -44,3 +44,13 @@ export const getCanvasSize = (spaces) => {
     height,
   };
 };
+
+export const renderSpaceTitle =
+  (spaceType) =>
+  ({ rowNumber, colNumber, name }) => {
+    if (spaceType === 'group') {
+      return name;
+    }
+
+    return `${rowNumber}-${colNumber}`;
+  };

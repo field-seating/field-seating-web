@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import { colors } from 'lib/theme/customTheme';
+import { renderSpaceTitle } from './helpers';
 
 const spaceTypeClassNameMap = {
   seat: 'seat',
@@ -9,16 +10,6 @@ const spaceTypeClassNameMap = {
 };
 
 const allowList = new Set(['seat', 'group']);
-
-const renderTitle =
-  (spaceType) =>
-  ({ rowNumber, colNumber, name }) => {
-    if (spaceType === 'group') {
-      return name;
-    }
-
-    return `${rowNumber}-${colNumber}`;
-  };
 
 const Space = ({
   id,
@@ -30,23 +21,24 @@ const Space = ({
   width,
   height,
   spaceType,
+  onSelect,
 }) => {
-  const onSelect = useCallback(() => {
-    alert(`select the seat: ${id}`);
-  }, [id]);
+  const onClick = useCallback(() => {
+    onSelect(id);
+  }, [onSelect, id]);
 
   const spaceClassname = spaceTypeClassNameMap[spaceType] || 'seat';
 
   const isClickable = allowList.has(spaceType);
 
-  const title = renderTitle(spaceType)({
+  const title = renderSpaceTitle(spaceType)({
     name,
     rowNumber,
     colNumber,
   });
 
   return (
-    <g className="container" onClick={isClickable ? onSelect : null}>
+    <g className="container" onClick={isClickable ? onClick : null}>
       <rect
         className={spaceClassname}
         x={x}

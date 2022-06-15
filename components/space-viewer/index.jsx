@@ -4,7 +4,7 @@ import { SIDE, getCoordinate, getCanvasSize } from './helpers';
 import Space from './Space';
 import EmptyState from './EmptyState';
 
-const SpaceViewer = ({ spaces }) => {
+const SpaceViewer = ({ spaces, onSpaceSelect }) => {
   const normalizedSpaces = useMemo(() => {
     console.log('getCoordinate heavy computing again');
     return spaces.map((space) => {
@@ -38,7 +38,7 @@ const SpaceViewer = ({ spaces }) => {
         ({ id, name, colNumber, rowNumber, spaceType, x, y }) => (
           <Space
             key={id}
-            id={`${rowNumber}-${colNumber}`}
+            id={id}
             name={name}
             rowNumber={rowNumber}
             colNumber={colNumber}
@@ -47,6 +47,7 @@ const SpaceViewer = ({ spaces }) => {
             width={SIDE}
             height={SIDE}
             spaceType={spaceType}
+            onSelect={onSpaceSelect}
           />
         )
       )}

@@ -25,9 +25,12 @@ const SpaceSelector = () => {
 
   const { zoneId, fieldId } = uploadStepperState.context.flowData;
 
-  const onSpaceSelect = useCallback((spaceId) => {
-    console.log('select spaceId: ', spaceId);
-  }, []);
+  const onSpaceSelect = useCallback(
+    (spaceId) => {
+      sendToUploadStepperActor({ type: 'SELECT_SPACE', spaceId });
+    },
+    [sendToUploadStepperActor]
+  );
 
   const onBack = useCallback(() => {
     sendToUploadStepperActor('BACK');
