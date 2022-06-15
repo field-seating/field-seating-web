@@ -16,6 +16,7 @@ const BottomNavigationButton = ({ as = 'button', icon, label, isActive }) => {
       }}
       icon={icon}
       aria-label={label}
+      role="button"
       cursor="pointer"
       borderRadius={0}
       h="56px"
