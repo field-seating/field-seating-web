@@ -6,7 +6,7 @@ import Router from 'next/router';
 
 import BottomNavigationButton from 'components/ui/bottom-navigation-button';
 import useSnackbar from 'components/ui/snackbar';
-
+import { selectLoginActive } from 'lib/machines/auth';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 
 const FILES_LIMIT = 3;
@@ -20,7 +20,8 @@ const isFilesValid = (files) => {
 };
 
 const ImageUploader = ({ isActive }) => {
-  const { uploadStepperService } = useContext(GlobalStateContext);
+  const { uploadStepperService, authService } = useContext(GlobalStateContext);
+  const [authState] = useActor(authService);
   const [, sendToUploadStepperActor] = useActor(uploadStepperService);
 
   const snackbar = useSnackbar();
@@ -49,10 +50,22 @@ const ImageUploader = ({ isActive }) => {
     [sendToUploadStepperActor, snackbar]
   );
 
+  const onClick = useCallback(
+    (e) => {
+      if (selectLoginActive(authState)) {
+        return;
+      }
+      e.preventDefault();
+      snackbar({ text: '上傳前請先登入', variant: 'error' });
+    },
+    [authState, snackbar]
+  );
+
   return (
     <Box flex={1}>
       <label htmlFor="image-uploader">
         <BottomNavigationButton
+          onClick={onClick}
           as="div"
           label="上傳"
           icon={<CloudUpload />}

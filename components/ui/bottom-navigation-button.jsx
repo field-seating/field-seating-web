@@ -1,6 +1,12 @@
 import { IconButton } from '@chakra-ui/react';
 
-const BottomNavigationButton = ({ as = 'button', icon, label, isActive }) => {
+const BottomNavigationButton = ({
+  as = 'button',
+  icon,
+  label,
+  isActive,
+  onClick,
+}) => {
   return (
     <IconButton
       as={as}
@@ -14,6 +20,7 @@ const BottomNavigationButton = ({ as = 'button', icon, label, isActive }) => {
       _focus={{
         boxShadow: undefined,
       }}
+      onClick={onClick}
       icon={icon}
       aria-label={label}
       role="button"
