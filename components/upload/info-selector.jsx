@@ -2,7 +2,7 @@ import { useContext, useCallback, useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import { useMachine, useSelector } from '@xstate/react';
 
-import DatetimeActorField from 'components/datetime-actor-field';
+import DateActorField from 'components/date-actor-field';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 import { selectSuccess } from 'lib/machines/form';
 import { selectInfoSelector } from 'lib/machines/upload-stepper-machine';
@@ -66,7 +66,7 @@ const InfoSelector = () => {
         />
       </Box>
       <Box>
-        <DatetimeActorField actor={datetimeActor} />
+        <DateActorField actor={datetimeActor} />
       </Box>
     </Stepper>
   );

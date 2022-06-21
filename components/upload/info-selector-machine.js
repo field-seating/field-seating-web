@@ -2,7 +2,7 @@ import { isValid } from 'date-fns';
 import { number } from 'yup';
 
 import formMachineCreator from 'lib/machines/form';
-import { formatForDatetimeLocal } from 'lib/utils/datetime';
+import { formatForDate } from 'lib/utils/datetime';
 
 const inputOptionMap = {
   space: {
@@ -26,7 +26,7 @@ const inputOptionMap = {
         message: '請選擇打卡時間',
       };
     },
-    defaultValue: formatForDatetimeLocal(new Date()),
+    defaultValue: formatForDate(new Date()),
     label: '打卡時間',
     helpText: '預設為當下時間',
   },
