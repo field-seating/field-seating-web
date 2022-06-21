@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { useSelector } from '@xstate/react';
 import { useContext, useEffect } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 import useAuth from 'lib/hooks/user-auth';
 import UploadContent from 'components/upload/upload-content';
@@ -13,6 +13,7 @@ import {
 
 const UploadPage = () => {
   const { isLoggedIn } = useAuth('/profile/sign-in');
+  const router = useRouter();
 
   const { uploadStepperService } = useContext(GlobalStateContext);
 
@@ -21,11 +22,11 @@ const UploadPage = () => {
 
   useEffect(() => {
     if (isNotReady) {
-      Router.push('/');
+      router.push('/');
     }
 
     return () => uploadStepperService.send('RESET');
-  }, [isNotReady, uploadStepperService]);
+  }, [isNotReady, uploadStepperService, router]);
 
   useEffect(() => {
     if (isIdle) {

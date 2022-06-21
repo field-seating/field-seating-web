@@ -1,11 +1,17 @@
 import { useContext, useCallback, useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import { useMachine, useSelector } from '@xstate/react';
+import { useRouter } from 'next/router';
 
 import DateActorField from 'components/date-actor-field';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 import { selectSuccess } from 'lib/machines/form';
-import { selectInfoSelector } from 'lib/machines/upload-stepper-machine';
+import {
+  selectInfoSelector,
+  selectSuccess as selectUploaderSuccess,
+  selectFailure,
+} from 'lib/machines/upload-stepper-machine';
+import useSnackbar from 'components/ui/snackbar';
 
 import machine from './info-selector-machine';
 import Stepper from './stepper';
@@ -13,6 +19,7 @@ import SelectSpaceButton from './select-space-button';
 import { getChildProps } from './helpers';
 
 const InfoSelector = () => {
+  const router = useRouter();
   const [currentForm, sendToForm] = useMachine(machine, { devTools: true });
 
   const { uploadStepperService } = useContext(GlobalStateContext);
@@ -25,6 +32,11 @@ const InfoSelector = () => {
   } = uploadStepperService.getSnapshot().context;
 
   const isInfoSelector = useSelector(uploadStepperService, selectInfoSelector);
+  const isUploaderSuccess = useSelector(
+    uploadStepperService,
+    selectUploaderSuccess
+  );
+  const isUploaderFailure = useSelector(uploadStepperService, selectFailure);
 
   const { forwardTitle, onForward, backTitle, onBack } = getChildProps(
     uploadStepperService.send
@@ -37,6 +49,8 @@ const InfoSelector = () => {
     uploadStepperService.send('OPEN_SPACE_SELECTOR');
   }, [uploadStepperService]);
 
+  const snackbar = useSnackbar();
+
   useEffect(() => {
     if (selectSuccess(currentForm) && isInfoSelector) {
       const datetime = datetimeActor.getSnapshot().context.value;
@@ -45,6 +59,21 @@ const InfoSelector = () => {
       return;
     }
   }, [currentForm, onForward, datetimeActor, isInfoSelector]);
+
+  useEffect(() => {
+    if (isUploaderSuccess) {
+      snackbar({ text: '成功上傳' });
+      router.push('/');
+      return;
+    }
+  }, [isUploaderSuccess, snackbar, router]);
+
+  useEffect(() => {
+    if (isUploaderFailure) {
+      snackbar({ text: '上傳失敗，請重新送出', variant: 'error' });
+      return;
+    }
+  }, [isUploaderFailure, snackbar]);
 
   const onSubmit = useCallback(() => {
     sendToForm('SUBMIT');

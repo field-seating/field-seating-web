@@ -5,7 +5,6 @@ import {
   selectImagePreviewer,
   selectInfoSelector,
   selectSpaceSelector,
-  selectFailure,
 } from 'lib/machines/upload-stepper-machine';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 
@@ -23,10 +22,6 @@ const getFormComponent = (state) => {
   }
 
   if (selectInfoSelector(state)) {
-    return InfoSelector;
-  }
-
-  if (selectFailure(state)) {
     return InfoSelector;
   }
 
