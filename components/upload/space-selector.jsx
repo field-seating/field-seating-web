@@ -50,7 +50,6 @@ const SpaceSelector = () => {
     [sendToUploadStepperActor, onClose]
   );
 
-  // TODO: handle error
   const { data: spaces } = useFetchSpaces(zoneId);
   const { data: field } = useFetchField(fieldId);
   const { data: zone } = useFetchZone(zoneId);

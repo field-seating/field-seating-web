@@ -85,7 +85,6 @@ const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
     [sendToForm]
   );
 
-  // TODO: handle error
   const { data: fields } = useFetchFields();
   const { data: orientations } = useFetchOrientations(fieldId);
   const { data: levels } = useFetchLevels(fieldId);
