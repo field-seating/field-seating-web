@@ -1,12 +1,25 @@
+import { isValid } from 'date-fns';
 import { number } from 'yup';
 
 import formMachineCreator from 'lib/machines/form';
 import { formatForDatetimeLocal } from 'lib/utils/datetime';
 
 const inputOptionMap = {
-  datetime: {
+  space: {
+    label: '空間',
     validateFunc: (context) => {
       const valid = number().required().isValidSync(context.value);
+
+      return {
+        valid,
+        message: '請選擇座位',
+      };
+    },
+    placeholder: '選擇座位',
+  },
+  datetime: {
+    validateFunc: (context) => {
+      const valid = isValid(new Date(context.value));
 
       return {
         valid,
