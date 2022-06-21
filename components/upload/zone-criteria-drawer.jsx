@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useContext } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
-import { defaultTo } from 'ramda';
+import { defaultTo, head, isEmpty } from 'ramda';
 import {
   Drawer,
   DrawerBody,
@@ -23,6 +23,16 @@ import machine from './zone-criteria-form-machine';
 import { useFetchZones } from 'lib/fetch/fields/list-zones';
 
 const defaultToEmptyArray = defaultTo([]);
+const getDefaultValue = (valueInContext, options) => {
+  if (valueInContext) {
+    return valueInContext;
+  }
+
+  if (!isEmpty(options)) {
+    return head(options).id;
+  }
+  return null;
+};
 
 const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
   const { uploadStepperService } = useContext(GlobalStateContext);
@@ -105,22 +115,34 @@ const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
               <SelectActorField
                 actor={fieldActor}
                 options={fieldOptions}
-                defaultValue={Number(defaultFieldId)}
+                defaultValue={getDefaultValue(
+                  Number(defaultFieldId),
+                  fieldOptions
+                )}
               />
               <SelectActorField
                 actor={orientationActor}
                 options={orientationOptions}
-                defaultValue={Number(defaultOrientationId)}
+                defaultValue={getDefaultValue(
+                  Number(defaultOrientationId),
+                  orientationOptions
+                )}
               />
               <SelectActorField
                 actor={levelActor}
                 options={levelOptions}
-                defaultValue={Number(defaultLevelId)}
+                defaultValue={getDefaultValue(
+                  Number(defaultLevelId),
+                  levelOptions
+                )}
               />
               <SelectActorField
                 actor={zoneActor}
                 options={zoneOptions}
-                defaultValue={Number(defaultZoneId)}
+                defaultValue={getDefaultValue(
+                  Number(defaultZoneId),
+                  zoneOptions
+                )}
               />
             </Grid>
           </form>
