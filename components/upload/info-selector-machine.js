@@ -12,7 +12,7 @@ const inputOptionMap = {
 
       return {
         valid,
-        message: '請選擇座位',
+        message: '請選擇一個座位',
       };
     },
     placeholder: '選擇座位',

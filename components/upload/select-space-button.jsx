@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { Box } from '@chakra-ui/react';
+import { FormControl, Box } from '@chakra-ui/react';
 import { useActor } from '@xstate/react';
 import { isNil, always, ifElse, any } from 'ramda';
 
@@ -9,6 +9,8 @@ import { useFetchSpace } from 'lib/fetch/fields/get-space';
 import { useFetchZone } from 'lib/fetch/fields/get-zone';
 import { useFetchField } from 'lib/fetch/fields/get-field';
 import { GlobalStateContext } from 'lib/contexts/global-state';
+import FormErrorMessage from 'components/ui/form-error-message';
+import { selectError } from 'lib/machines/input-machine-creator';
 
 const anyNil = any(isNil);
 const renderSpaceLabel = ifElse(
@@ -34,7 +36,8 @@ const SelectSpaceButton = ({ onClick, actor, defaultValue }) => {
     flowData: { zoneId, fieldId },
   } = uploadStepperState.context;
 
-  const { value: spaceId } = state.context;
+  const { value: spaceId, errorMsg, id } = state.context;
+  const isError = selectError(state);
 
   const { data: field } = useFetchField(fieldId);
   const { data: space } = useFetchSpace(spaceId);
@@ -42,11 +45,14 @@ const SelectSpaceButton = ({ onClick, actor, defaultValue }) => {
   const spaceLabel = renderSpaceLabel([field, zone, space]);
 
   return (
-    <Box>
+    <FormControl id={id} isInvalid={isError}>
       <Button variant="outline" onClick={onClick} size="md">
         {spaceLabel}
       </Button>
-    </Box>
+      <Box h={4}>
+        {isError && <FormErrorMessage>{errorMsg}</FormErrorMessage>}
+      </Box>
+    </FormControl>
   );
 };
 
