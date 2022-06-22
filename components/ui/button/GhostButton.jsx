@@ -1,8 +1,10 @@
+import React, { forwardRef } from 'react';
 import { Button } from '@chakra-ui/react';
 
-const GhostButton = (props) => (
+const GhostButton = forwardRef((props, ref) => (
   <Button
     {...props}
+    ref={ref}
     bg="surface"
     color={props.color || 'primary.main'}
     variant="ghost"
@@ -16,6 +18,8 @@ const GhostButton = (props) => (
       boxShadow: 'onSurface',
     }}
   />
-);
+));
+
+GhostButton.displayName = 'GhostButton';
 
 export default GhostButton;

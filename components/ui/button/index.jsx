@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import SolidButton from './SolidButton';
 import OutlineButton from './OutlineButton';
 import GhostButton from './GhostButton';
@@ -18,25 +18,23 @@ const getButtonComp = (variant) => {
   }
 };
 
-const Button = ({
-  isDisabled,
-  onClick,
-  variant,
-  type,
-  isLoading,
-  ...props
-}) => {
-  const Comp = getButtonComp(variant);
+const Button = forwardRef(
+  ({ isDisabled, onClick, variant, type, isLoading, ...props }, ref) => {
+    const Comp = getButtonComp(variant);
 
-  return (
-    <Comp
-      onClick={onClick}
-      isDisabled={isDisabled}
-      type={type}
-      isLoading={isLoading}
-      {...props}
-    />
-  );
-};
+    return (
+      <Comp
+        onClick={onClick}
+        isDisabled={isDisabled}
+        type={type}
+        isLoading={isLoading}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
+
+Button.displayName = 'Button';
 
 export default Button;

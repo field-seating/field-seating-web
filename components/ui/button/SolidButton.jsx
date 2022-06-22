@@ -1,8 +1,10 @@
+import React, { forwardRef } from 'react';
 import { Button } from '@chakra-ui/react';
 
-const SolidButton = (props) => (
+const SolidButton = forwardRef((props, ref) => (
   <Button
     {...props}
+    ref={ref}
     bg="primary.light"
     color="onPrimary.main"
     variant="solid"
@@ -16,6 +18,8 @@ const SolidButton = (props) => (
       boxShadow: 'onSurface',
     }}
   />
-);
+));
+
+SolidButton.displayName = 'SolidButton';
 
 export default SolidButton;

@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useContext } from 'react';
+import { useEffect, useCallback, useContext, useRef } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
 import { defaultTo, head, isEmpty } from 'ramda';
@@ -105,8 +105,15 @@ const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
   const levelOptions = defaultToEmptyArray(levels);
   const zoneOptions = defaultToEmptyArray(zones);
 
+  const ref = useRef();
+
   return (
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+    <Drawer
+      isOpen={isOpen}
+      placement="right"
+      onClose={onClose}
+      initialFocusRef={ref}
+    >
       <DrawerOverlay />
       <DrawerContent>
         <DrawerBody>
@@ -152,7 +159,9 @@ const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
           <Button variant="outline" mr={3} onClick={onClose}>
             Cancel
           </Button>
-          <Button onClick={onSubmit}>Save</Button>
+          <Button ref={ref} onClick={onSubmit}>
+            Save
+          </Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
