@@ -17,9 +17,9 @@ const AppLayout = ({ children }) => {
   const isLoading = useSelector(loadingService, selectActive);
 
   return (
-    <Box>
+    <Box h="100%">
       <DefaultHead />
-      <Box as="main" h="100vh" pb="56px" position="relative">
+      <Box as="main" h="100%" pb="56px" position="relative">
         {isLoading && (
           <Box
             bg="onSurface.40"

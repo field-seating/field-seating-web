@@ -7,10 +7,21 @@ import { GlobalStateProvider } from 'lib/contexts/globalState';
 import AppLayout from 'components/layout/app-layout';
 import theme from 'lib/theme/customTheme';
 
+import 'styles/app.css';
+
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   inspect({
     iframe: false, // open in new window
   });
+
+  const appHeight = () => {
+    const doc = document.documentElement;
+    doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+  };
+
+  window.addEventListener('resize', appHeight);
+
+  appHeight();
 }
 
 function MyApp({ Component, pageProps }) {
