@@ -15,7 +15,9 @@ const getBg = (variant) => {
 
 const Snackbar = ({ children, variant }) => (
   <Box
-    mb="56px"
+    pos="absolute"
+    bottom="56px"
+    left={0}
     bg={getBg(variant)}
     w="100vw"
     p={4}

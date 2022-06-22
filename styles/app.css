@@ -1,0 +1,13 @@
+:root {
+  --app-height: 100vh;
+}
+
+body {
+  height: 100vh;
+  height: var(--app-height);
+  width: 100vw;
+}
+
+#__next {
+  height: 100%;
+}

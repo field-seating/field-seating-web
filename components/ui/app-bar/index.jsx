@@ -17,14 +17,21 @@ const AppBar = ({ title, hasBackward, onBack, backHref, hasMenu, onMenu }) => {
       h={[12, 16]}
       w="100%"
     >
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" flex="1" minW="0">
         {hasBackward && (
           <Box mr={4}>
             <BackwardButton onClick={onBack} href={backHref} />
           </Box>
         )}
-        <Box>
-          <Heading as="h1" size="md" m={0}>
+        <Box flex="1" minW>
+          <Heading
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+            as="h1"
+            size="md"
+            m={0}
+          >
             {title}
           </Heading>
         </Box>

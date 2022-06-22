@@ -1,8 +1,10 @@
+import React, { forwardRef } from 'react';
 import { Button } from '@chakra-ui/react';
 
-const OutlineButton = (props) => (
+const OutlineButton = forwardRef((props, ref) => (
   <Button
     {...props}
+    ref={ref}
     bg="surface.main"
     color="primary.main"
     variant="outline"
@@ -17,6 +19,8 @@ const OutlineButton = (props) => (
       boxShadow: 'onSurface',
     }}
   />
-);
+));
+
+OutlineButton.displayName = 'OutlineButton';
 
 export default OutlineButton;

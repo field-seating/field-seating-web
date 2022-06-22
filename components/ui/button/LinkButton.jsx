@@ -1,8 +1,10 @@
+import React, { forwardRef } from 'react';
 import { Button } from '@chakra-ui/react';
 
-const LinkButton = (props) => (
+const LinkButton = forwardRef((props, ref) => (
   <Button
     {...props}
+    ref={ref}
     bg="surface"
     color="primary.light"
     variant="link"
@@ -15,6 +17,8 @@ const LinkButton = (props) => (
       boxShadow: 'onSurface',
     }}
   />
-);
+));
+
+LinkButton.displayName = 'LinkButton';
 
 export default LinkButton;
