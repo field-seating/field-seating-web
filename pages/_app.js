@@ -9,19 +9,25 @@ import theme from 'lib/theme/customTheme';
 
 import 'styles/app.css';
 
+const appHeightFix = () => {
+  if (typeof window !== 'undefined') {
+    const appHeight = () => {
+      const doc = document.documentElement;
+      doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+    };
+
+    window.addEventListener('resize', appHeight);
+
+    appHeight();
+  }
+};
+
+appHeightFix();
+
 if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
   inspect({
     iframe: false, // open in new window
   });
-
-  const appHeight = () => {
-    const doc = document.documentElement;
-    doc.style.setProperty('--app-height', `${window.innerHeight}px`);
-  };
-
-  window.addEventListener('resize', appHeight);
-
-  appHeight();
 }
 
 function MyApp({ Component, pageProps }) {
