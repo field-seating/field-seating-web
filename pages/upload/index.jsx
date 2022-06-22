@@ -24,9 +24,11 @@ const UploadPage = () => {
     if (isNotReady) {
       router.push('/');
     }
-
-    return () => uploadStepperService.send('RESET');
   }, [isNotReady, uploadStepperService, router]);
+
+  useEffect(() => {
+    return () => uploadStepperService.send('RESET');
+  }, [uploadStepperService]);
 
   useEffect(() => {
     if (isIdle) {

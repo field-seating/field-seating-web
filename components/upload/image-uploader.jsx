@@ -1,12 +1,12 @@
 import { useCallback, useContext } from 'react';
-import { useActor } from '@xstate/react';
+import { useSelector } from '@xstate/react';
 import { CloudUpload } from '@mui/icons-material';
 import { Box } from '@chakra-ui/react';
 import Router from 'next/router';
 
 import BottomNavigationButton from 'components/ui/bottom-navigation-button';
 import useSnackbar from 'components/ui/snackbar';
-import { selectLoginActive } from 'lib/machines/auth';
+import { selectReadyNotActive, selectPreparing } from 'lib/machines/auth';
 import { selectPrepareImages } from 'lib/machines/upload-stepper-machine';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 
@@ -22,9 +22,14 @@ const isFilesValid = (files) => {
 
 const ImageUploader = ({ isActive }) => {
   const { uploadStepperService, authService } = useContext(GlobalStateContext);
-  const [authState] = useActor(authService);
-  const [uploadStepperState, sendToUploadStepperActor] =
-    useActor(uploadStepperService);
+
+  const isUploaderPrepareImages = useSelector(
+    uploadStepperService,
+    selectPrepareImages
+  );
+
+  const isReadyNotActive = useSelector(authService, selectReadyNotActive);
+  const isAuthPreparing = useSelector(authService, selectPreparing);
 
   const snackbar = useSnackbar();
 
@@ -45,28 +50,28 @@ const ImageUploader = ({ isActive }) => {
         return;
       }
 
-      sendToUploadStepperActor({ type: 'START_FLOW', imageFiles: files });
+      uploadStepperService.send({ type: 'START_FLOW', imageFiles: files });
 
       Router.push('/upload');
     },
-    [sendToUploadStepperActor, snackbar]
+    [uploadStepperService, snackbar]
   );
 
   const onClick = useCallback(
     (e) => {
-      if (!selectLoginActive(authState)) {
+      if (isReadyNotActive) {
         e.preventDefault();
-        snackbar({ text: '上傳前請先登入', variant: 'error' });
+        snackbar({ text: '上傳前請先登入並且驗證信箱', variant: 'error' });
         Router.push('/profile');
         return;
       }
 
-      if (!selectPrepareImages(uploadStepperState)) {
+      if (isAuthPreparing) {
         e.preventDefault();
         return;
       }
     },
-    [authState, snackbar, uploadStepperState]
+    [isReadyNotActive, isAuthPreparing, snackbar, isUploaderPrepareImages]
   );
 
   return (
