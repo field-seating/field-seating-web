@@ -3,19 +3,27 @@ import { isEmpty, map, prop, max, compose, multiply, add, reduce } from 'ramda';
 export const GAP = 5;
 export const SIDE = 50;
 
-export const getCoordinate = ({ positionRowNumber, positionColNumber }) => {
-  const y = (positionRowNumber - 1) * (SIDE + GAP);
-  const x = (positionColNumber - 1) * (SIDE + GAP);
-
-  return {
-    x,
-    y,
-  };
-};
-
 const multiplyUnitLength = multiply(GAP + SIDE);
 
 const buffer = 10;
+
+export const getCoordinate = ({ spaces }) => {
+  const rightEdgePosition = compose(
+    multiplyUnitLength,
+    reduce(max, 0),
+    map(prop('positionColNumber'))
+  )(spaces);
+
+  return ({ positionRowNumber, positionColNumber }) => {
+    const y = multiplyUnitLength(positionRowNumber - 1);
+    const x = rightEdgePosition - multiplyUnitLength(positionColNumber);
+
+    return {
+      x,
+      y,
+    };
+  };
+};
 
 export const getCanvasSize = (spaces) => {
   if (isEmpty(spaces)) {

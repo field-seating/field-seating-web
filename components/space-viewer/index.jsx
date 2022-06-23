@@ -6,8 +6,10 @@ import EmptyState from './EmptyState';
 
 const SpaceViewer = ({ spaces, onSpaceSelect }) => {
   const normalizedSpaces = useMemo(() => {
+    const mapper = getCoordinate({ spaces });
+
     return spaces.map((space) => {
-      const { x, y } = getCoordinate(space);
+      const { x, y } = mapper(space);
 
       return {
         ...space,
