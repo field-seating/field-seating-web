@@ -50,12 +50,7 @@ const PreviewImages = () => {
         {!isNil(imageURLs) &&
           imageURLs.map(({ id, url, alt }) => (
             <Box key={id} display="flex" justifyContent="center">
-              <PhotoPreviewCard
-                thumbUp={100}
-                thumbDown={3}
-                src={url}
-                alt={alt}
-              />
+              <PhotoPreviewCard hideRate src={url} alt={alt} />
             </Box>
           ))}
       </Grid>
