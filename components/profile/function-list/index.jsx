@@ -2,7 +2,7 @@ import { useCallback, useContext } from 'react';
 import { useActor } from '@xstate/react';
 import { Box } from '@chakra-ui/react';
 
-import { GlobalStateContext } from 'lib/contexts/globalState';
+import { GlobalStateContext } from 'lib/contexts/global-state';
 
 import FunctionItem from './function-item';
 

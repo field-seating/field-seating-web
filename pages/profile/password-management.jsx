@@ -3,7 +3,7 @@ import { Box, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useActor } from '@xstate/react';
 
-import { GlobalStateContext } from 'lib/contexts/globalState';
+import { GlobalStateContext } from 'lib/contexts/global-state';
 import useAuth from 'lib/hooks/user-auth';
 import Button from 'components/ui/button';
 import AppBar from 'components/ui/app-bar';

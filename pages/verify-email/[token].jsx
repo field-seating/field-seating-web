@@ -4,7 +4,7 @@ import { useMachine, useActor } from '@xstate/react';
 import { Box, Heading, Spinner, Text } from '@chakra-ui/react';
 
 import useSnackbar from 'components/ui/snackbar';
-import { GlobalStateContext } from 'lib/contexts/globalState';
+import { GlobalStateContext } from 'lib/contexts/global-state';
 
 import machine, {
   selectSuccess,

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useActor } from '@xstate/react';
 import { Box, Heading } from '@chakra-ui/react';
 
-import { GlobalStateContext } from 'lib/contexts/globalState';
+import { GlobalStateContext } from 'lib/contexts/global-state';
 import Link from 'components/ui/link';
 import { selectLogin, selectLoginInactive } from 'lib/machines/auth';
 

@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, useContext } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Box, Grid, useDisclosure } from '@chakra-ui/react';
 
-import { GlobalStateContext } from 'lib/contexts/globalState';
+import { GlobalStateContext } from 'lib/contexts/global-state';
 import Button from 'components/ui/button';
 import Field from 'components/input-actor-field';
 import useSnackbar from 'components/ui/snackbar';

@@ -3,7 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { inspect } from '@xstate/inspect';
 import { SWRConfig } from 'swr';
 
-import { GlobalStateProvider } from 'lib/contexts/globalState';
+import { GlobalStateProvider } from 'lib/contexts/global-state';
 import AppLayout from 'components/layout/app-layout';
 import theme from 'lib/theme/customTheme';
 
