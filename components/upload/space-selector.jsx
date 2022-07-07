@@ -9,7 +9,7 @@ import { useFetchZone } from 'lib/fetch/fields/get-zone';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 import SpaceViewer from 'components/space-viewer';
 import AppBar from 'components/ui/app-bar';
-import ZoneCriteriaDrawer from './zone-criteria-drawer';
+import ZoneCriteriaDrawer from 'components/zone-criteria-drawer';
 
 const anyNil = any(isNil);
 const renderTitle = ifElse(

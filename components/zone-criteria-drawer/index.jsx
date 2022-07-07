@@ -19,7 +19,7 @@ import { useFetchLevels } from 'lib/fetch/fields/list-levels';
 import { selectSuccess, selectFailure } from 'lib/machines/form';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 
-import machine from './zone-criteria-form-machine';
+import machine from './form-machine';
 import { useFetchZones } from 'lib/fetch/fields/list-zones';
 
 const defaultToEmptyArray = defaultTo([]);
