@@ -20,23 +20,22 @@ const renderTitle = ifElse(
 
 const SpaceSelector = () => {
   const { browsePhotosService } = useContext(GlobalStateContext);
-  const [browsePhotosState, sendToBrowsePhotosActor] =
-    useActor(browsePhotosService);
+  const [browsePhotosState] = useActor(browsePhotosService);
 
   const { zoneId, fieldId } = browsePhotosState.context;
 
   const onSpaceSelect = useCallback(
     (spaceId) => {
-      sendToBrowsePhotosActor({ type: 'SELECT_SPACE', spaceId });
+      browsePhotosService.send({ type: 'SELECT_SPACE', spaceId });
     },
-    [sendToBrowsePhotosActor]
+    [browsePhotosService]
   );
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onSave = useCallback(
     ({ fieldId, orientationId, levelId, zoneId }) => {
-      sendToBrowsePhotosActor({
+      browsePhotosService.send({
         type: 'SAVE_SPACE_CRITERIA',
         fieldId,
         orientationId,
@@ -45,7 +44,7 @@ const SpaceSelector = () => {
       });
       onClose();
     },
-    [sendToBrowsePhotosActor, onClose]
+    [browsePhotosService, onClose]
   );
 
   const { data: spaces } = useFetchSpaces(zoneId);
@@ -55,8 +54,8 @@ const SpaceSelector = () => {
   const title = renderTitle([field, zone]);
 
   useEffect(() => {
-    sendToBrowsePhotosActor('INIT');
-  }, [sendToBrowsePhotosActor]);
+    browsePhotosService.send('INIT');
+  }, [browsePhotosService]);
 
   return (
     <>
