@@ -11,7 +11,14 @@ const RateNumber = ({ children }) => (
 
 const RateIcon = ({ as }) => <Icon boxSize={['3', '6']} as={as} mr="1" />;
 
-const PhotoPreviewCard = ({ thumbUp, thumbDown, src, alt, hideRate }) => {
+const PhotoPreviewCard = ({
+  thumbUp,
+  thumbDown,
+  src,
+  alt,
+  hideRate,
+  srcSet,
+}) => {
   const [current, send] = useMachine(machine);
   const onLoad = useCallback(() => {
     send('LOADED');
@@ -37,6 +44,7 @@ const PhotoPreviewCard = ({ thumbUp, thumbDown, src, alt, hideRate }) => {
         <Box w="100%" h={['120px', '240px', '240px', '360px']}>
           <Image
             src={src}
+            srcSet={srcSet}
             alt={alt}
             loading="lazy"
             objectFit="cover"

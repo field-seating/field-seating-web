@@ -4,6 +4,7 @@ import { pathOr } from 'ramda';
 
 import { useFetchSpacePhotos } from 'lib/fetch/spaces/get-photos';
 import PhotoPreviewCard from 'components/ui/photo-preview-card';
+import { getPhotoSrc } from 'lib/utils/image-srcset';
 
 const getPhotos = pathOr([], ['photos']);
 
@@ -22,14 +23,15 @@ const SpacePhotos = () => {
         justifyItems="center"
       >
         {getPhotos(data).map((photo) => {
-          const url = photo.dataset.lg;
+          const { src, srcSet } = getPhotoSrc(photo.dataset);
           const id = photo.id;
           const { usefulCount, uselessCount } = photo;
 
           return (
             <PhotoPreviewCard
               key={id}
-              src={url}
+              src={src}
+              srcSet={srcSet}
               alt={'photo'}
               thumbUp={usefulCount}
               thumbDown={uselessCount}
