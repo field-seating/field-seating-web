@@ -1,6 +1,7 @@
-import { useCallback } from 'react';
 import { Image, Box, Skeleton, Text, Icon } from '@chakra-ui/react';
+import { useCallback, forwardRef } from 'react';
 import { useMachine } from '@xstate/react';
+import NextLink from 'next/link';
 import { ThumbDownOutlined, ThumbUpOutlined } from '@mui/icons-material';
 
 import machine, { selectLoaded } from './machine';
@@ -11,6 +12,48 @@ const RateNumber = ({ children }) => (
 
 const RateIcon = ({ as }) => <Icon boxSize={['3', '6']} as={as} mr="1" />;
 
+const CustomImage = forwardRef(({ alt, ...props }, ref) => (
+  <Image
+    loading="lazy"
+    objectFit="cover"
+    width="100%"
+    height="100%"
+    ref={ref}
+    alt={alt}
+    {...props}
+  />
+));
+
+CustomImage.displayName = 'CustomImage';
+
+const ImageLink = ({ href, src, srcSet, onError, onLoad, alt }) => {
+  if (href) {
+    return (
+      <NextLink href={href} passHref>
+        <a>
+          <CustomImage
+            src={src}
+            srcSet={srcSet}
+            onError={onError}
+            onLoad={onLoad}
+            alt={alt}
+          />
+        </a>
+      </NextLink>
+    );
+  }
+
+  return (
+    <CustomImage
+      src={src}
+      srcSet={srcSet}
+      onError={onError}
+      onLoad={onLoad}
+      alt={alt}
+    />
+  );
+};
+
 const PhotoPreviewCard = ({
   thumbUp,
   thumbDown,
@@ -18,6 +61,7 @@ const PhotoPreviewCard = ({
   alt,
   hideRate,
   srcSet,
+  href,
 }) => {
   const [current, send] = useMachine(machine);
   const onLoad = useCallback(() => {
@@ -42,14 +86,11 @@ const PhotoPreviewCard = ({
     >
       <Skeleton isLoaded={isLoaded}>
         <Box w="100%" h={['120px', '240px', '240px', '360px']}>
-          <Image
+          <ImageLink
+            href={href}
             src={src}
             srcSet={srcSet}
             alt={alt}
-            loading="lazy"
-            objectFit="cover"
-            width="100%"
-            height="100%"
             onError={onError}
             onLoad={onLoad}
           />

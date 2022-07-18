@@ -35,6 +35,7 @@ const SpacePhotos = () => {
               alt={'photo'}
               thumbUp={usefulCount}
               thumbDown={uselessCount}
+              href={`/photos/${id}`}
             />
           );
         })}
