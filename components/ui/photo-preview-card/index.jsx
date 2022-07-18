@@ -73,6 +73,8 @@ PhotoPreviewCard.defaultProps = {
   src: '',
   alt: 'photo in the field',
   hideRate: false,
+  thumbUp: 0,
+  thumbDown: 0,
 };
 
 export default PhotoPreviewCard;

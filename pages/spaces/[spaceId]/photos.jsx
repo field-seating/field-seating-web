@@ -4,7 +4,7 @@ import SpacePhotos from 'components/space-photos';
 
 const SpacePhotosPage = () => {
   return (
-    <Box px={[4, 16, 32, 48]} py={4}>
+    <Box px={[4, 16]} py={4}>
       <SpacePhotos />
     </Box>
   );
