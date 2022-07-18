@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { SWRConfig } from 'swr';
 
-import getSpacePhotos from 'lib/fetch/spaces/get-photos';
+import getSpacePhotos, { url } from 'lib/fetch/spaces/get-photos';
 import SpacePhotos from 'components/space-photos';
 
 export async function getServerSideProps({ query }) {
@@ -11,7 +11,7 @@ export async function getServerSideProps({ query }) {
   return {
     props: {
       fallback: {
-        [`/api/spaces/${spaceId}/photos`]: photosData,
+        [url(spaceId)]: photosData,
       },
     },
   };
