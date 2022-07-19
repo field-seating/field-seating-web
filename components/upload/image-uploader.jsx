@@ -46,7 +46,7 @@ const ImageUploader = ({ isActive }) => {
 
       uploadStepperService.send({ type: 'START_FLOW', imageFiles: files });
 
-      Router.push('/upload?space=128');
+      Router.push('/upload');
     },
     [uploadStepperService, snackbar]
   );
