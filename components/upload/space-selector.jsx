@@ -23,7 +23,8 @@ const SpaceSelector = () => {
   const [uploadStepperState, sendToUploadStepperActor] =
     useActor(uploadStepperService);
 
-  const { zoneId, fieldId } = uploadStepperState.context.flowData;
+  const { zoneId, fieldId, levelId, orientationId } =
+    uploadStepperState.context.flowData;
 
   const onSpaceSelect = useCallback(
     (spaceId) => {
@@ -72,7 +73,15 @@ const SpaceSelector = () => {
           <SpaceViewer spaces={spaces || []} onSpaceSelect={onSpaceSelect} />
         </Box>
       </Box>
-      <ZoneCriteriaDrawer isOpen={isOpen} onClose={onClose} onSave={onSave} />
+      <ZoneCriteriaDrawer
+        isOpen={isOpen}
+        onClose={onClose}
+        onSave={onSave}
+        defaultFieldId={fieldId}
+        defaultLevelId={levelId}
+        defaultOrientationId={orientationId}
+        defaultZoneId={zoneId}
+      />
     </>
   );
 };
