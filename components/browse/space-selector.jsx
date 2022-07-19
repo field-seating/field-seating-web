@@ -56,7 +56,7 @@ const SpaceSelector = () => {
   const title = renderTitle([field, zone]);
 
   useEffect(() => {
-    browsePhotosService.send({ type: 'INIT', spaceId: router.query.space });
+    browsePhotosService.send({ type: 'INIT', zoneId: router.query.zone });
   }, [browsePhotosService, router]);
 
   return (

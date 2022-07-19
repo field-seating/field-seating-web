@@ -65,7 +65,7 @@ const TopBar = () => {
 
   const title = renderTitle([field, zone]);
 
-  const query = qs.stringify({ space: spaceId });
+  const query = qs.stringify({ zone: space?.zoneId });
   return (
     <>
       <Head>
