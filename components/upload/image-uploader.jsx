@@ -7,7 +7,6 @@ import Router from 'next/router';
 import BottomNavigationButton from 'components/ui/bottom-navigation-button';
 import useSnackbar from 'components/ui/snackbar';
 import { selectReadyNotActive, selectPreparing } from 'lib/machines/auth';
-import { selectPrepareImages } from 'lib/machines/upload-stepper-machine';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 
 const FILES_LIMIT = 3;
@@ -22,11 +21,6 @@ const isFilesValid = (files) => {
 
 const ImageUploader = ({ isActive }) => {
   const { uploadStepperService, authService } = useContext(GlobalStateContext);
-
-  const isUploaderPrepareImages = useSelector(
-    uploadStepperService,
-    selectPrepareImages
-  );
 
   const isReadyNotActive = useSelector(authService, selectReadyNotActive);
   const isAuthPreparing = useSelector(authService, selectPreparing);
@@ -71,7 +65,7 @@ const ImageUploader = ({ isActive }) => {
         return;
       }
     },
-    [isReadyNotActive, isAuthPreparing, snackbar, isUploaderPrepareImages]
+    [isReadyNotActive, isAuthPreparing, snackbar]
   );
 
   return (
