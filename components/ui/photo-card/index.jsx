@@ -78,9 +78,8 @@ const PhotoCard = ({
       w="100%"
       display="flex"
       flexDir="column"
-      borderColor="onSurface.light"
-      borderWidth="1px"
-      borderRadius="base"
+      borderBottomColor="onSurface.light"
+      borderBottomWidth="1px"
       overflow="hidden"
       bg="surface.main"
     >

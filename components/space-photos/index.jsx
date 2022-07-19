@@ -4,7 +4,7 @@ import { pathOr } from 'ramda';
 
 import { useFetchSpacePhotos } from 'lib/fetch/spaces/get-photos';
 import PhotoPreviewCard from 'components/ui/photo-preview-card';
-import { getPhotoSrc } from 'lib/utils/image-srcset';
+import { getSpacePhotoSrc } from 'lib/utils/image-srcset';
 
 const getPhotos = pathOr([], ['photos']);
 
@@ -23,7 +23,7 @@ const SpacePhotos = () => {
         justifyItems="center"
       >
         {getPhotos(data).map((photo) => {
-          const { src, srcSet } = getPhotoSrc(photo.dataset);
+          const { src, srcSet } = getSpacePhotoSrc(photo.dataset);
           const id = photo.id;
           const { usefulCount, uselessCount } = photo;
 
