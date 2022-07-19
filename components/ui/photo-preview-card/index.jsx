@@ -15,7 +15,7 @@ const RateIcon = ({ as }) => <Icon boxSize={['3', '6']} as={as} mr="1" />;
 const CustomImage = forwardRef(({ alt, ...props }, ref) => (
   <Image
     loading="lazy"
-    objectFit="cover"
+    objectFit="contain"
     width="100%"
     height="100%"
     ref={ref}

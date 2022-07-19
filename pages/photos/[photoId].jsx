@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import { SWRConfig } from 'swr';
+import { useRouter } from 'next/router';
 
 import AppBar from 'components/ui/app-bar';
 import PhotoList from 'components/photo-list';
@@ -19,10 +20,12 @@ export async function getServerSideProps({ query }) {
 }
 
 const SpacePhotosPage = ({ fallback }) => {
+  const router = useRouter();
+
   return (
     <SWRConfig value={{ fallback }}>
       <Box display="flex" flexDir="column" h="100%">
-        <AppBar hasBackward backHref="/profile" />
+        <AppBar hasBackward onBack={() => router.back()} />
         <Box flex="1" overflowY="auto">
           <PhotoList />
         </Box>

@@ -5,6 +5,7 @@ import NextLink from 'next/link';
 import { ThumbDownOutlined, ThumbUpOutlined } from '@mui/icons-material';
 
 import machine, { selectLoaded } from '../photo-preview-card/machine';
+import { renderDate } from './helpers';
 
 const RateNumber = ({ children }) => <Text fontSize={['xs']}>{children}</Text>;
 
@@ -13,9 +14,10 @@ const RateIcon = ({ as }) => <Icon boxSize={['3']} as={as} mr="1" />;
 const CustomImage = forwardRef(({ alt, ...props }, ref) => (
   <Image
     loading="lazy"
-    objectFit="cover"
+    objectFit="contain"
     width="100%"
     height="100%"
+    background="onSurface.lighter"
     ref={ref}
     alt={alt}
     {...props}
@@ -88,7 +90,7 @@ const PhotoCard = ({
       bg="surface.main"
     >
       <Skeleton isLoaded={isLoaded}>
-        <Box h={['240px', '400px']}>
+        <Box h={['320px', '480px']}>
           <ImageLink
             href={href}
             src={src}
@@ -109,7 +111,7 @@ const PhotoCard = ({
         </Box>
         <Box display="flex" h="6" px="4" alignItems="center">
           <Text color="onSurface.40" fontSize="xs">
-            {date}
+            {renderDate(date)}
           </Text>
         </Box>
 
