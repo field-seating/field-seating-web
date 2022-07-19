@@ -152,10 +152,10 @@ const ZoneCriteriaDrawer = ({
 
         <DrawerFooter>
           <Button variant="outline" mr={3} onClick={onClose}>
-            Cancel
+            取消
           </Button>
           <Button ref={ref} onClick={onSubmit}>
-            Save
+            確定
           </Button>
         </DrawerFooter>
       </DrawerContent>

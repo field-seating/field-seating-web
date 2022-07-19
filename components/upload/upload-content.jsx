@@ -25,7 +25,7 @@ const getFormComponent = (state) => {
     return InfoSelector;
   }
 
-  return PreviewImages;
+  return InfoSelector;
 };
 
 const UploadContent = () => {
