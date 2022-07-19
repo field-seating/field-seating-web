@@ -21,9 +21,11 @@ export async function getServerSideProps({ query }) {
 const SpacePhotosPage = ({ fallback }) => {
   return (
     <SWRConfig value={{ fallback }}>
-      <AppBar hasBackward backHref="/profile" />
-      <Box>
-        <PhotoList />
+      <Box display="flex" flexDir="column" h="100%">
+        <AppBar hasBackward backHref="/profile" />
+        <Box flex="1" overflowY="auto">
+          <PhotoList />
+        </Box>
       </Box>
     </SWRConfig>
   );

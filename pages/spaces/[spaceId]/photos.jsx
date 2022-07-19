@@ -72,9 +72,11 @@ const TopBar = () => {
 const SpacePhotosPage = ({ fallback }) => {
   return (
     <SWRConfig value={{ fallback }}>
-      <TopBar />
-      <Box px={[4, 16]} py={4}>
-        <SpacePhotos />
+      <Box display="flex" flexDir="column" h="100%">
+        <TopBar />
+        <Box px={[4, 16]} py={4} flex="1" overflowY="auto">
+          <SpacePhotos />
+        </Box>
       </Box>
     </SWRConfig>
   );
