@@ -24,7 +24,7 @@ const SpaceSelector = () => {
   const { browsePhotosService } = useContext(GlobalStateContext);
   const [browsePhotosState] = useActor(browsePhotosService);
 
-  const { zoneId, fieldId } = browsePhotosState.context;
+  const { zoneId, fieldId, levelId, orientationId } = browsePhotosState.context;
 
   const onSpaceSelect = useCallback(
     (spaceId) => {
@@ -67,7 +67,15 @@ const SpaceSelector = () => {
           <SpaceViewer spaces={spaces || []} onSpaceSelect={onSpaceSelect} />
         </Box>
       </Box>
-      <ZoneCriteriaDrawer isOpen={isOpen} onClose={onClose} onSave={onSave} />
+      <ZoneCriteriaDrawer
+        isOpen={isOpen}
+        onClose={onClose}
+        onSave={onSave}
+        defaultFieldId={fieldId}
+        defaultLevelId={levelId}
+        defaultOrientationId={orientationId}
+        defaultZoneId={zoneId}
+      />
     </>
   );
 };
