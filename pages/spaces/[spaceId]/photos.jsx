@@ -1,7 +1,9 @@
 import { Box } from '@chakra-ui/react';
+import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import { always, any, ifElse, isNil } from 'ramda';
 import { useRouter } from 'next/router';
+import qs from 'qs';
 
 import getSpacePhotos, {
   url as getSpacePhotosUrl,
@@ -60,12 +62,18 @@ const TopBar = () => {
 
   const { data: zone } = useFetchZone(space?.zoneId);
   const { data: field } = useFetchField(zone?.fieldId);
+
+  const title = renderTitle([field, zone]);
+
+  const query = qs.stringify({ space: spaceId });
   return (
-    <AppBar
-      title={renderTitle([field, zone])}
-      hasBackward
-      backHref="/profile"
-    />
+    <>
+      <Head>
+        <title>{`${title} | 球場坐座`}</title>
+      </Head>
+
+      <AppBar title={title} hasBackward backHref={`/?${query}`} />
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import { Box } from '@chakra-ui/react';
+import Head from 'next/head';
 import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';
 
@@ -19,19 +20,25 @@ export async function getServerSideProps({ query }) {
   };
 }
 
-const SpacePhotosPage = ({ fallback }) => {
+const PhotosPage = ({ fallback }) => {
   const router = useRouter();
 
   return (
-    <SWRConfig value={{ fallback }}>
-      <Box display="flex" flexDir="column" h="100%">
-        <AppBar hasBackward onBack={() => router.back()} />
-        <Box flex="1" overflowY="auto">
-          <PhotoList />
+    <>
+      <Head>
+        <title>球場照片 | 球場坐座</title>
+      </Head>
+
+      <SWRConfig value={{ fallback }}>
+        <Box display="flex" flexDir="column" h="100%">
+          <AppBar hasBackward onBack={() => router.back()} />
+          <Box flex="1" overflowY="auto">
+            <PhotoList />
+          </Box>
         </Box>
-      </Box>
-    </SWRConfig>
+      </SWRConfig>
+    </>
   );
 };
 
-export default SpacePhotosPage;
+export default PhotosPage;
