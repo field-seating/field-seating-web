@@ -4,13 +4,11 @@ import { useMachine } from '@xstate/react';
 import NextLink from 'next/link';
 import { ThumbDownOutlined, ThumbUpOutlined } from '@mui/icons-material';
 
-import machine, { selectLoaded } from './machine';
+import machine, { selectLoaded } from '../photo-preview-card/machine';
 
-const RateNumber = ({ children }) => (
-  <Text fontSize={['xs', 'md']}>{children}</Text>
-);
+const RateNumber = ({ children }) => <Text fontSize={['xs']}>{children}</Text>;
 
-const RateIcon = ({ as }) => <Icon boxSize={['3', '6']} as={as} mr="1" />;
+const RateIcon = ({ as }) => <Icon boxSize={['3']} as={as} mr="1" />;
 
 const CustomImage = forwardRef(({ alt, ...props }, ref) => (
   <Image
@@ -54,14 +52,15 @@ const ImageLink = ({ href, src, srcSet, onError, onLoad, alt }) => {
   );
 };
 
-const PhotoPreviewCard = ({
+const PhotoCard = ({
   thumbUp,
   thumbDown,
   src,
   alt,
-  hideRate,
   srcSet,
   href,
+  userName,
+  date,
 }) => {
   const [current, send] = useMachine(machine);
   const onLoad = useCallback(() => {
@@ -76,16 +75,17 @@ const PhotoPreviewCard = ({
 
   return (
     <Box
-      w={['160px', '320px', '320px', '480px']}
+      w="100%"
       display="flex"
       flexDir="column"
       borderColor="onSurface.light"
       borderWidth="1px"
       borderRadius="base"
       overflow="hidden"
+      bg="surface.main"
     >
       <Skeleton isLoaded={isLoaded}>
-        <Box w="100%" h={['120px', '240px', '240px', '360px']}>
+        <Box h={['240px', '400px']}>
           <ImageLink
             href={href}
             src={src}
@@ -97,33 +97,42 @@ const PhotoPreviewCard = ({
         </Box>
       </Skeleton>
 
-      {!hideRate && (
-        <Box
-          display="flex"
-          justifyContent="space-between"
-          h={['8', '16', '16', '24']}
-          px={['2', '8']}
-        >
-          <Box display="flex" alignItems="center">
-            <RateIcon as={ThumbUpOutlined} mr="1" />
-            <RateNumber>{thumbUp}</RateNumber>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <RateIcon as={ThumbDownOutlined} mr="1" />
-            <RateNumber>{thumbDown}</RateNumber>
+      <Box pt="1">
+        <Box display="flex" h="6" px="4" alignItems="center">
+          <Text color="onSurface.main" fontSize="sm">
+            {userName}
+          </Text>
+        </Box>
+        <Box display="flex" h="6" px="4" alignItems="center">
+          <Text color="onSurface.40" fontSize="xs">
+            {date}
+          </Text>
+        </Box>
+
+        <Box display="flex" alignItems="center" h={['8']} px={['4']}>
+          <Box display="flex">
+            <Box display="flex" alignItems="center" mr="4">
+              <RateIcon as={ThumbUpOutlined} mr="1" />
+              <RateNumber>{thumbUp}</RateNumber>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <RateIcon as={ThumbDownOutlined} mr="1" />
+              <RateNumber>{thumbDown}</RateNumber>
+            </Box>
           </Box>
         </Box>
-      )}
+      </Box>
     </Box>
   );
 };
 
-PhotoPreviewCard.defaultProps = {
+PhotoCard.defaultProps = {
   src: '',
   alt: 'photo in the field',
-  hideRate: false,
   thumbUp: 0,
   thumbDown: 0,
+  date: '',
+  userName: '',
 };
 
-export default PhotoPreviewCard;
+export default PhotoCard;
