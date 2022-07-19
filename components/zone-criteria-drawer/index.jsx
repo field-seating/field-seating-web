@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useContext, useRef } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useMachine, useActor } from '@xstate/react';
 import { Grid } from '@chakra-ui/react';
 import { defaultTo, head, isEmpty } from 'ramda';
@@ -17,9 +17,8 @@ import { useFetchFields } from 'lib/fetch/fields/list-fields';
 import { useFetchOrientations } from 'lib/fetch/fields/list-orientations';
 import { useFetchLevels } from 'lib/fetch/fields/list-levels';
 import { selectSuccess, selectFailure } from 'lib/machines/form';
-import { GlobalStateContext } from 'lib/contexts/global-state';
 
-import machine from './zone-criteria-form-machine';
+import machine from './form-machine';
 import { useFetchZones } from 'lib/fetch/fields/list-zones';
 
 const defaultToEmptyArray = defaultTo([]);
@@ -34,19 +33,15 @@ const getDefaultValue = (valueInContext, options) => {
   return null;
 };
 
-const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
-  const { uploadStepperService } = useContext(GlobalStateContext);
-  const [uploadStepperState] = useActor(uploadStepperService);
-
-  const {
-    flowData: {
-      fieldId: defaultFieldId,
-      levelId: defaultLevelId,
-      orientationId: defaultOrientationId,
-      zoneId: defaultZoneId,
-    },
-  } = uploadStepperState.context;
-
+const ZoneCriteriaDrawer = ({
+  isOpen,
+  onClose,
+  onSave,
+  defaultFieldId,
+  defaultLevelId,
+  defaultOrientationId,
+  defaultZoneId,
+}) => {
   const [currentForm, sendToForm] = useMachine(machine, { devTools: true });
   const {
     field: fieldActor,
@@ -157,10 +152,10 @@ const ZoneCriteriaDrawer = ({ isOpen, onClose, onSave }) => {
 
         <DrawerFooter>
           <Button variant="outline" mr={3} onClick={onClose}>
-            Cancel
+            取消
           </Button>
           <Button ref={ref} onClick={onSubmit}>
-            Save
+            確定
           </Button>
         </DrawerFooter>
       </DrawerContent>

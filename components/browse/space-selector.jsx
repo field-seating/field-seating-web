@@ -1,6 +1,7 @@
-import { useContext, useCallback } from 'react';
+import { useContext, useCallback, useEffect } from 'react';
 import { useActor } from '@xstate/react';
 import { Box, useDisclosure } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { always, any, ifElse, isNil } from 'ramda';
 
 import { useFetchSpaces } from 'lib/fetch/fields/list-spaces';
@@ -19,27 +20,24 @@ const renderTitle = ifElse(
 );
 
 const SpaceSelector = () => {
-  const { uploadStepperService } = useContext(GlobalStateContext);
-  const [uploadStepperState, sendToUploadStepperActor] =
-    useActor(uploadStepperService);
+  const router = useRouter();
+  const { browsePhotosService } = useContext(GlobalStateContext);
+  const [browsePhotosState] = useActor(browsePhotosService);
 
-  const { zoneId, fieldId, levelId, orientationId } =
-    uploadStepperState.context.flowData;
+  const { zoneId, fieldId, levelId, orientationId } = browsePhotosState.context;
 
   const onSpaceSelect = useCallback(
     (spaceId) => {
-      sendToUploadStepperActor({ type: 'SELECT_SPACE', spaceId });
+      browsePhotosService.send({ type: 'SELECT_SPACE', spaceId });
     },
-    [sendToUploadStepperActor]
+    [browsePhotosService]
   );
 
-  const onBack = useCallback(() => {
-    sendToUploadStepperActor('BACK');
-  }, [sendToUploadStepperActor]);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onSave = useCallback(
     ({ fieldId, orientationId, levelId, zoneId }) => {
-      sendToUploadStepperActor({
+      browsePhotosService.send({
         type: 'SAVE_SPACE_CRITERIA',
         fieldId,
         orientationId,
@@ -48,27 +46,23 @@ const SpaceSelector = () => {
       });
       onClose();
     },
-    [sendToUploadStepperActor, onClose]
+    [browsePhotosService, onClose]
   );
 
   const { data: spaces } = useFetchSpaces(zoneId);
   const { data: field } = useFetchField(fieldId);
   const { data: zone } = useFetchZone(zoneId);
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   const title = renderTitle([field, zone]);
+
+  useEffect(() => {
+    browsePhotosService.send({ type: 'INIT', zoneId: router.query.zone });
+  }, [browsePhotosService, router]);
 
   return (
     <>
       <Box display="flex" flexDir="column" height="100%">
-        <AppBar
-          title={title}
-          hasBackward
-          onBack={onBack}
-          hasMenu
-          onMenu={onOpen}
-        />
+        <AppBar title={title} hasMenu onMenu={onOpen} />
         <Box flex="1" width="100%" overflowX="auto" pt={[4, 8]} px={[4, 8]}>
           <SpaceViewer spaces={spaces || []} onSpaceSelect={onSpaceSelect} />
         </Box>

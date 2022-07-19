@@ -63,10 +63,10 @@ const InfoSelector = () => {
   useEffect(() => {
     if (isUploaderSuccess) {
       snackbar({ text: '成功上傳' });
-      router.push('/');
+      router.push(`/spaces/${spaceId}/photos`);
       return;
     }
-  }, [isUploaderSuccess, snackbar, router]);
+  }, [isUploaderSuccess, snackbar, router, spaceId]);
 
   useEffect(() => {
     if (isUploaderFailure) {

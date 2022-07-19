@@ -25,6 +25,9 @@ const FloatingIconButton = (props) => (
     bg="primary.light"
     color="onPrimary.main"
     variant="solid"
+    role="button"
+    cursor="pointer"
+    aria-label={props.label}
     {...getStyle(props.size)}
     boxShadow="onSurface"
     _hover={{ bg: 'primary.main' }}
