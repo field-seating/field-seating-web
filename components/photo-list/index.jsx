@@ -17,17 +17,19 @@ const PhotoList = () => {
     <Box display="flex" flexDir="column">
       {getPhotos(data).map((photo) => {
         const { user, id, date, usefulCount, uselessCount } = photo;
-        const { src, srcSet } = getPhotoSrc(photo.dataset);
+        const { src, srcSet, sizes } = getPhotoSrc(photo.dataset);
         return (
           <Box key={id} mb="8">
             <PhotoCard
               src={src}
               srcSet={srcSet}
+              sizes={sizes}
               alt={`photo uploaded by ${user.name}`}
               userName={user.name}
               thumbUp={usefulCount}
               thumbDown={uselessCount}
               date={date}
+              hideRate
             />
           </Box>
         );

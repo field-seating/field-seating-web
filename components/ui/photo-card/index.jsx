@@ -24,7 +24,7 @@ const CustomImage = forwardRef(({ alt, ...props }, ref) => (
 
 CustomImage.displayName = 'CustomImage';
 
-const ImageLink = ({ href, src, srcSet, onError, onLoad, alt }) => {
+const ImageLink = ({ href, src, srcSet, onError, onLoad, alt, sizes }) => {
   if (href) {
     return (
       <NextLink href={href} passHref>
@@ -35,6 +35,7 @@ const ImageLink = ({ href, src, srcSet, onError, onLoad, alt }) => {
             onError={onError}
             onLoad={onLoad}
             alt={alt}
+            sizes={sizes}
           />
         </a>
       </NextLink>
@@ -48,6 +49,7 @@ const ImageLink = ({ href, src, srcSet, onError, onLoad, alt }) => {
       onError={onError}
       onLoad={onLoad}
       alt={alt}
+      sizes={sizes}
     />
   );
 };
@@ -58,9 +60,11 @@ const PhotoCard = ({
   src,
   alt,
   srcSet,
+  sizes,
   href,
   userName,
   date,
+  hideRate,
 }) => {
   const [current, send] = useMachine(machine);
   const onLoad = useCallback(() => {
@@ -89,6 +93,7 @@ const PhotoCard = ({
             href={href}
             src={src}
             srcSet={srcSet}
+            sizes={sizes}
             alt={alt}
             onError={onError}
             onLoad={onLoad}
@@ -108,18 +113,20 @@ const PhotoCard = ({
           </Text>
         </Box>
 
-        <Box display="flex" alignItems="center" h={['8']} px={['4']}>
-          <Box display="flex">
-            <Box display="flex" alignItems="center" mr="4">
-              <RateIcon as={ThumbUpOutlined} mr="1" />
-              <RateNumber>{thumbUp}</RateNumber>
-            </Box>
-            <Box display="flex" alignItems="center">
-              <RateIcon as={ThumbDownOutlined} mr="1" />
-              <RateNumber>{thumbDown}</RateNumber>
+        {!hideRate && (
+          <Box display="flex" alignItems="center" h={['8']} px={['4']}>
+            <Box display="flex">
+              <Box display="flex" alignItems="center" mr="4">
+                <RateIcon as={ThumbUpOutlined} mr="1" />
+                <RateNumber>{thumbUp}</RateNumber>
+              </Box>
+              <Box display="flex" alignItems="center">
+                <RateIcon as={ThumbDownOutlined} mr="1" />
+                <RateNumber>{thumbDown}</RateNumber>
+              </Box>
             </Box>
           </Box>
-        </Box>
+        )}
       </Box>
     </Box>
   );
@@ -132,6 +139,7 @@ PhotoCard.defaultProps = {
   thumbDown: 0,
   date: '',
   userName: '',
+  hideRate: false,
 };
 
 export default PhotoCard;
