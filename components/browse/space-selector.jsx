@@ -1,6 +1,7 @@
 import { useContext, useCallback, useEffect } from 'react';
 import { useActor } from '@xstate/react';
 import { Box, useDisclosure } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { always, any, ifElse, isNil } from 'ramda';
 
 import { useFetchSpaces } from 'lib/fetch/fields/list-spaces';
@@ -19,6 +20,7 @@ const renderTitle = ifElse(
 );
 
 const SpaceSelector = () => {
+  const router = useRouter();
   const { browsePhotosService } = useContext(GlobalStateContext);
   const [browsePhotosState] = useActor(browsePhotosService);
 
@@ -54,8 +56,8 @@ const SpaceSelector = () => {
   const title = renderTitle([field, zone]);
 
   useEffect(() => {
-    browsePhotosService.send('INIT');
-  }, [browsePhotosService]);
+    browsePhotosService.send({ type: 'INIT', spaceId: router.query.space });
+  }, [browsePhotosService, router]);
 
   return (
     <>
