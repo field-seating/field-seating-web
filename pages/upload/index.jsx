@@ -32,9 +32,9 @@ const UploadPage = () => {
 
   useEffect(() => {
     if (isIdle) {
-      uploadStepperService.send({ type: 'INIT' });
+      uploadStepperService.send({ type: 'INIT', spaceId: router.query.space });
     }
-  }, [isIdle, uploadStepperService]);
+  }, [isIdle, uploadStepperService, router]);
 
   return (
     <>
