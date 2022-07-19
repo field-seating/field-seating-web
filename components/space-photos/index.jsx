@@ -1,10 +1,12 @@
 import { Box, Grid } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { pathOr } from 'ramda';
+import { pathOr, isEmpty } from 'ramda';
 
 import { useFetchSpacePhotos } from 'lib/fetch/spaces/get-photos';
 import PhotoPreviewCard from 'components/ui/photo-preview-card';
 import { getSpacePhotoSrc } from 'lib/utils/image-srcset';
+
+import EmptyState from './EmptyState';
 
 const getPhotos = pathOr([], ['photos']);
 
@@ -14,6 +16,11 @@ const SpacePhotos = () => {
 
   // TODO: handle error
   const { data } = useFetchSpacePhotos(spaceId);
+  const photos = getPhotos(data);
+
+  if (isEmpty(photos)) {
+    return <EmptyState />;
+  }
 
   return (
     <Box>
@@ -22,7 +29,7 @@ const SpacePhotos = () => {
         rowGap="8"
         justifyItems="center"
       >
-        {getPhotos(data).map((photo) => {
+        {photos.map((photo) => {
           const { src, srcSet } = getSpacePhotoSrc(photo.dataset);
           const id = photo.id;
           const { usefulCount, uselessCount } = photo;

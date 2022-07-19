@@ -1,10 +1,11 @@
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import { pathOr } from 'ramda';
+import { isEmpty, pathOr } from 'ramda';
 
 import { useFetchPhotos } from 'lib/fetch/photos/get-photos';
 import PhotoCard from 'components/ui/photo-card';
 import { getPhotoSrc } from 'lib/utils/image-srcset';
+import EmptyState from 'components/space-photos/EmptyState';
 
 const getPhotos = pathOr([], ['photos']);
 
@@ -13,9 +14,15 @@ const PhotoList = () => {
   const { photoId } = router.query;
   const { data } = useFetchPhotos({ startPhotoId: photoId });
 
+  const photos = getPhotos(data);
+
+  if (isEmpty(photos)) {
+    return <EmptyState />;
+  }
+
   return (
     <Box display="flex" flexDir="column">
-      {getPhotos(data).map((photo) => {
+      {photos.map((photo) => {
         const { user, id, date, usefulCount, uselessCount } = photo;
         const { src, srcSet, sizes } = getPhotoSrc(photo.dataset);
         return (
