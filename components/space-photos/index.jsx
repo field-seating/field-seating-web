@@ -1,9 +1,11 @@
 import { Box, Grid } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { pathOr, isEmpty } from 'ramda';
+import { AddIcon } from '@chakra-ui/icons';
 
 import { useFetchSpacePhotos } from 'lib/fetch/spaces/get-photos';
 import PhotoPreviewCard from 'components/ui/photo-preview-card';
+import FloatingIconButton from 'components/ui/floating-icon-button';
 import { getSpacePhotoSrc } from 'lib/utils/image-srcset';
 
 import EmptyState from './EmptyState';
@@ -47,6 +49,11 @@ const SpacePhotos = () => {
           );
         })}
       </Grid>
+      <Box pos="absolute" right="4" bottom="4">
+        <FloatingIconButton size="sm">
+          <AddIcon />
+        </FloatingIconButton>
+      </Box>
     </Box>
   );
 };

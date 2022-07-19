@@ -22,6 +22,7 @@ import getSpace, {
 } from 'lib/fetch/fields/get-space';
 import SpacePhotos from 'components/space-photos';
 import AppBar from 'components/ui/app-bar';
+import UploadFloatingButton from 'components/space-photos/upload-floating-button';
 
 export async function getServerSideProps({ query }) {
   const { spaceId } = query;
@@ -54,10 +55,7 @@ const renderTitle = ifElse(
   ([field, zone]) => `${field.name} ${zone.name}`
 );
 
-const TopBar = () => {
-  const router = useRouter();
-  const { spaceId } = router.query;
-
+const TopBar = ({ spaceId }) => {
   const { data: space } = useFetchSpace(spaceId);
 
   const { data: zone } = useFetchZone(space?.zoneId);
@@ -78,12 +76,16 @@ const TopBar = () => {
 };
 
 const SpacePhotosPage = ({ fallback }) => {
+  const router = useRouter();
+  const { spaceId } = router.query;
+
   return (
     <SWRConfig value={{ fallback }}>
       <Box display="flex" flexDir="column" h="100%">
-        <TopBar />
-        <Box px={[4, 16]} py={4} flex="1" overflowY="auto">
+        <TopBar spaceId={spaceId} />
+        <Box px={[4, 16]} py={4} flex="1" overflowY="auto" pos="relative">
           <SpacePhotos />
+          <UploadFloatingButton spaceId={spaceId} />
         </Box>
       </Box>
     </SWRConfig>
