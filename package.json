@@ -16,8 +16,8 @@
     "prettier:fix:all": "prettier --write ."
   },
   "engines": {
-    "npm": ">=7.0.0",
-    "node": ">=14.0.0"
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
   },
   "dependencies": {
     "@chakra-ui/icons": "^1.1.7",
