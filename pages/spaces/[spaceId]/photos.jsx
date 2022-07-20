@@ -63,14 +63,14 @@ const TopBar = ({ spaceId }) => {
 
   const title = renderTitle([field, zone]);
 
-  const query = qs.stringify({ zone: space?.zoneId });
+  const query = qs.stringify({ zone: space?.zoneId }, { addQueryPrefix: true });
   return (
     <>
       <Head>
         <title>{`${title} | 球場坐座`}</title>
       </Head>
 
-      <AppBar title={title} hasBackward backHref={`/?${query}`} />
+      <AppBar title={title} hasBackward backHref={`/${query}`} />
     </>
   );
 };

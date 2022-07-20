@@ -44,7 +44,9 @@ const useImageUpload = ({ spaceId } = {}) => {
 
       uploadStepperService.send({ type: 'START_FLOW', imageFiles: files });
 
-      Router.push(`/upload?${qs.stringify({ space: spaceId })}`);
+      Router.push(`/upload${qs.stringify({ space: spaceId })}`, {
+        addQueryPrefix: true,
+      });
     },
     [uploadStepperService, snackbar, spaceId]
   );
