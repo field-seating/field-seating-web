@@ -18,8 +18,11 @@ import UploadFloatingButton from 'components/space-photos/upload-floating-button
 
 export async function getServerSideProps({ query }) {
   const { spaceId } = query;
-  const photosData = await getSpacePhotos(spaceId);
-  const spaceData = await getSpace(spaceId);
+
+  const [photosData, spaceData] = await Promise.all([
+    getSpacePhotos(spaceId),
+    getSpace(spaceId),
+  ]);
 
   return {
     props: {
