@@ -8,14 +8,6 @@ import qs from 'qs';
 import getSpacePhotos, {
   url as getSpacePhotosUrl,
 } from 'lib/fetch/spaces/get-photos';
-import getField, {
-  url as getFieldUrl,
-  useFetchField,
-} from 'lib/fetch/fields/get-field';
-import getZone, {
-  url as getZoneUrl,
-  useFetchZone,
-} from 'lib/fetch/fields/get-zone';
 import getSpace, {
   url as getSpaceUrl,
   useFetchSpace,
@@ -29,20 +21,11 @@ export async function getServerSideProps({ query }) {
   const photosData = await getSpacePhotos(spaceId);
   const spaceData = await getSpace(spaceId);
 
-  const { zoneId } = spaceData;
-  const zoneData = await getZone(zoneId);
-
-  const { fieldId } = zoneData;
-
-  const fieldData = await getField(fieldId);
-
   return {
     props: {
       fallback: {
         [getSpacePhotosUrl(spaceId)]: photosData,
         [getSpaceUrl(spaceId)]: spaceData,
-        [getZoneUrl(zoneId)]: zoneData,
-        [getFieldUrl(fieldId)]: fieldData,
       },
     },
   };
@@ -58,10 +41,7 @@ const renderTitle = ifElse(
 const TopBar = ({ spaceId }) => {
   const { data: space } = useFetchSpace(spaceId);
 
-  const { data: zone } = useFetchZone(space?.zoneId);
-  const { data: field } = useFetchField(zone?.fieldId);
-
-  const title = renderTitle([field, zone]);
+  const title = renderTitle([space?.zone?.field, space?.zone]);
 
   const query = qs.stringify({ zone: space?.zoneId }, { addQueryPrefix: true });
   return (
