@@ -7,6 +7,7 @@ const spaceTypeClassNameMap = {
   seat: 'seat',
   pillar: 'pillar',
   group: 'group',
+  aisle: 'aisle',
 };
 
 const allowList = new Set(['seat', 'group']);
@@ -61,7 +62,7 @@ const Space = ({
       )}
       <style jsx>{`
         .container {
-          cursor: pointer;
+          cursor: ${isClickable ? 'pointer' : 'inherit'};
         }
         .group {
           fill: ${colors.secondary.light};
@@ -71,6 +72,9 @@ const Space = ({
         }
         .pillar {
           fill: ${colors.onSurface.main};
+        }
+        .aisle {
+          fill: ${colors.onSurface['40']};
         }
         .group:hover > .seat {
           fill: ${colors.secondary.light};
