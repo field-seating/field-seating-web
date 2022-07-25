@@ -28,6 +28,7 @@ const useImageUpload = ({ spaceId } = {}) => {
   const onFileInputChange = useCallback(
     (e) => {
       e.preventDefault();
+      console.log('onFileInputChange head');
 
       const files = e.target.files;
 
@@ -44,15 +45,23 @@ const useImageUpload = ({ spaceId } = {}) => {
 
       uploadStepperService.send({ type: 'START_FLOW', imageFiles: files });
 
-      Router.push(`/upload${qs.stringify({ space: spaceId })}`, {
-        addQueryPrefix: true,
-      });
+      console.log('onFileInputChange pre push');
+      const destination = `/upload${qs.stringify(
+        { space: spaceId },
+        {
+          addQueryPrefix: true,
+        }
+      )}`;
+
+      Router.push(destination);
     },
     [uploadStepperService, snackbar, spaceId]
   );
 
   const onClick = useCallback(
     (e) => {
+      console.log('onClick isReadyNotActive', isReadyNotActive);
+      console.log('onClick isAuthPreparing', isAuthPreparing);
       if (isReadyNotActive) {
         e.preventDefault();
         snackbar({ text: '上傳前請先登入並且驗證信箱', variant: 'error' });

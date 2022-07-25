@@ -28,7 +28,7 @@ const SpacePhotos = () => {
     <Box>
       <Grid
         templateColumns={['repeat(2, 1fr)']}
-        rowGap="8"
+        rowGap={['2', '4']}
         justifyItems="center"
       >
         {photos.map((photo) => {

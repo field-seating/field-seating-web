@@ -15,7 +15,7 @@ const RateIcon = ({ as }) => <Icon boxSize={['3', '6']} as={as} mr="1" />;
 const CustomImage = forwardRef(({ alt, ...props }, ref) => (
   <Image
     loading="lazy"
-    objectFit="contain"
+    objectFit="cover"
     width="100%"
     height="100%"
     ref={ref}
@@ -76,7 +76,7 @@ const PhotoPreviewCard = ({
 
   return (
     <Box
-      w={['160px', '320px', '320px', '480px']}
+      w={['160px', '320px', '360px', '480px']}
       display="flex"
       flexDir="column"
       borderColor="onSurface.light"
@@ -85,7 +85,7 @@ const PhotoPreviewCard = ({
       overflow="hidden"
     >
       <Skeleton isLoaded={isLoaded}>
-        <Box w="100%" h={['120px', '240px', '240px', '360px']}>
+        <Box w="100%" h={['120px', '240px', '270px', '360px']}>
           <ImageLink
             href={href}
             src={src}
