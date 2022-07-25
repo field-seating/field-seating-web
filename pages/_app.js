@@ -3,6 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { inspect } from '@xstate/inspect';
 import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 import NProgress from 'nprogress';
 
 import { GlobalStateProvider } from 'lib/contexts/global-state';
@@ -55,12 +56,27 @@ function MyApp({ Component, pageProps }) {
     };
   }, [Router]);
 
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_ANALYTICS_ID;
+
   return (
     <SWRConfig
       value={{
         revalidateOnReconnect: true,
       }}
     >
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', ${GA_MEASUREMENT_ID});
+        `}
+      </Script>
       <ChakraProvider theme={theme}>
         <GlobalStateProvider>
           <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
