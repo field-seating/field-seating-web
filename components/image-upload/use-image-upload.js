@@ -28,7 +28,6 @@ const useImageUpload = ({ spaceId } = {}) => {
   const onFileInputChange = useCallback(
     (e) => {
       e.preventDefault();
-      console.log('onFileInputChange head');
 
       const files = e.target.files;
 
@@ -45,7 +44,6 @@ const useImageUpload = ({ spaceId } = {}) => {
 
       uploadStepperService.send({ type: 'START_FLOW', imageFiles: files });
 
-      console.log('onFileInputChange pre push');
       const destination = `/upload${qs.stringify(
         { space: spaceId },
         {
