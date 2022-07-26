@@ -10,6 +10,7 @@ import { GlobalStateContext } from 'lib/contexts/global-state';
 import SpaceViewer from 'components/space-viewer';
 import AppBar from 'components/ui/app-bar';
 import ZoneCriteriaDrawer from 'components/zone-criteria-drawer';
+import { selectSpace } from 'lib/utils/tracking/event';
 
 const anyNil = any(isNil);
 const renderTitle = ifElse(
@@ -25,13 +26,6 @@ const SpaceSelector = () => {
 
   const { zoneId, fieldId, levelId, orientationId } =
     uploadStepperState.context.flowData;
-
-  const onSpaceSelect = useCallback(
-    (spaceId) => {
-      sendToUploadStepperActor({ type: 'SELECT_SPACE', spaceId });
-    },
-    [sendToUploadStepperActor]
-  );
 
   const onBack = useCallback(() => {
     sendToUploadStepperActor('BACK');
@@ -56,6 +50,14 @@ const SpaceSelector = () => {
   const { data: zone } = useFetchZone(zoneId);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const onSpaceSelect = useCallback(
+    (spaceId) => {
+      sendToUploadStepperActor({ type: 'SELECT_SPACE', spaceId });
+      selectSpace({ spaceId, fieldName: field.name, zoneName: zone.name });
+    },
+    [sendToUploadStepperActor, field, zone]
+  );
 
   const xMirror = zone ? zone.xMirror : null;
   const title = renderTitle([field, zone]);
