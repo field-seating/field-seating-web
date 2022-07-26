@@ -15,6 +15,7 @@ import getSpace, {
 import SpacePhotos from 'components/space-photos';
 import AppBar from 'components/ui/app-bar';
 import UploadFloatingButton from 'components/space-photos/upload-floating-button';
+import { renderSpaceTitle } from 'components/space-viewer/helpers';
 
 export async function getServerSideProps({ query }) {
   const { spaceId } = query;
@@ -38,13 +39,14 @@ const anyNil = any(isNil);
 const renderTitle = ifElse(
   anyNil,
   always(''),
-  ([field, zone]) => `${field.name} ${zone.name}`
+  ([field, zone, space]) =>
+    `${field.name} ${zone.name} - ${renderSpaceTitle(space)}`
 );
 
 const TopBar = ({ spaceId }) => {
   const { data: space } = useFetchSpace(spaceId);
 
-  const title = renderTitle([space?.zone?.field, space?.zone]);
+  const title = renderTitle([space?.zone?.field, space?.zone, space]);
 
   const query = qs.stringify({ zone: space?.zoneId }, { addQueryPrefix: true });
   return (

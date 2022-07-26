@@ -17,7 +17,7 @@ const renderSpaceLabel = ifElse(
   anyNil,
   always('選擇座位'),
   ([field, zone, space]) =>
-    `${field.name} - ${zone.name} ${renderSpaceTitle(space.spaceType)(space)}`
+    `${field.name} - ${zone.name} ${renderSpaceTitle(space)}`
 );
 
 const SelectSpaceButton = ({ onClick, actor, defaultValue }) => {

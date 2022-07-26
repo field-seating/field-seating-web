@@ -32,7 +32,8 @@ const Space = ({
 
   const isClickable = allowList.has(spaceType);
 
-  const title = renderSpaceTitle(spaceType)({
+  const title = renderSpaceTitle({
+    spaceType,
     name,
     rowNumber,
     colNumber,
