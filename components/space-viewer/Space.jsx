@@ -12,6 +12,14 @@ const spaceTypeClassNameMap = {
 
 const allowList = new Set(['seat', 'group']);
 
+const getTextFontSize = ({ spaceType }) => {
+  if (spaceType === spaceTypeClassNameMap.seat) {
+    return 12;
+  }
+
+  return 10;
+};
+
 const Space = ({
   id,
   rowNumber,
@@ -39,6 +47,8 @@ const Space = ({
     colNumber,
   });
 
+  const textFontSize = getTextFontSize({ spaceType });
+
   return (
     <g className="container" onClick={isClickable ? onClick : null}>
       <rect
@@ -53,7 +63,7 @@ const Space = ({
           x={x + 0.5 * width}
           y={y + 0.5 * height}
           fontFamily="Verdana"
-          fontSize="12"
+          fontSize={textFontSize}
           textAnchor="middle"
           alignmentBaseline="central"
           className="title"
