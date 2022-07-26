@@ -27,6 +27,10 @@ const nextConfig = {
         source: '/api/:path*',
         destination: `${apiHost}/api/:path*`,
       },
+      {
+        source: '/robots.txt',
+        destination: '/api/robots',
+      },
     ];
   },
 };
