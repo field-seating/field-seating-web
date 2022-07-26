@@ -1,7 +1,7 @@
 import { useContext, useCallback, useEffect } from 'react';
 import { useActor } from '@xstate/react';
-import { Box, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import { always, any, ifElse, isNil } from 'ramda';
 
 import { useFetchSpaces } from 'lib/fetch/fields/list-spaces';
@@ -53,18 +53,24 @@ const SpaceSelector = () => {
   const { data: field } = useFetchField(fieldId);
   const { data: zone } = useFetchZone(zoneId);
 
-  const title = renderTitle([field, zone]);
-
   useEffect(() => {
     browsePhotosService.send({ type: 'INIT', zoneId: router.query.zone });
   }, [browsePhotosService, router]);
+
+  const xMirror = zone ? zone.xMirror : false;
+
+  const title = renderTitle([field, zone]);
 
   return (
     <>
       <Box display="flex" flexDir="column" height="100%">
         <AppBar title={title} hasMenu onMenu={onOpen} />
         <Box flex="1" width="100%" overflowX="auto" pt={[4, 8]} px={[4, 8]}>
-          <SpaceViewer spaces={spaces || []} onSpaceSelect={onSpaceSelect} />
+          <SpaceViewer
+            spaces={spaces || []}
+            onSpaceSelect={onSpaceSelect}
+            xMirror={xMirror}
+          />
         </Box>
       </Box>
       <ZoneCriteriaDrawer
