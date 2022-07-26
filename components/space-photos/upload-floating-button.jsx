@@ -3,6 +3,7 @@ import { Box } from '@chakra-ui/react';
 
 import FloatingIconButton from 'components/ui/floating-icon-button';
 import useImageUpload from 'components/image-upload/use-image-upload';
+import { clickUploadButton, viaMap } from 'lib/utils/tracking/event';
 
 const UploadFloatingButton = ({ spaceId }) => {
   const { onClick, onFileInputChange } = useImageUpload({ spaceId });
@@ -13,7 +14,10 @@ const UploadFloatingButton = ({ spaceId }) => {
         <FloatingIconButton
           as="div"
           size="sm"
-          onClick={onClick}
+          onClick={(e) => {
+            onClick(e);
+            clickUploadButton({ via: viaMap.spacePhotosFloatingButton });
+          }}
           label="上傳照片"
         >
           <AddIcon />

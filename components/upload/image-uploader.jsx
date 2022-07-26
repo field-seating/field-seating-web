@@ -1,7 +1,7 @@
 import { CloudUpload } from '@mui/icons-material';
 import { Box } from '@chakra-ui/react';
 import useImageUpload from 'components/image-upload/use-image-upload';
-
+import { clickUploadButton, viaMap } from 'lib/utils/tracking/event';
 import BottomNavigationButton from 'components/ui/bottom-navigation-button';
 
 const ImageUploader = ({ isActive }) => {
@@ -10,7 +10,11 @@ const ImageUploader = ({ isActive }) => {
     <Box flex={1}>
       <label htmlFor="image-uploader">
         <BottomNavigationButton
-          onClick={onClick}
+          onClick={(e) => {
+            onClick(e);
+
+            clickUploadButton({ via: viaMap.bottomNavigationButton });
+          }}
           as="div"
           label="上傳"
           icon={<CloudUpload />}

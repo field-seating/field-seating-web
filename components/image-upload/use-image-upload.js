@@ -60,8 +60,6 @@ const useImageUpload = ({ spaceId } = {}) => {
 
   const onClick = useCallback(
     (e) => {
-      console.log('onClick isReadyNotActive', isReadyNotActive);
-      console.log('onClick isAuthPreparing', isAuthPreparing);
       if (isReadyNotActive) {
         e.preventDefault();
         snackbar({ text: '上傳前請先登入並且驗證信箱', variant: 'error' });
