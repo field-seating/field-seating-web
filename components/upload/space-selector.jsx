@@ -57,6 +57,7 @@ const SpaceSelector = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const xMirror = zone ? zone.xMirror : null;
   const title = renderTitle([field, zone]);
 
   return (
@@ -70,7 +71,11 @@ const SpaceSelector = () => {
           onMenu={onOpen}
         />
         <Box flex="1" width="100%" overflowX="auto" pt={[4, 8]} px={[4, 8]}>
-          <SpaceViewer spaces={spaces || []} onSpaceSelect={onSpaceSelect} />
+          <SpaceViewer
+            spaces={spaces || []}
+            onSpaceSelect={onSpaceSelect}
+            xMirror={xMirror}
+          />
         </Box>
       </Box>
       <ZoneCriteriaDrawer

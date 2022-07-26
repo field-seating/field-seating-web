@@ -1,12 +1,13 @@
 import { useMemo } from 'react';
+import { isNil } from 'ramda';
 
 import { SIDE, getCoordinate, getCanvasSize } from './helpers';
 import Space from './Space';
 import EmptyState from './EmptyState';
 
-const SpaceViewer = ({ spaces, onSpaceSelect }) => {
+const SpaceViewer = ({ spaces, onSpaceSelect, xMirror }) => {
   const normalizedSpaces = useMemo(() => {
-    const mapper = getCoordinate({ spaces });
+    const mapper = getCoordinate({ spaces, xMirror });
 
     return spaces.map((space) => {
       const { x, y } = mapper(space);
@@ -17,13 +18,14 @@ const SpaceViewer = ({ spaces, onSpaceSelect }) => {
         y,
       };
     });
-  }, [spaces]);
+  }, [spaces, xMirror]);
 
   const canvasSize = useMemo(() => {
     return getCanvasSize(spaces);
   }, [spaces]);
 
-  if (normalizedSpaces.length === 0) {
+  const isRenderReady = !isNil(xMirror) && normalizedSpaces.length !== 0;
+  if (!isRenderReady) {
     return <EmptyState />;
   }
 

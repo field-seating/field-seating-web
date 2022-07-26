@@ -7,22 +7,37 @@ const multiplyUnitLength = multiply(GAP + SIDE);
 
 const buffer = 10;
 
-export const getCoordinate = ({ spaces }) => {
+const getPosition =
+  ({ rightEdgePosition, xMirror }) =>
+  ({ positionRowNumber, positionColNumber }) => {
+    if (xMirror) {
+      const y = multiplyUnitLength(positionRowNumber - 1);
+      const x = rightEdgePosition - multiplyUnitLength(positionColNumber);
+
+      return {
+        x,
+        y,
+      };
+    }
+
+    const y = multiplyUnitLength(positionRowNumber - 1);
+    const x = multiplyUnitLength(positionColNumber - 1);
+    return {
+      x,
+      y,
+    };
+  };
+
+export const getCoordinate = ({ spaces, xMirror }) => {
   const rightEdgePosition = compose(
     multiplyUnitLength,
     reduce(max, 0),
     map(prop('positionColNumber'))
   )(spaces);
 
-  return ({ positionRowNumber, positionColNumber }) => {
-    const y = multiplyUnitLength(positionRowNumber - 1);
-    const x = rightEdgePosition - multiplyUnitLength(positionColNumber);
+  const renderPosition = getPosition({ rightEdgePosition, xMirror });
 
-    return {
-      x,
-      y,
-    };
-  };
+  return renderPosition;
 };
 
 export const getCanvasSize = (spaces) => {
