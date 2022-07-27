@@ -1,5 +1,5 @@
 import { useContext, useCallback, useEffect } from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import { useMachine, useSelector } from '@xstate/react';
 import { useRouter } from 'next/router';
 
@@ -12,6 +12,7 @@ import {
   selectFailure,
 } from 'lib/machines/upload-stepper-machine';
 import useSnackbar from 'components/ui/snackbar';
+import Prompt from 'components/ui/prompt';
 
 import machine from './info-selector-machine';
 import Stepper from './stepper';
@@ -62,7 +63,7 @@ const InfoSelector = () => {
 
   useEffect(() => {
     if (isUploaderSuccess) {
-      snackbar({ text: '成功上傳' });
+      snackbar({ text: '成功上傳，導引至座位頁面' });
       router.push(`/spaces/${spaceId}/photos`);
       return;
     }
@@ -79,10 +80,12 @@ const InfoSelector = () => {
     sendToForm('SUBMIT');
   }, [sendToForm]);
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Stepper
       forwardTitle={forwardTitle}
-      onForward={onSubmit}
+      onForward={onOpen}
       backTitle={backTitle}
       onBack={onBack}
       title={title}
@@ -94,9 +97,15 @@ const InfoSelector = () => {
           defaultValue={spaceId}
         />
       </Box>
-      <Box>
+      <Box mb={16}>
         <DateActorField actor={datetimeActor} />
       </Box>
+      <Prompt
+        isOpen={isOpen}
+        onClose={onClose}
+        onSubmit={onSubmit}
+        title="注意，照片將會公開於我們的平台"
+      />
     </Stepper>
   );
 };
