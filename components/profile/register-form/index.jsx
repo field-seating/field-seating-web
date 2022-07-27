@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useMachine } from '@xstate/react';
-import { Box, Grid } from '@chakra-ui/react';
+import { Box, Grid, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 
 import Button from 'components/ui/button';
@@ -62,8 +62,19 @@ const RegisterForm = () => {
           <Field actor={passwordActor} />
           <Field actor={confirmPasswordActor} />
         </Grid>
-        <Box display="flex" mt={10} flexDir="column">
+        <Box display="flex" mt={8} flexDir="column">
           <Box mb="3">
+            <Box mb="2">
+              <Text color="onSurface.40" fontSize="xs">
+                請先參閱我們的
+                <Link size="xs" href="/privacy" isExternal>
+                  隱私權條款
+                </Link>
+              </Text>
+              <Text color="onSurface.40" fontSize="xs">
+                若註冊則視為同意
+              </Text>
+            </Box>
             <Button
               isLoading={isLoading}
               isDisabled={isDisabled}

@@ -11,7 +11,6 @@ const Home = () => {
           name="description"
           content="platform for sharing photos in the fields"
         />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <SpaceSelector />
     </>

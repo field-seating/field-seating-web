@@ -35,19 +35,22 @@ const Prompt = ({
     <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay />
       <DrawerContent>
-        <DrawerHeader borderBottomWidth={hasDescription && '1px'}>
+        <DrawerHeader
+          color="onSurface.main"
+          borderBottomWidth={hasDescription && '1px'}
+        >
           {title}
         </DrawerHeader>
         {description && (
           <DrawerBody>
-            <Text>{description}</Text>
+            <Text color="onSurface.main">{description}</Text>
           </DrawerBody>
         )}
         <DrawerFooter>
-          <Button variant="outline" mr={4} onClick={onClose}>
+          <Button variant="outline" mr={4} onClick={onClose} size="sm">
             {cancelText}
           </Button>
-          <Button variant="solid" onClick={wrappedOnSubmit}>
+          <Button variant="solid" onClick={wrappedOnSubmit} size="sm">
             {submitText}
           </Button>
         </DrawerFooter>

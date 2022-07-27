@@ -18,6 +18,7 @@ const FunctionList = () => {
     <Box display="flex" flexDir="column">
       <FunctionItem href="/profile/info">個人資訊</FunctionItem>
       <FunctionItem href="/profile/password-management">管理密碼</FunctionItem>
+      <FunctionItem href="/privacy">隱私權條款</FunctionItem>
       <FunctionItem onClick={logout}>登出</FunctionItem>
     </Box>
   );
