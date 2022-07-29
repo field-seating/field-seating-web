@@ -74,7 +74,7 @@ const SpacePhotosPage = ({ fallback }) => {
             pos="sticky"
             display="flex"
             justifyContent="flex-end"
-            right="4"
+            pr="4"
             bottom="4"
           >
             <UploadFloatingButton spaceId={spaceId} />
