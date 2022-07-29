@@ -68,15 +68,9 @@ const SpacePhotosPage = ({ fallback }) => {
     <SWRConfig value={{ fallback }}>
       <Box display="flex" flexDir="column" h="100%">
         <TopBar spaceId={spaceId} />
-        <Box px={[1, 4]} py={4} flex="1" overflowY="auto" pos="relative">
+        <Box px={[1, 4]} py={4} flex="1" overflowY="auto">
           <SpacePhotos />
-          <Box
-            pos="sticky"
-            display="flex"
-            justifyContent="flex-end"
-            pr="4"
-            bottom="4"
-          >
+          <Box pos="fixed" right="4" bottom="16">
             <UploadFloatingButton spaceId={spaceId} />
           </Box>
         </Box>
