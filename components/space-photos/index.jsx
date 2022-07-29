@@ -30,6 +30,7 @@ const SpacePhotos = () => {
         templateColumns={['repeat(2, 1fr)']}
         rowGap={['2', '4']}
         justifyItems="center"
+        px={['1em', '2em', '2em', '2em', '16em']}
       >
         {photos.map((photo) => {
           const { src, srcSet } = getSpacePhotoSrc(photo.dataset);
@@ -45,6 +46,7 @@ const SpacePhotos = () => {
               thumbUp={usefulCount}
               thumbDown={uselessCount}
               href={`/photos/${id}`}
+              hideRate
             />
           );
         })}
