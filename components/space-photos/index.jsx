@@ -26,7 +26,7 @@ const SpacePhotos = () => {
     <Box>
       <Grid
         templateColumns={['repeat(2, 1fr)']}
-        rowGap={['2', '4']}
+        rowGap={['1', '2']}
         justifyItems="center"
         px={['1em', '2em', '2em', '2em', '16em']}
       >
