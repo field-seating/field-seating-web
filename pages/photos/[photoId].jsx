@@ -26,7 +26,7 @@ const PhotosPage = ({ fallback }) => {
   return (
     <>
       <Head>
-        <title>球場照片 | 球場坐座</title>
+        <title>座位視野 | 球場坐座</title>
       </Head>
 
       <SWRConfig value={{ fallback }}>

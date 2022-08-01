@@ -10,7 +10,7 @@ const buffer = 10;
 const getPosition =
   ({ rightEdgePosition, xMirror }) =>
   ({ positionRowNumber, positionColNumber }) => {
-    if (xMirror) {
+    if (!xMirror) {
       const y = multiplyUnitLength(positionRowNumber - 1);
       const x = rightEdgePosition - multiplyUnitLength(positionColNumber);
 

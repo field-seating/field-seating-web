@@ -7,7 +7,7 @@ const SignUpPage = () => {
   const { isAnonymous } = useAuth('/profile', false);
 
   return (
-    <Box px={[4, 16, 32, 48]} py={4}>
+    <Box px={[4, 16, 32, 48]} pt={4} h="100%" overflowY="auto">
       {isAnonymous && (
         <Box display="flex" flexDir="column">
           <RegisterForm />
