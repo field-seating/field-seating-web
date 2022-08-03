@@ -20,9 +20,17 @@ import { renderSpaceTitle } from 'components/space-viewer/helpers';
 export async function getServerSideProps({ query }) {
   const { spaceId } = query;
 
+  console.time('getSpacePhotos');
+  console.time('getSpaces');
   const [photosData, spaceData] = await Promise.all([
-    getSpacePhotos(spaceId),
-    getSpace(spaceId),
+    getSpacePhotos(spaceId).then((resp) => {
+      console.timeEnd('getSpacePhotos');
+      return resp;
+    }),
+    getSpace(spaceId).then((resp) => {
+      console.timeEnd('getSpaces');
+      return resp;
+    }),
   ]);
 
   return {
