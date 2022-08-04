@@ -2,6 +2,7 @@ import { useCallback, useContext } from 'react';
 import { Box, useDisclosure } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useActor } from '@xstate/react';
+import Head from 'next/head';
 
 import { GlobalStateContext } from 'lib/contexts/global-state';
 import useAuth from 'lib/hooks/user-auth';
@@ -31,11 +32,16 @@ const PasswordManagementPage = () => {
     }
   }, [snackbar, router, email]);
 
+  const title = '密碼管理';
+
   return (
     <>
+      <Head>
+        <title>{`${title} | 球場坐座`}</title>
+      </Head>
       {isLoggedIn && (
         <Box>
-          <AppBar title="密碼管理" hasBackward backHref="/profile" />
+          <AppBar title={title} hasBackward backHref="/profile" />
           <Box pt="8" px={[4, 8]}>
             <Button variant="outline" size="md" onClick={onOpen}>
               重置密碼
