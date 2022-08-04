@@ -11,6 +11,10 @@ const DefaultHead = () => {
       <meta name="description" content={desc} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={desc} />
+      <meta
+        property="og:image"
+        content="https://www.fieldseating.com/icons/icon256.png"
+      />
       <link rel="icon" href="/favicon.ico" />
       <link rel="icon" type="image/png" href="/favicon.png" />
       <link rel="manifest" href="/manifest.json" />
