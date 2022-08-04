@@ -2,6 +2,7 @@ import { string } from 'yup';
 
 import formMachineCreator from 'lib/machines/form';
 import signUp from 'lib/fetch/users/signup';
+import { signUp as signUpEvent } from 'lib/utils/tracking/event';
 
 const inputOptionMap = {
   name: {
@@ -73,7 +74,10 @@ const machine = formMachineCreator({ machineId: 'signup-form' })(
       const name = context.inputRefs.name.getSnapshot().context.value;
       const email = context.inputRefs.email.getSnapshot().context.value;
       const password = context.inputRefs.password.getSnapshot().context.value;
-      return signUp(name, email, password);
+      return signUp(name, email, password).then((resp) => {
+        signUpEvent();
+        return resp;
+      });
     },
   },
 });
