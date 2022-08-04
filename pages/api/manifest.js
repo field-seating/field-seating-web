@@ -12,7 +12,7 @@ const getContent = () => {
       '透過群眾上傳，提升看球體驗。照片更多，共享更多看球視野！操作更快，手機上傳一指搞定！',
     icons: [
       {
-        src: 'favicon.png',
+        src: 'icons/icon256.png',
         sizes: '256x256',
         type: 'image/png',
       },
