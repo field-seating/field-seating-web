@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 import useAuth from 'lib/hooks/user-auth';
 import Button from 'components/ui/button';
@@ -22,12 +23,16 @@ const VerifyPage = () => {
       snackbar({ text: err.response.data?.message, variant: 'error' });
     }
   }, [snackbar, router]);
+  const title = '驗證信箱';
 
   return (
     <>
+      <Head>
+        <title>{`${title} | 球場坐座`}</title>
+      </Head>
       {isLoggedIn && (
         <Box>
-          <AppBar title="驗證信箱" hasBackward backHref="/profile" />
+          <AppBar title={title} hasBackward backHref="/profile" />
           <Box pt="8" px={[4, 8]}>
             <Button variant="outline" size="md" onClick={onClick}>
               傳送驗證信

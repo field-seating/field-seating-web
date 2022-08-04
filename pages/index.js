@@ -6,11 +6,7 @@ const Home = () => {
   return (
     <>
       <Head>
-        <title>球場坐座</title>
-        <meta
-          name="description"
-          content="platform for sharing photos in the fields"
-        />
+        <title>選擇座位 | 球場坐座</title>
       </Head>
       <SpaceSelector />
     </>
