@@ -42,11 +42,19 @@ const SelectSpaceButton = ({ onClick, actor, defaultValue }) => {
   const { data: field } = useFetchField(fieldId);
   const { data: space } = useFetchSpace(spaceId);
   const { data: zone } = useFetchZone(zoneId);
+
   const spaceLabel = renderSpaceLabel([field, zone, space]);
+
+  const isLoading = !isNil(spaceId) && anyNil([field, zone, space]);
 
   return (
     <FormControl id={id} isInvalid={isError}>
-      <Button variant="outline" onClick={onClick} size="md">
+      <Button
+        variant="outline"
+        onClick={onClick}
+        size="md"
+        isLoading={isLoading}
+      >
         {spaceLabel}
       </Button>
       <Box h={4}>
