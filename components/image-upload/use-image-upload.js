@@ -4,7 +4,7 @@ import Router from 'next/router';
 import qs from 'qs';
 
 import useSnackbar from 'components/ui/snackbar';
-import { selectReadyNotActive, selectPreparing } from 'lib/machines/auth';
+import { selectPreparing } from 'lib/machines/auth';
 import { GlobalStateContext } from 'lib/contexts/global-state';
 
 const FILES_LIMIT = 3;
@@ -20,7 +20,6 @@ const isFilesValid = (files) => {
 const useImageUpload = ({ spaceId } = {}) => {
   const { uploadStepperService, authService } = useContext(GlobalStateContext);
 
-  const isReadyNotActive = useSelector(authService, selectReadyNotActive);
   const isAuthPreparing = useSelector(authService, selectPreparing);
 
   const snackbar = useSnackbar();
@@ -58,19 +57,12 @@ const useImageUpload = ({ spaceId } = {}) => {
 
   const onClick = useCallback(
     (e) => {
-      if (isReadyNotActive) {
-        e.preventDefault();
-        snackbar({ text: '上傳前請先登入並且驗證信箱', variant: 'error' });
-        Router.push('/profile');
-        return;
-      }
-
       if (isAuthPreparing) {
         e.preventDefault();
         return;
       }
     },
-    [isReadyNotActive, isAuthPreparing, snackbar]
+    [isAuthPreparing]
   );
 
   return {

@@ -12,7 +12,7 @@ import {
 } from 'lib/machines/upload-stepper-machine';
 
 const UploadPage = () => {
-  const { isLoggedIn } = useAuth('/profile/sign-in');
+  const { isAnonymous } = useAuth();
   const router = useRouter();
 
   const { uploadStepperService } = useContext(GlobalStateContext);
@@ -32,16 +32,20 @@ const UploadPage = () => {
 
   useEffect(() => {
     if (isIdle) {
-      uploadStepperService.send({ type: 'INIT', spaceId: router.query.space });
+      uploadStepperService.send({
+        type: 'INIT',
+        spaceId: router.query.space,
+        anonymous: isAnonymous,
+      });
     }
-  }, [isIdle, uploadStepperService, router]);
+  }, [isIdle, uploadStepperService, router, isAnonymous]);
 
   return (
     <>
       <Head>
         <title>留下紀錄 | 球場坐座</title>
       </Head>
-      {isLoggedIn && !isNotReady && <UploadContent />}
+      {!isNotReady && <UploadContent />}
     </>
   );
 };
