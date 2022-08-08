@@ -29,7 +29,7 @@ const InfoSelector = () => {
     stepIndex,
     title,
     totalStep,
-    flowData: { spaceId },
+    flowData: { spaceId, isAnonymous },
   } = uploadStepperService.getSnapshot().context;
 
   const isInfoSelector = useSelector(uploadStepperService, selectInfoSelector);
@@ -82,6 +82,11 @@ const InfoSelector = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const prompTitle = '您將上傳照片至球場坐座';
+  const prompDescription = isAnonymous
+    ? '照片將會公開於「球場坐座」。由於您未登入，照片所有權將歸屬「球場坐座」。'
+    : '照片將會公開於「球場坐座」。「球場坐座」保留刪除違法照片之權力。';
+
   return (
     <Stepper
       forwardTitle={forwardTitle}
@@ -104,7 +109,8 @@ const InfoSelector = () => {
         isOpen={isOpen}
         onClose={onClose}
         onSubmit={onSubmit}
-        title="注意，照片將會公開於我們的平台"
+        title={prompTitle}
+        description={prompDescription}
       />
     </Stepper>
   );

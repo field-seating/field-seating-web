@@ -35,7 +35,7 @@ const UploadPage = () => {
       uploadStepperService.send({
         type: 'INIT',
         spaceId: router.query.space,
-        anonymous: isAnonymous,
+        isAnonymous,
       });
     }
   }, [isIdle, uploadStepperService, router, isAnonymous]);
