@@ -11,6 +11,7 @@ const DefaultHead = () => {
       <meta name="description" content={desc} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={desc} />
+      <meta property="og:locale" content="zh_TW" />
       <meta
         property="og:image"
         content="https://www.fieldseating.com/images/og-image.jpg"
