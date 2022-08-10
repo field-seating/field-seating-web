@@ -5,7 +5,7 @@ const DefaultHead = () => {
   const desc =
     '透過群眾上傳，提升看球體驗。照片更多，共享更多看球視野！操作更快，手機上傳一指搞定！';
 
-  const ogImage = 'https://www.fieldseating.com/images/og-image.png';
+  const ogImage = 'https://www.fieldseating.com/images/og-image-1.png';
 
   return (
     <Head>
