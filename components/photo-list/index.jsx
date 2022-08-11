@@ -25,14 +25,16 @@ const PhotoList = () => {
       {photos.map((photo) => {
         const { user, id, date, usefulCount, uselessCount } = photo;
         const { src, srcSet, sizes } = getPhotoSrc(photo.dataset);
+
+        const userName = user ? user.name : '網友';
         return (
           <Box key={id} mb="8">
             <PhotoCard
               src={src}
               srcSet={srcSet}
               sizes={sizes}
-              alt={`photo uploaded by ${user.name}`}
-              userName={user.name}
+              alt={`photo uploaded by ${userName}`}
+              userName={userName}
               thumbUp={usefulCount}
               thumbDown={uselessCount}
               date={date}
