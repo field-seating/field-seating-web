@@ -6,6 +6,7 @@ import { useFetchPhotos } from 'lib/fetch/photos/get-photos';
 import PhotoCard from 'components/ui/photo-card';
 import { getPhotoSrc } from 'lib/utils/image-srcset';
 import EmptyState from 'components/space-photos/EmptyState';
+import { generateAnonymousName } from './helpers';
 
 const getPhotos = pathOr([], ['photos']);
 
@@ -26,7 +27,7 @@ const PhotoList = () => {
         const { user, id, date, usefulCount, uselessCount } = photo;
         const { src, srcSet, sizes } = getPhotoSrc(photo.dataset);
 
-        const userName = user ? user.name : '網友';
+        const userName = user ? user.name : generateAnonymousName();
         return (
           <Box key={id} mb="8">
             <PhotoCard
