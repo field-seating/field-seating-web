@@ -2,10 +2,10 @@ import { Box } from '@chakra-ui/react';
 import Head from 'next/head';
 
 import RegisterForm from 'components/profile/register-form';
-import useAuth from 'lib/hooks/user-auth';
+import useAuth, { AUTH_TYPE } from 'lib/hooks/user-auth';
 
 const SignUpPage = () => {
-  const { isAnonymous } = useAuth('/profile', false);
+  const { isAnonymous } = useAuth('/profile', AUTH_TYPE.ANONYMOUS);
 
   const title = '註冊帳號';
 
