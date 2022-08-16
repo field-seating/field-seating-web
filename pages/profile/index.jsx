@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import { Box } from '@chakra-ui/react';
 
-import useAuth, { AUTH_TYPE } from 'lib/hooks/user-auth';
+import useAuth from 'lib/hooks/user-auth';
 import ProfileHeader from 'components/profile/profile-header';
 import FunctionList from 'components/profile/function-list';
 
 const ProfilePage = () => {
-  const { isLoggedIn } = useAuth('/profile/sign-in', AUTH_TYPE.LOGIN);
+  const { isLoggedIn } = useAuth('/profile/sign-in');
 
   return (
     <>
