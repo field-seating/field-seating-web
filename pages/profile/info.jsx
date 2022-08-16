@@ -9,7 +9,7 @@ import useAuth from 'lib/hooks/user-auth';
 const InfoPage = () => {
   const { isLoggedIn } = useAuth('/profile/sign-in');
 
-  const title = '驗證信箱';
+  const title = '個人資訊';
 
   return (
     <>
