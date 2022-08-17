@@ -3,10 +3,10 @@ import Head from 'next/head';
 
 import LoginForm from 'components/profile/login-form';
 import ProfileHeader from 'components/profile/profile-header';
-import useAuth from 'lib/hooks/user-auth';
+import useAuth, { AUTH_TYPE } from 'lib/hooks/user-auth';
 
 const SignInPage = () => {
-  const { isAnonymous } = useAuth('/profile', false);
+  const { isAnonymous } = useAuth('/profile', AUTH_TYPE.ANONYMOUS);
 
   const title = '登入';
   return (

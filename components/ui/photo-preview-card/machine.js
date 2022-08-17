@@ -1,6 +1,7 @@
 import { createMachine } from 'xstate';
 
 const machine = createMachine({
+  predictableActionArguments: true,
   id: 'photo-preview-card',
   initial: 'loading',
   states: {
