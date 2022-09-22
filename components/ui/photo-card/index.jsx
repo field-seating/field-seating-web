@@ -83,6 +83,7 @@ const PhotoCard = ({
   date,
   hideRate,
   hasAction,
+  menuList,
 }) => {
   const [current, send] = useMachine(machine);
   const onLoad = useCallback(() => {
@@ -174,7 +175,11 @@ const PhotoCard = ({
                   }}
                 />
                 <MenuList>
-                  <MenuItem>New Tab</MenuItem>
+                  {menuList.map(({ title, onClick, icon }, index) => (
+                    <MenuItem key={index} icon={icon} onClick={onClick}>
+                      {title}
+                    </MenuItem>
+                  ))}
                 </MenuList>
               </Menu>
             </Box>
@@ -194,6 +199,7 @@ PhotoCard.defaultProps = {
   userName: '',
   hideRate: false,
   hasAction: true,
+  menuList: [],
 };
 
 export default PhotoCard;
