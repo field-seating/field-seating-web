@@ -1,8 +1,12 @@
-import { Image, Box, Skeleton, Text, Icon } from '@chakra-ui/react';
+import { Image, Box, Skeleton, Text, Icon, IconButton } from '@chakra-ui/react';
 import { useCallback, forwardRef } from 'react';
 import { useMachine } from '@xstate/react';
 import NextLink from 'next/link';
-import { ThumbDownOutlined, ThumbUpOutlined } from '@mui/icons-material';
+import {
+  ThumbDownOutlined,
+  ThumbUpOutlined,
+  MoreVert,
+} from '@mui/icons-material';
 
 import machine, { selectLoaded } from '../photo-preview-card/machine';
 import { renderDate } from './helpers';
@@ -67,6 +71,7 @@ const PhotoCard = ({
   userName,
   date,
   hideRate,
+  hasAction,
 }) => {
   const [current, send] = useMachine(machine);
   const onLoad = useCallback(() => {
@@ -103,7 +108,7 @@ const PhotoCard = ({
         </Box>
       </Skeleton>
 
-      <Box pt="1">
+      <Box py="1">
         <Box display="flex" h="6" px="4" alignItems="center">
           <Text color="onSurface.main" fontSize="sm">
             {userName}
@@ -115,20 +120,35 @@ const PhotoCard = ({
           </Text>
         </Box>
 
-        {!hideRate && (
-          <Box display="flex" alignItems="center" h={['8']} px={['4']}>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          h={['8']}
+          px={['4']}
+        >
+          {!hideRate && (
             <Box display="flex">
               <Box display="flex" alignItems="center" mr="4">
-                <RateIcon as={ThumbUpOutlined} mr="1" />
+                <RateIcon as={ThumbUpOutlined} />
                 <RateNumber>{thumbUp}</RateNumber>
               </Box>
               <Box display="flex" alignItems="center">
-                <RateIcon as={ThumbDownOutlined} mr="1" />
+                <RateIcon as={ThumbDownOutlined} />
                 <RateNumber>{thumbDown}</RateNumber>
               </Box>
             </Box>
-          </Box>
-        )}
+          )}
+          {hasAction && (
+            <Box display="flex">
+              <IconButton
+                aria-label="Action"
+                icon={<MoreVert />}
+                variant="ghost"
+              />
+            </Box>
+          )}
+        </Box>
       </Box>
     </Box>
   );
@@ -142,6 +162,7 @@ PhotoCard.defaultProps = {
   date: '',
   userName: '',
   hideRate: false,
+  hasAction: true,
 };
 
 export default PhotoCard;
