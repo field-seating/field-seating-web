@@ -136,6 +136,7 @@ const PhotoCard = ({
           display="flex"
           alignItems="center"
           justifyContent="space-between"
+          flexDir="row-reverse"
           h={['8']}
           px={['4']}
         >

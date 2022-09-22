@@ -6,7 +6,9 @@ import { useFetchPhotos } from 'lib/fetch/photos/get-photos';
 import PhotoCard from 'components/ui/photo-card';
 import { getPhotoSrc } from 'lib/utils/image-srcset';
 import EmptyState from 'components/space-photos/EmptyState';
-import { generateAnonymousName } from './helpers';
+import Prompt from 'components/ui/prompt';
+
+import { generateAnonymousName, usePrompt } from './helpers';
 
 const getPhotos = pathOr([], ['photos']);
 
@@ -14,6 +16,7 @@ const PhotoList = () => {
   const router = useRouter();
   const { photoId } = router.query;
   const { data } = useFetchPhotos({ startPhotoId: photoId });
+  const promptPayload = usePrompt();
 
   const photos = getPhotos(data);
 
@@ -40,10 +43,30 @@ const PhotoList = () => {
               thumbDown={uselessCount}
               date={date}
               hideRate
+              hasAction
+              menuList={[
+                {
+                  title: '回報',
+                  onClick: () => {
+                    promptPayload.onOpen({
+                      title: '回報圖片',
+                      description: '送出後管理員將會審查該圖片是否違反規定',
+                      onSubmit: () => alert('submit!'),
+                    });
+                  },
+                },
+              ]}
             />
           </Box>
         );
       })}
+      <Prompt
+        isOpen={promptPayload.isOpen}
+        onClose={promptPayload.onClose}
+        onSubmit={promptPayload.onSubmit}
+        title={promptPayload.title}
+        description={promptPayload.description}
+      />
     </Box>
   );
 };
