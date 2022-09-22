@@ -1,4 +1,15 @@
-import { Image, Box, Skeleton, Text, Icon, IconButton } from '@chakra-ui/react';
+import {
+  Image,
+  Box,
+  Skeleton,
+  Text,
+  Icon,
+  IconButton,
+  Menu,
+  MenuItem,
+  MenuList,
+  MenuButton,
+} from '@chakra-ui/react';
 import { useCallback, forwardRef } from 'react';
 import { useMachine } from '@xstate/react';
 import NextLink from 'next/link';
@@ -141,11 +152,31 @@ const PhotoCard = ({
           )}
           {hasAction && (
             <Box display="flex">
-              <IconButton
-                aria-label="Action"
-                icon={<MoreVert />}
-                variant="ghost"
-              />
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label="Options"
+                  icon={<MoreVert />}
+                  bg="surface"
+                  color="primary.main"
+                  variant="ghost"
+                  _hover={{
+                    bg: 'primary.transparent',
+                    borderColor: 'primary.main',
+                  }}
+                  _active={{
+                    bg: 'surface',
+                    borderColor: 'primary.main',
+                  }}
+                  _focus={{
+                    bg: 'surface',
+                    boxShadow: 'onSurface',
+                  }}
+                />
+                <MenuList>
+                  <MenuItem>New Tab</MenuItem>
+                </MenuList>
+              </Menu>
             </Box>
           )}
         </Box>
