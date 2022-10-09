@@ -12,6 +12,7 @@ import {
 import { useFetchReports } from 'lib/fetch/admin/get-reports';
 
 import { getReports, properties } from './helpers';
+import Menu from './Menu';
 
 const ReportTable = () => {
   const { data: reportData } = useFetchReports();
@@ -38,6 +39,9 @@ const ReportTable = () => {
                 {properties.map((property) => (
                   <Td key={property.label}>{property.resolver(report)}</Td>
                 ))}
+                <Td>
+                  <Menu />
+                </Td>
               </Tr>
             ))}
           </Tbody>
