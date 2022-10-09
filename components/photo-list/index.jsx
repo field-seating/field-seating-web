@@ -8,10 +8,11 @@ import PhotoCard from 'components/ui/photo-card';
 import { getPhotoSrc } from 'lib/utils/image-srcset';
 import EmptyState from 'components/space-photos/EmptyState';
 import Prompt from 'components/ui/prompt';
+import usePrompt from 'components/ui/prompt/usePrompt';
 import useSnackbar from 'components/ui/snackbar';
 import reportPhoto from 'lib/fetch/photos/report-photo';
 
-import { generateAnonymousName, usePrompt } from './helpers';
+import { generateAnonymousName } from './helpers';
 
 const getPhotos = pathOr([], ['photos']);
 
