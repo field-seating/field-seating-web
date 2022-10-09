@@ -19,7 +19,7 @@ const getFontSize = (size) => {
   }
 };
 
-const Link = ({ children, color, isExternal, href, size }) => (
+const Link = ({ children, color, isExternal, href, size, rel, target }) => (
   <NextLink href={href} passHref>
     <ChakraLink
       fontSize={getFontSize(size)}
@@ -34,6 +34,8 @@ const Link = ({ children, color, isExternal, href, size }) => (
         bg: 'surface',
         boxShadow: 'onSurface',
       }}
+      rel={rel}
+      target={target}
     >
       {children}
     </ChakraLink>
