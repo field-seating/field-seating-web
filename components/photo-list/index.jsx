@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Box } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { isEmpty, pathOr } from 'ramda';
@@ -7,6 +8,8 @@ import PhotoCard from 'components/ui/photo-card';
 import { getPhotoSrc } from 'lib/utils/image-srcset';
 import EmptyState from 'components/space-photos/EmptyState';
 import Prompt from 'components/ui/prompt';
+import useSnackbar from 'components/ui/snackbar';
+import reportPhoto from 'lib/fetch/photos/report-photo';
 
 import { generateAnonymousName, usePrompt } from './helpers';
 
@@ -17,6 +20,16 @@ const PhotoList = () => {
   const { photoId } = router.query;
   const { data } = useFetchPhotos({ startPhotoId: photoId });
   const promptPayload = usePrompt();
+  const snackbar = useSnackbar();
+
+  const reportPhotoFunc = useCallback(
+    (photoId) => {
+      reportPhoto(photoId).then(() => {
+        snackbar({ text: '回報成功' });
+      });
+    },
+    [snackbar]
+  );
 
   const photos = getPhotos(data);
 
@@ -51,7 +64,7 @@ const PhotoList = () => {
                     promptPayload.onOpen({
                       title: '回報圖片',
                       description: '送出後管理員將會審查該圖片是否違反規定',
-                      onSubmit: () => alert('submit!'),
+                      onSubmit: () => reportPhotoFunc(id),
                     });
                   },
                 },
