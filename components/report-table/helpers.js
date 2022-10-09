@@ -1,4 +1,4 @@
-import { prop, propOr, pathOr, compose, filter } from 'ramda';
+import { prop, propOr, pathOr, compose, filter, propEq } from 'ramda';
 
 import Link from 'components/ui/link';
 
@@ -10,6 +10,22 @@ export const properties = [
   {
     label: '回報者ID',
     resolver: propOr('匿名', 'userId'),
+  },
+  {
+    label: '照片ID',
+    resolver: compose(
+      (photoId) => (
+        <Link
+          size="md"
+          href={`/photos/${photoId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {photoId}
+        </Link>
+      ),
+      prop('photoId')
+    ),
   },
   {
     label: '狀態',
@@ -33,6 +49,6 @@ export const properties = [
 ];
 
 export const getReports = compose(
-  filter((report) => report.status !== 'deleted'),
+  filter(propEq('status', 'pending')),
   propOr([], 'reportPhotos')
 );

@@ -1,3 +1,6 @@
+import { useCallback } from 'react';
+import PropTypes from 'prop-types';
+
 import {
   IconButton,
   Menu,
@@ -7,8 +10,25 @@ import {
 } from '@chakra-ui/react';
 
 import { MoreVert } from '@mui/icons-material';
+import resolveReport from 'lib/fetch/admin/resolve-report';
 
-const MenuComp = () => {
+const MenuComp = ({ reportId, onPromptOpen, revalidate }) => {
+  const resolveToNoIssue = useCallback(() => {
+    onPromptOpen({
+      title: '處理為「無爭議」',
+      description: '注意：同一張照片的回報紀錄將會一併處理',
+      onSubmit: () => resolveReport(reportId, 'no_issue').then(revalidate),
+    });
+  }, [revalidate, reportId, onPromptOpen]);
+
+  const resolveToDeleted = useCallback(() => {
+    onPromptOpen({
+      title: '處理為「刪除照片」',
+      description: '注意：同一張照片的回報紀錄將會一併處理',
+      onSubmit: () => resolveReport(reportId, 'deleted').then(revalidate),
+    });
+  }, [revalidate, reportId, onPromptOpen]);
+
   return (
     <Menu>
       <MenuButton
@@ -32,11 +52,17 @@ const MenuComp = () => {
         }}
       />
       <MenuList>
-        <MenuItem onClick={() => console.log('resolved')}>無爭議</MenuItem>
-        <MenuItem onClick={() => console.log('deleted')}>刪除</MenuItem>
+        <MenuItem onClick={resolveToNoIssue}>無爭議</MenuItem>
+        <MenuItem onClick={resolveToDeleted}>刪除</MenuItem>
       </MenuList>
     </Menu>
   );
+};
+
+MenuComp.propTypes = {
+  reportId: PropTypes.number,
+  onPromptOpen: PropTypes.func,
+  revalidate: PropTypes.func,
 };
 
 export default MenuComp;

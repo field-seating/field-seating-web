@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import {
   Table,
   Thead,
@@ -9,15 +10,25 @@ import {
   Box,
   Heading,
 } from '@chakra-ui/react';
-import { useFetchReports } from 'lib/fetch/admin/get-reports';
+import { useSWRConfig } from 'swr';
+
+import { useFetchReports, url } from 'lib/fetch/admin/get-reports';
+import Prompt from 'components/ui/prompt';
+import usePrompt from 'components/ui/prompt/usePrompt';
 
 import { getReports, properties } from './helpers';
 import Menu from './Menu';
 
 const ReportTable = () => {
+  const { mutate } = useSWRConfig();
   const { data: reportData } = useFetchReports();
 
   const reports = getReports(reportData);
+  const promptPayload = usePrompt();
+
+  const revalidate = useCallback(() => {
+    mutate(url());
+  }, [mutate]);
 
   return (
     <Box>
@@ -40,13 +51,24 @@ const ReportTable = () => {
                   <Td key={property.label}>{property.resolver(report)}</Td>
                 ))}
                 <Td>
-                  <Menu />
+                  <Menu
+                    reportId={report.id}
+                    onPromptOpen={promptPayload.onOpen}
+                    revalidate={revalidate}
+                  />
                 </Td>
               </Tr>
             ))}
           </Tbody>
         </Table>
       </TableContainer>
+      <Prompt
+        isOpen={promptPayload.isOpen}
+        onClose={promptPayload.onClose}
+        onSubmit={promptPayload.onSubmit}
+        title={promptPayload.title}
+        description={promptPayload.description}
+      />
     </Box>
   );
 };
