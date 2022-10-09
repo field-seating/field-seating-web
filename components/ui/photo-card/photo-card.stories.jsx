@@ -29,6 +29,13 @@ const story = {
 
 export default story;
 
+const menuList = [
+  {
+    title: 'cancel',
+    onClick: () => alert('cancel'),
+  },
+];
+
 export const Main = ({ userName, date, thumbUp, thumbDown }) => {
   return (
     <Box w="80%">
@@ -39,6 +46,7 @@ export const Main = ({ userName, date, thumbUp, thumbDown }) => {
           src={`${imageSrc}`}
           userName={userName}
           date={date}
+          menuList={menuList}
         />
       </Box>
       <Box>
@@ -48,6 +56,7 @@ export const Main = ({ userName, date, thumbUp, thumbDown }) => {
           src={`/wrongurl`}
           userName={userName}
           date={date}
+          menuList={menuList}
         />
       </Box>
     </Box>

@@ -1,8 +1,23 @@
-import { Image, Box, Skeleton, Text, Icon } from '@chakra-ui/react';
+import {
+  Image,
+  Box,
+  Skeleton,
+  Text,
+  Icon,
+  IconButton,
+  Menu,
+  MenuItem,
+  MenuList,
+  MenuButton,
+} from '@chakra-ui/react';
 import { useCallback, forwardRef } from 'react';
 import { useMachine } from '@xstate/react';
 import NextLink from 'next/link';
-import { ThumbDownOutlined, ThumbUpOutlined } from '@mui/icons-material';
+import {
+  ThumbDownOutlined,
+  ThumbUpOutlined,
+  MoreVert,
+} from '@mui/icons-material';
 
 import machine, { selectLoaded } from '../photo-preview-card/machine';
 import { renderDate } from './helpers';
@@ -67,6 +82,8 @@ const PhotoCard = ({
   userName,
   date,
   hideRate,
+  hasAction,
+  menuList,
 }) => {
   const [current, send] = useMachine(machine);
   const onLoad = useCallback(() => {
@@ -103,7 +120,7 @@ const PhotoCard = ({
         </Box>
       </Skeleton>
 
-      <Box pt="1">
+      <Box py="1">
         <Box display="flex" h="6" px="4" alignItems="center">
           <Text color="onSurface.main" fontSize="sm">
             {userName}
@@ -115,20 +132,60 @@ const PhotoCard = ({
           </Text>
         </Box>
 
-        {!hideRate && (
-          <Box display="flex" alignItems="center" h={['8']} px={['4']}>
+        <Box
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+          flexDir="row-reverse"
+          h={['8']}
+          px={['4']}
+        >
+          {!hideRate && (
             <Box display="flex">
               <Box display="flex" alignItems="center" mr="4">
-                <RateIcon as={ThumbUpOutlined} mr="1" />
+                <RateIcon as={ThumbUpOutlined} />
                 <RateNumber>{thumbUp}</RateNumber>
               </Box>
               <Box display="flex" alignItems="center">
-                <RateIcon as={ThumbDownOutlined} mr="1" />
+                <RateIcon as={ThumbDownOutlined} />
                 <RateNumber>{thumbDown}</RateNumber>
               </Box>
             </Box>
-          </Box>
-        )}
+          )}
+          {hasAction && (
+            <Box display="flex">
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label="Options"
+                  icon={<MoreVert />}
+                  bg="surface"
+                  color="primary.main"
+                  variant="ghost"
+                  _hover={{
+                    bg: 'primary.transparent',
+                    borderColor: 'primary.main',
+                  }}
+                  _active={{
+                    bg: 'surface',
+                    borderColor: 'primary.main',
+                  }}
+                  _focus={{
+                    bg: 'surface',
+                    boxShadow: 'onSurface',
+                  }}
+                />
+                <MenuList>
+                  {menuList.map(({ title, onClick, icon }, index) => (
+                    <MenuItem key={index} icon={icon} onClick={onClick}>
+                      {title}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            </Box>
+          )}
+        </Box>
       </Box>
     </Box>
   );
@@ -142,6 +199,8 @@ PhotoCard.defaultProps = {
   date: '',
   userName: '',
   hideRate: false,
+  hasAction: true,
+  menuList: [],
 };
 
 export default PhotoCard;

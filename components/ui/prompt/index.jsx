@@ -58,6 +58,7 @@ const Prompt = ({
     </Drawer>
   );
 };
+
 Prompt.propTypes = {
   isOpen: PropTypes.bool,
   onClose: PropTypes.func,
