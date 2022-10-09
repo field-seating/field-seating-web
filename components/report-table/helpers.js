@@ -16,7 +16,7 @@ export const properties = [
     resolver: prop('status'),
   },
   {
-    label: '回報備註',
+    label: '備註',
     resolver: propOr('', 'content'),
   },
   {
