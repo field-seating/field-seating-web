@@ -6,7 +6,7 @@ import ProfileHeader from 'components/profile/profile-header';
 import FunctionList from 'components/profile/function-list';
 
 const ProfilePage = () => {
-  const { isLoggedIn } = useAuth('/profile/sign-in');
+  const { isLoggedIn, isAdmin } = useAuth('/profile/sign-in');
 
   return (
     <>
@@ -15,7 +15,7 @@ const ProfilePage = () => {
       </Head>
       {isLoggedIn && (
         <Box>
-          <FunctionList />
+          <FunctionList isAdmin={isAdmin} />
         </Box>
       )}
     </>
